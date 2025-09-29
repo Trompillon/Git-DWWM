@@ -1,0 +1,97 @@
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tiger {
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.tiger img {
+    border-radius: 5%;
+    box-shadow: 0 8px 16px rgba(227, 235, 238, 0.5);
+}
+
+.tiger h1{
+position: absolute;
+bottom: 30px;
+left: 10px;
+}
+
+.tiger p {
+position: absolute;
+bottom: 10px;
+left: 10px;
+}
+
+.articles {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+.article {
+    flex: 1;
+    border: 2px solid;
+    border-radius: 5%;
+}
+
+.article img {
+    width: 100%;
+    height: 150px;
+    border-radius: 5%;
+}
+
+.article p {
+    margin: 5px;
+}
+
+.button {
+    font-weight: bold;
+    padding: 8px 12px;
+    margin-top: 10px;
+    background-color: #0a1ab1;
+    color: white;
+    border-radius: 45%;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.Apropos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 80%;
+    margin: 40px auto;
+    border: 2px solid;
+}
+
+.Apropos img {
+    width: 200px;
+    height: auto;
+    border-radius: 45%;
+}
+
+.Apropos h3, .Apropos p {
+    margin: 0 0 10px 0;
+}
+
+
+footer {
+    padding: 10px 0;
+}
+
+.Apropos, footer {
+    width: 50%;
+    margin: 20px auto;
+}
+

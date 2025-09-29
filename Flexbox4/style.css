@@ -1,0 +1,362 @@
+.nav {
+    display: flex;          /* mettre tout en ligne */
+    flex-wrap: wrap;        /* passer à la ligne si besoin */
+    align-items: center;    
+    gap: 20px;              
+    padding: 10px;
+    color: black;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    background-color: blue;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.mainMenu {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    gap: 15px;
+    background-color: purple;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.sideMenu {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: auto;
+    gap: 15px;
+    background-color: orange;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 150px;
+}
+
+.headerBis {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 40px;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.widgets {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    border-radius: 5px;
+    width: 150px;
+    padding: 0;
+    margin: 0;
+}
+
+
+.headerBis {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.accueil {
+    background-color: blue;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.projets {
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.stats {
+    background-color: green;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.tâches {
+    background-color: yellow;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.équipe {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.docs {
+    background-color: pink;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.parametres {
+    background-color: greenyellow;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.recherche {
+    background-color: rgba(56, 82, 122, 0.5);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.nouveau {
+    background-color: blue;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.exporter {
+    background-color: green;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.menuTop {
+    background-color: pink;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    color: black;
+}
+
+.dashboard {
+    background-color: blue;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.activite {
+    background-color:  green;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.kanban {
+    background-color: orange;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.reporting {
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.parametres2 {
+    background-color: greenyellow;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    color: black;
+}
+
+.header2 {
+    background-color: orange;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 1000px;
+    color: black;
+}
+
+.statA {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.statB {
+    background-color: pink;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.statC {
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.aFaire {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.enCours {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.termine {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 100px;
+}
+
+.tache1 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache2 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;   
+}
+
+.tache3 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache4 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache5 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache6 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache7 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache8 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+  
+}
+
+.tache9 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache10 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;  
+}
+
+.tache11 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.tache12 {
+    background-color: red;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.suivre {
+    background-color: purple;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.widget1 {
+    background-color: orange;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.widget2 {
+    background-color: orangered;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.widget3 {
+    background-color: rgb(117, 13, 30);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
