@@ -1,0 +1,15 @@
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#switchColor {
+  width: 150px;
+  height: 150px;
+  border-radius: 10%;
+  border: 2px solid;
+  font-size: large;
+}

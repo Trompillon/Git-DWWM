@@ -1,0 +1,152 @@
+.container {
+    display: flex;
+    flex-direction: column;   
+    gap: 20px;                
+    margin: 50px;
+}
+
+.ligne1 {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;       
+    padding: 10px;
+    border: 1px solid #c41b1b;
+    height: 150px;
+    justify-content: space-around;
+}
+
+.ligne2 {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;       
+    padding: 10px;
+    border: 1px solid #c41b1b;
+    height: 150px;
+    justify-content: space-around;
+}
+
+.ligne3 {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;       
+    padding: 10px;
+    border: 1px solid #c41b1b;
+    height: 150px;
+    justify-content: space-around;
+}
+
+.carreRouge {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.carreRouge:hover {
+    border-radius: 50%;
+    transition: transform 0.5s ease;
+}
+
+.rondBleu {
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.rondBleu:hover {
+    transform: scale(1.3);
+    background-color: rgb(0, 174, 255);
+    transition: transform 0.5s ease;
+}
+
+.carreVert {
+    width: 30px;
+    height: 30px;
+    background-color: green;
+    border-radius: 5px;
+    transition: transform 0.5s ease;
+}
+
+.carreVert:hover {
+    background-color: gold;
+    border-radius: 0px;
+}
+
+.traitRouge1 {
+    width: 50px;
+    height: 4px;
+    background-color: red;
+    transform-origin: center;
+    animation: rotationinverse 1s linear infinite;
+}
+
+.carreViolet {
+    width: 30px;
+    height: 30px;
+    background-color: purple;
+    border-radius: 5px;
+    transform-origin: center;
+    animation: rotation 0.5s linear infinite;
+}
+
+.traitRouge2 {
+    width: 50px;              
+    height: 4px;
+    background-color: red;
+    transform: rotate(135deg);
+    transform-origin: center;
+    animation: rotation 1s linear infinite;
+}
+
+.carreGrenat {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(82, 7, 7);
+    border-radius: 5px;
+    position: relative;
+    animation: oscilleHG 2s ease-in-out infinite alternate; 
+}
+
+.rondGris {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(109, 100, 96);
+    border-radius: 50%;
+    position: relative;
+    animation: oscilleV 2s ease-in-out infinite alternate;
+}
+
+.carreRose {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(175, 13, 113);
+    border-radius: 5px;
+    position: relative;
+    animation: oscilleHD 2s ease-in-out infinite alternate; 
+}
+
+@keyframes rotation {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes rotationinverse {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+@keyframes oscilleV {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-40px); } /* se déplace vers le haut */
+}
+
+@keyframes oscilleHG {
+    from { transform: translateX(0px); }
+    to   { transform: translateX(-40px); } /* se déplace vers la gauche */
+}
+
+@keyframes oscilleHD {
+    from { transform: translateX(0px); }
+    to   { transform: translateX(40px); } /* se déplace vers la droite */
+}
