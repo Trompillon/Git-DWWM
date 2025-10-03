@@ -1,0 +1,7 @@
+table, th, td {
+  border: 5px solid rgb(105, 96, 96);
+  border-collapse: collapse; /* pour éviter les doubles lignes entre cellules */
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
