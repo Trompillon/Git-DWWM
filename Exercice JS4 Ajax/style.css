@@ -1,0 +1,13 @@
+body {text-align: center;}
+
+#apiCatcher {
+    display: block;
+    margin: auto;
+    margin-top: 15px;
+    padding: 15px;
+}
+
+#catImage {
+    max-width: 500px;
+    max-height: 500px;
+}
