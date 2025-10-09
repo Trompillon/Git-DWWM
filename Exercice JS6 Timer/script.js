@@ -23,7 +23,11 @@ let intervalId = setInterval(() => {
     }, 1000);
 })
 
-clearInterval(intervalId);
-intervalId = null;
-temps = 0;
-timerElement.innerText = "00:00";
+// let button = document.getElementById("stopTimer");
+// button.addEventListener("click", () => {
+// clearInterval(intervalId);
+// intervalId = null;
+// temps = 0;
+// timerElement.innerText = "00:00";
+// })
+
