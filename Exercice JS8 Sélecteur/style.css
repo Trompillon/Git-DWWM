@@ -1,0 +1,37 @@
+body {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.colonne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
+
+#firstList {
+    list-style: none;
+    font-size: larger;
+    padding: 40px;
+}
+
+#secondList {
+    list-style: none;
+    font-size: larger;
+    padding: 40px;
+}
+
+#myButton {
+    height: 40px;
+    padding: 0 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 60px;
+    background-color: aquamarine;
+}
