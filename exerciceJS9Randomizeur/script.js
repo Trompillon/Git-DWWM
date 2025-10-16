@@ -1,6 +1,21 @@
 const list = document.getElementById("list");
 const button = document.getElementById("relance");
 
+function nbrPremier(nbr) {
+  // 1 n'est pas premier
+  if (nbr <= 1) {
+    return false;
+  }
+  // Seuls les nombres >= 2 sont testés
+  // Il suffit de tester jusqu'à la racine carrée du nombre
+  for (let i = 2; i * i <= nbr; i++) {
+    if (nbr % i === 0) {
+      return false; // Trouvé un diviseur, donc ce n'est pas premier
+    }
+  }
+  return true; // Aucun diviseur trouvé, c'est premier
+}
+
 button.addEventListener('click', () => {
 
     list.innerHTML = '';
@@ -11,8 +26,11 @@ button.addEventListener('click', () => {
         if (number <= 5000 && number % 4 === 0) {
             list.innerHTML += `<p style="color: red;"> ${number} </p>`;
         } 
-        else if (number % 2 === 1) { // L'expression conditionnelle doit être entre parenthèses ici
+        else if (number % 2 === 1) {
             list.innerHTML += `<p style="color: green;"> ${number} </p>`;
+        }
+        else if (nbrPremier(number)) {
+            list.innerHTML += `<p style="color: blue;"> ${number} </p>`;
         }
         else {
             list.innerHTML += `<p> ${number} </p>`;
@@ -21,7 +39,7 @@ button.addEventListener('click', () => {
 }); 
 
 // function nbrPremier(nbr) {
-//   for(var i = 2; i < nbr; i++)
+//   for(let i = 2; i < nbr; i++)
 //     if(nbr%i === 0) return false;
 //   return nbr > 1;
 // }

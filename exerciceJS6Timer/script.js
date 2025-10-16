@@ -11,13 +11,17 @@ button.addEventListener("click", () => {
     intervalId = setInterval(() => {
         let minutes = parseInt(temps / 60, 10);
         let secondes = parseInt(temps % 60, 10);
-        
+
         minutes = minutes < 10 ? "0" + minutes : minutes;
         secondes = secondes < 10 ? "0" + secondes : secondes;
-        
+
         timerElement.innerText = `${minutes}:${secondes}`;
-        temps = temps <= 0 ? 1 : temps + 1;
-        if (temps >= 11 && temps <= 11) {  
+        if (temps <= 0) {
+            temps = 1;
+        } else {
+        temps = temps + 1;
+        }
+        if (temps >= 11 && temps <= 11) {
             outputDiv.innerHTML += `<p>Vous avez attendu 10 secondes !</p>`;
             let audio = new Audio("win.mp3");
             audio.play();
@@ -25,11 +29,7 @@ button.addEventListener("click", () => {
     }, 1000);
 })
 
-// if (temps <= 0) {
-//     temps = 1;
-// } else {
-//     temps = temps + 1;
-// }
+// temps = temps <= 0 ? 1 : temps + 1;
 
 document.getElementById("stopTimer").addEventListener("click", () => {
     clearInterval(intervalId);
