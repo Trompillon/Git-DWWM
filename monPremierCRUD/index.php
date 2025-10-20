@@ -2,7 +2,7 @@
 
 require 'db.php';
 
-    //Requête préparée pour éviter les injections SQL
+//Requête préparée pour éviter les injections SQL
     $sql = "SELECT * FROM User";
     $stmt = $pdo->query($sql);
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -10,7 +10,7 @@ require 'db.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,21 @@ require 'db.php';
 </head>
 <body>
     
+<?php
+
+
+if (isset($_GET['action']) && $_GET['action'] === 'added') {
+    
+    $message = "Ajout réussi ! Vous êtes incroyablement fort ! La taille de votre pénis doit être gigantesque !";
+    
+    echo "<div style='background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; margin-bottom: 15px; border-radius: 5px;'>";
+    echo $message;
+    echo "</div>";
+}
+
+
+?>
+
 <h1>Formulaire d'inscription</h1>
 
 <!-- Formulaire d'ajout -->
@@ -65,12 +80,15 @@ require 'db.php';
                 <td><?= ($user['sex']) ?></td>      
                 
                 <td>
-                    <a href="delete.php?id=<?= htmlspecialchars($user['id']) ?>" 
-                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
+                    <button class="boutonSupprimer"
+                            onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) { window.location.href='delete.php?id=<?= htmlspecialchars($user['id']) ?>'; }">
                        Supprimer
-                    </a>
+                    </button>
+                    <button class="boutonModifier" 
+                            onclick="window.location.href='update.php?id=<?= htmlspecialchars($user['id']) ?>'">
+                       Modifier
+                    </button>
                 </td>   
-
             </tr>
 
             <?php

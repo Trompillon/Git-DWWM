@@ -19,7 +19,7 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['age']) && i
         $stmt->execute([$nom, $prenom, $age, $sexe]);
 
         //Redirection vers l'accueil si tout s'est bien passé
-        header("Location: index.php");
+        header("Location: index.php?action=added");
         exit;
 
     } catch (PDOException $e) {
@@ -32,9 +32,9 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['age']) && i
     }
 
     } else {
-    // Si des champs sont manquants ou vides
-    echo "<p style='color:red;'>Tous les champs sont obligatoires.</p>";
-    echo "<p><a href='index.php'> Retour</a></p>";
+    // Si des champs sont manquants ou vides, on redirige avec un paramètre d'erreur
+    header("Location: index.php?action=missing_fields"); // On ajoute le mot-clé "missing_fields"
+    exit;
     }
 
 } else {
