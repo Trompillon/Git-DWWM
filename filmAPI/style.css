@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    color: white;
+    background-color: #7921d2;
+    padding: 25px;
+    list-style: none;
+    border-radius: 5px;
+    font-size: large;
+}
+
+nav ul li {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+nav ul li:hover {
+    background-color: blue;
+    color: #FFD700;
+}
+
+h1, p {
+    text-align: center;
+}
+
+.formConnexion {
+    text-align: center;
+}
+
+.formInscription {
+    text-align: center;
+}

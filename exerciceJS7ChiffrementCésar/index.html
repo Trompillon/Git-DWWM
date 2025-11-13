@@ -10,22 +10,30 @@
 
     <h1>Chiffrement César</h1>
 
-    <div bloc1></div>
+    <div class="bloc1">
         <h2>Chiffrer</h2>
-        <label for="texte">Texte en clair</label><br>
-        <input type="text" name="texte" id="chiffrer" placeholder="Tape ton message ici">
+        <label for="texteACoder">Texte en clair</label><br>
+        <input type="text" name="texte" id="texteACoder" placeholder="Tape ton message ici">
         <button id="coder">Coder</button>
+    </div>
 
-    <div bloc2></div>
+    <div class="bloc2">
         <h2>Clé de chiffrement</h2>
-        <label for="texte">Clé de chiffrement</label><br>
-        <input type="text" name="texte" id="clé" placeholder="Entre ton chiffre ici">
+        <label for="cle">Clé de chiffrement</label><br>
+        <input type="number" name="cle" id="cle" placeholder="Entre ton chiffre ici" min="1" max="25" value="3">
+    </div>
     
-    <div bloc3></div>
+    <div class="bloc3">
         <h2>Déchiffrer</h2>
-        <label for="texte">Texte chiffré</label><br>
-        <input type="text" name="texte" id="chiffrer" placeholder="Colle ton texte chiffré">
+        <label for="texteADecoder">Texte chiffré</label><br>
+        <input type="text" name="texte" id="texteADecoder" placeholder="Colle ton texte chiffré">
         <button id="decoder">Décoder</button>
+    </div>
+    
+    <div>
+        <h3>Résultat</h3>
+        <input type="text" id="resultat" readonly placeholder="Le message chiffré/déchiffré s'affichera ici">
+    </div>
 
     <script src="script.js"></script>
     
