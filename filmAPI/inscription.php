@@ -9,9 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirmPassword = $_POST['confirmPassword'] ?? '';
+    $birthdate = $_POST['birthdate'] ?? '';
 
     // Vérifications de base
-    if (empty($login) || empty($email) || empty($password) || empty($confirmPassword)) {
+    if (empty($login) || empty($email) || empty($password) || empty($confirmPassword) || empty($birthdate)) {
         $message = 'Tous les champs sont obligatoires.';
     } elseif ($password !== $confirmPassword) {
         $message = 'Les mots de passe ne correspondent pas.';
@@ -27,11 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // Insérer dans la BDD
-            $insert = $pdo->prepare("INSERT INTO users (login, email, password) VALUES (:login, :email, :password)");
+            $insert = $pdo->prepare("INSERT INTO users (login, email, password, birthdate) VALUES (:login, :email, :password, :birthdate)");
             $result = $insert->execute([
                 'login' => $login,
                 'email' => $email,
-                'password' => $hashedPassword
+                'password' => $hashedPassword,
+                'birthdate' => $birthdate
             ]);
 
             if ($result) {
@@ -45,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -56,14 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-   <header>
-        <nav>
-            <ul>
-                <li>Accueil</li>
-                <li class = "deco">Déconnexion</li>
-            </ul>
-        </nav>
-    </header>
+   <?php include 'navbar.php'; ?>
 
     <form class="formInscription" action="inscription.php" method="post">
         
@@ -80,6 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="email">Adresse Email</label>
     <input type="email" name="email" id="email" required>
     <br><br>
+
+    <label for="date">Date de naissance</label>
+    <input type="date" name="birthdate" required>
+
 
     <label for="password">Mot de passe</label>
     <input type="password" name="password" id="password" required>

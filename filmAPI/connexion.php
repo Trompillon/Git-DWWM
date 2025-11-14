@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Connexion réussie
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_login'] = $user['login'];
+            $_SESSION['birthdate'] = $user['birthdate'];
             header('Location: index.php'); // ou page d'accueil après connexion
             exit;
         } else {
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,14 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Connexion - TopFilms</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li>Accueil</li>
-                <li class="deco">Déconnexion</li>
-            </ul>
-        </nav>
-    </header>
+    
+<?php include 'navbar.php'; ?>
 
     <form class="formConnexion" action="connexion.php" method="post">
         <h1>Connexion</h1>

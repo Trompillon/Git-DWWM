@@ -1,16 +1,26 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+} */
+
+
+body {
+    background-color: #0e0e30;
+    font-family: Garamond, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
 }
+
 
 nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px;
-    color: white;
-    background-color: #7921d2;
+    color: rgb(255, 255, 255);
+    background-color: #000000;
     padding: 25px;
     list-style: none;
     border-radius: 5px;
@@ -37,4 +47,230 @@ h1, p {
 
 .formInscription {
     text-align: center;
+}
+
+/* Conteneur principal des films */
+#filmsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    color: black;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Chaque film */
+.film {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Image du film */
+.film img {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Titre du film */
+.film h3 {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+/* Date et description */
+.film p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+/* Bouton Ajouter aux favoris */
+.film button {
+    margin-top: auto; /* pousse le bouton tout en bas de la carte */
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.film button:hover {
+    background-color: #ff4c4c;
+}
+
+/* Barre de recherche + genre */
+.search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+.search-container input,
+.search-container select,
+.search-container button {
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #45a049;
+}
+
+/* Conteneur principal des favoris */
+#favorisContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    color: black;
+}
+
+/* Chaque film favori */
+.filmFavori {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Image du film */
+.filmFavori img {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Titre du film */
+.filmFavori h3 {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+/* Date et description */
+.filmFavori p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+/* Bouton Supprimer des favoris */
+.filmFavori button {
+    margin-top: auto; /* pousse le bouton en bas de la carte */
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.filmFavori button:hover {
+    background-color: #ff4c4c;
+}
+
+/* Formulaires Connexion et Inscription */
+form.formConnexion,
+form.formInscription {
+    background-color: rgba(20, 20, 60, 0.9);
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form.formConnexion label,
+form.formInscription label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+form.formConnexion input,
+form.formInscription input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #1a1a50;
+    color: #fff;
+    transition: border 0.3s ease;
+}
+
+form.formConnexion input:focus,
+form.formInscription input:focus {
+    border: 1px solid #FFD700;
+    outline: none;
+}
+
+form.formConnexion button,
+form.formInscription button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1a73e8;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form.formConnexion button:hover,
+form.formInscription button:hover {
+    background-color: #155ab6;
+}
+
+form.formConnexion a,
+form.formInscription a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+form.formConnexion a:hover,
+form.formInscription a:hover {
+    text-decoration: underline;
+}
+
+/* Message d'erreur */
+form.formConnexion p[style],
+form.formInscription p[style] {
+    color: #ff4c4c;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Titres des formulaires */
+form.formConnexion h1,
+form.formInscription h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #FFD700;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }

@@ -1,31 +1,32 @@
+<?php
+session_start();
+require 'db.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopFilms - Accueil</title>
     <link rel="stylesheet" href="style.css">
-    <title>Le site des topfilms</title>
 </head>
 <body>
+    
+    <?php include 'navbar.php'; ?>
 
-    <header>
-        <nav>
-            <ul>
-                <li>Accueil</li>
-                <li class = "connexion">Se connecter</li>
-            </ul>
-        </nav>
-    </header>
+    <main>
+        <h1>Bienvenue sur TopFilms</h1>
+        <p>Découvrez et gérez vos films préférés !</p>
+        
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            echo '<p><a href="films.php">Voir votre liste de films</a></p>';
+        } else {
+            echo '<p>Pour gérer vos films, <a href="connexion.php">connectez-vous</a> ou <a href="inscription.php">inscrivez-vous</a>.</p>';
+        }
+        ?>
 
-    <br>
-
-    <h1> Le site pour faire des tops de films!</h1>
-    <br>
-
-    <p>Bienvenue sur le site qui va vous permettre de faire des tops de vos petits films chouchous!</p>
-    <p>Le but de ce site et vous permettre de créer vos propres tops, de vos films préférées!</p>
-    <p>Alors prenez votre souris en main et élaborez vos meilleurs tops dans tous les genres et catégories de films! </p>
-
-
+    </main>
 </body>
 </html>
+
