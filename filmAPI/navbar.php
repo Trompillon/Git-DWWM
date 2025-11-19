@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -16,6 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li class="deco"><a href="deconnexion.php">Déconnexion</a></li>
                 <li>Bonjour, <?= htmlspecialchars($_SESSION['user_login']) ?></li>
                 <?php
+
             } else {
                 // Menu pour utilisateur non connecté
                 ?>

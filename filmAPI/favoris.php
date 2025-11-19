@@ -12,6 +12,7 @@ $stmt = $pdo->prepare("SELECT * FROM favoris WHERE user_id = :user_id ORDER BY c
 $stmt->execute(['user_id' => $_SESSION['user_id']]);
 $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,10 +35,11 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php foreach($favoris as $film): ?>
                 <div class="filmFavori">
                     <?php if($film['image']): ?>
+                        <a href="infosFilms.php?id=<?= $film['tmdb_id'] ?>">
                         <img src="https://image.tmdb.org/t/p/w200<?= $film['image'] ?>" alt="<?= htmlspecialchars($film['titre']) ?>">
+                        </a>
+                        <h3><?= htmlspecialchars($film['titre']) ?></h3>
                     <?php endif; ?>
-                    <h3><?= htmlspecialchars($film['titre']) ?></h3>
-                    <p><?= htmlspecialchars($film['description']) ?></p>
                     <form action="supprimerFavoris.php" method="post" style="width: 100%;">
                         <input type="hidden" name="id" value="<?= $film['id'] ?>">
                         <button type="submit">Supprimer des favoris</button>

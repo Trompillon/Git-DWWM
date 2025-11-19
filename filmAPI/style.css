@@ -6,11 +6,11 @@
 
 
 body {
-    background-color: #0e0e30;
+    background-color: #afcbff;
     font-family: Garamond, sans-serif;
     margin: 0;
     padding: 0;
-    color: white;
+    color: black;
 }
 
 
@@ -273,4 +273,319 @@ form.formInscription h1 {
     font-size: 2rem;
     color: #FFD700;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+.page-btn {
+    margin: 0 3px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.page-btn.active {
+    background-color: #007BFF; /* bleu vif par exemple */
+    color: #fff;
+    font-weight: bold;
+}
+
+
+/* Pagination */
+#pagination {
+    display: flex;
+    justify-content: center; /* centre horizontalement */
+    align-items: center;     /* aligne verticalement si plusieurs éléments */
+    gap: 10px;               /* espace entre les boutons */
+    margin: 20px;            /* espace autour du bloc */
+}
+
+#pagination button {
+    padding: 8px 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #4CAF50; /* même vert que le bouton recherche */
+    color: white;
+    cursor: pointer;
+}
+
+#pagination button:hover {
+    background-color: #45a049; /* même effet hover que le bouton recherche */
+}
+
+/* Bouton de la page active */
+#pagination button.active {
+    background-color: #2196F3; /* bleu pour la page en cours */
+    color: white;
+    font-weight: bold;
+    cursor: default; /* pas cliquable si tu veux */
+}
+
+/* Optionnel : span des pages (si tu utilises un span au milieu) */
+#pagination #pagesContainer {
+    display: flex;
+    gap: 5px;
+}
+
+.film a {
+    display: block;
+}
+
+/* Conteneur principal du film */
+#filmContainer {
+    max-width: 800px;
+    margin: 40px auto; /* centre le conteneur */
+    padding: 20px;
+    background-color: rgba(20, 20, 60, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    color: white;
+    text-align: center;
+    font-family: Garamond, sans-serif;
+}
+
+/* Titre du film */
+#filmContainer h1 {
+    font-size: 2rem;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+/* Description et infos */
+#filmContainer p {
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+/* Image du film */
+#filmContainer img {
+    display: block;
+    margin: 0 auto 20px auto; /* centre et ajoute un margin en bas */
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Bouton Ajouter aux favoris */
+#filmContainer > button {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50; /* même vert que bouton recherche */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#filmContainer > button:hover {
+    background-color: #45a049;
+}
+
+/* Section commentaires */
+#filmContainer h2 {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #FFD700;
+}
+
+/* Formulaire commentaire (style barre de recherche) */
+#commentaireForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#commentaireForm textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+#commentaireForm button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50; /* identique à bouton ajouter favoris */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#commentaireForm button:hover {
+    background-color: #45a049;
+}
+
+/* Liste des commentaires */
+#listeCommentaires {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.commentaire {
+    background-color: rgba(50,50,100,0.8);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+a:visited {
+  /* Remplacez 'purple' par la couleur de votre choix */
+  color: #FFD700; 
+}
+
+/* --- ACCUEIL : SECTION HERO (AFFICHE CINÉMA) --- */
+
+.heroSection {
+    background-color: #14143c; 
+    color: white; 
+    padding: 60px 20px;
+    margin: 10px; 
+    border-radius: 10px; 
+    margin-bottom: 30px;
+}
+
+.heroContent {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+    align-items: center;
+    text-align: left;
+}
+
+.heroPoster {
+    flex-shrink: 0; /* Empêche l'image de rétrécir */
+}
+
+.heroPoster img {
+    width: 300px; /* Taille fixe pour l'affiche */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.heroPoster img:hover {
+    transform: scale(1.03);
+}
+
+.heroDetails {
+    flex-grow: 1;
+}
+
+.heroDetails h1 {
+    font-size: 2.5rem;
+    color: #FFD700; /* Jaune Or pour le titre principal */
+    text-align: left;
+    margin-top: 0;
+}
+
+.heroRating {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4CAF50; /* Vert de vos boutons */
+    margin-bottom: 10px;
+}
+
+.heroOverview {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: left; /* Annule le 'text-align: center' des <p> globaux */
+}
+
+.heroButton {
+    /* Style du bouton CTA (Call To Action) */
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 8px;
+    background-color: #1a73e8; /* Bleu de vos boutons de formulaire */
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.heroButton:hover {
+    background-color: #155ab6;
+    transform: translateY(-2px);
+}
+
+/* --- SECTION LIENS RAPIDES --- */
+
+.quick-links-section {
+    max-width: 1200px;
+    margin: 30px auto 60px auto;
+    padding: 0 20px;
+}
+
+.quick-links-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #000000; /* Noir ou couleur dominante */
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.quick-link-box {
+    display: block;
+    text-decoration: none;
+    background-color: #f2f2f2; /* Même fond que vos cartes films */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: black;
+    text-align: center;
+}
+
+.quick-link-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+}
+
+.quick-link-box h3 {
+    color: #1a73e8; /* Bleu des boutons */
+    margin-top: 0;
+}
+
+.quick-link-box p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Adaptation pour les petits écrans */
+
+@media (max-width: 768px) {
+    .heroContent {
+        flex-direction: column; /* L'affiche passe au-dessus du texte */
+        text-align: center;
+    }
+    .heroDetails h1,
+    .heroOverview,
+    .heroRating {
+        text-align: center;
+    }
 }
