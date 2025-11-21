@@ -31,7 +31,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'added') {
     echo "</div>";
 }
 
-
 ?>
 
 <h1>Formulaire d'inscription</h1>

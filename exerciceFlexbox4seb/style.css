@@ -1,0 +1,812 @@
+body {
+    background-color: black;
+    margin-top: 10px;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+
+.container1 {
+    display: flex;
+    gap: 10px;
+  }
+
+.logo {
+    height: 50px;
+    width: 150px;
+    background-color: rgb(0, 102, 255);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.nav {
+    height: 50px;
+    width: 1200px;
+    padding-left: 10px;
+    background-color: rgb(224, 0, 224);
+    border-radius : 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;   
+}
+
+.Accueil{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(41, 215, 228);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.Projets{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(28, 159, 168);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.Stats{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(55, 187, 15);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Equipe{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(218, 17, 17);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Docs{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(255, 0, 128);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Paramètres{
+    height: 30px;
+    width: 100px;
+    background-color: rgb(72, 165, 119);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Tâches{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(240, 169, 15);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Recherche {
+    height: 50px;
+    width: 600px;
+    background-color: orangered;
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 90px;   
+}
+
+.Recherche1{
+    height: 30px;
+    width: 120px;
+    background-color: rgb(241, 208, 134);
+    border-radius : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Nouveau{
+    height: 30px;
+    width: 120px;
+    background-color: rgb(23, 138, 245);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.Exporter{
+    height: 30px;
+    width: 120px;
+    background-color: rgb(32, 190, 32);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.container2{
+    display: flex;
+    flex-direction: column;
+    gap : 10px;          
+}
+
+.menu-top{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(205, 41, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Dashboard{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(98, 184, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: row;
+    align-items: center; 
+}
+
+.Activité{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(85, 235, 185);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: row;
+    align-items: center; 
+}
+
+.Kanban{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(252, 114, 233);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: row;
+    align-items: center; 
+}
+
+.Reporting{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(41, 177, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: row;
+    align-items: center; 
+}
+
+.Paramètres1{
+    height: 40px;
+    width: 250px;
+    background-color: rgb(48, 255, 41);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: row;
+    align-items: center; 
+}
+
+.container3{
+    display: flex;
+    flex-direction:row;   
+    gap: 10px;   
+}
+
+.Header{
+    height: 45px;
+    width: 950px;
+    padding-left: 10px;
+    background-color: rgb(255, 188, 2);
+    border-radius : 8px;
+    display: flex;
+    align-items: center;
+}
+
+.StatA{
+    height: 45px;
+    width: 100px;
+    background-color: rgb(255, 21, 21);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.StatB{
+    height: 45px;
+    width: 100px;
+    background-color: rgb(232, 55, 255);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.StatC{
+    height: 45px;
+    width: 100px;
+    background-color: rgb(100, 255, 11);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.A{
+    display: flex;
+    margin: 10px;
+    margin-left: 0px;
+    gap : 10px;
+}
+
+.B{
+    display: flex;   
+}
+
+.container4 {
+    padding : 10px;
+    margin-left: -20px;
+    display: flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.Suivre {
+    height: 115px;
+    width: 334px;
+    background-color: rgb(88, 68, 177);
+    border-radius : 8px;
+    display: flex;
+    align-items: center;
+}
+
+.Carré {
+    height: 70px;
+    width: 70px;
+    background-color: rgb(23, 170, 255);
+    margin: 20px;
+    border-radius:8px;
+}
+
+.Texte {
+    margin-right: 70px;
+    margin-left: -10px;
+}
+
+.Suivre2{
+    height: 30px;
+    width: 70px;
+    background-color: rgb(20, 226, 20);
+    border-radius : 8px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+
+.Widget1{
+    height: 50px;
+    width: 324px;
+    background-color: rgb(255, 187, 0);
+    border-radius : 8px;
+    display: flex;
+    padding-top: 10px;
+    padding-left: 10px;
+    justify-content: row;
+    
+}
+
+.Widget2{
+    height:50px;
+    width: 324px;
+    background-color: rgb(255, 0, 0);
+    border-radius : 8px;
+    display: flex;
+    padding-top: 10px;
+    padding-left: 10px;
+    justify-content: row;
+    
+}
+
+.Widget3{
+    height: 50px;
+    width: 324px;
+    background-color: rgb(255, 91, 206);
+    border-radius : 8px;
+    display: flex;
+    padding-top: 10px;
+    padding-left: 10px;
+    justify-content: row;
+}
+
+.C{
+    display: flex;
+    flex-direction: column;
+}
+
+.container5 {
+    padding : 10px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.Afaire {
+    height: 35px;
+    width: 413px;
+    background-color: rgb(205, 41, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche1 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(54, 181, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche2 {
+    height: 100px;
+    width: 413px;
+    background-color: rgb(32, 255, 3);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche3 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(226, 42, 195);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche4 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(41, 177, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.D {
+    display:flex;
+}
+
+.container6 {
+    padding : 10px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.Encours {
+    height: 35px;
+    width: 413px;
+    background-color: rgb(252, 101, 0);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche5 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(0, 255, 234);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche6 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(255, 0, 242);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche7 {
+    height: 100px;
+    width: 413px;
+    background-color: rgb(0, 195, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche8 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(84, 255, 5);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.container7 {
+    padding : 10px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.Terminé {
+    height: 35px;
+    width: 413px;
+    background-color: rgb(0, 110, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche9 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(255, 196, 0);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche10 {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(255, 3, 3);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche11 {
+    height: 60px;
+    width: 80px;
+    background-color: rgb(255, 5, 213);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Tâche12 {
+    height: 100px;
+    width: 413px;
+    background-color: rgb(0, 235, 125);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.container8 {
+    margin-top: -10px;
+    margin-left: -70px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.C1 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(38, 132, 240);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C2 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 3, 234);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C3 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(2, 226, 255);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C4 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(2, 255, 35);
+    border-radius : 8px;
+    display: flex;
+    justify-content : center;
+    align-items: center; 
+}
+
+.container9 {
+    margin-top: 10px;
+    margin-left: -70px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.C5 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 196, 0);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C6 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 3, 3);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C7 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 2, 234);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C8 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(144, 252, 162);
+    border-radius : 8px;
+    display: flex;
+    justify-content : center;
+    align-items: center; 
+}
+
+.container10 {
+    margin-top: 10px;
+    margin-left: -70px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.C9 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 0, 221);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C10 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(255, 125, 3);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C11 {
+    height: 60px;
+    width: 315px;    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C12 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(2, 255, 35);
+    border-radius : 8px;
+    display: flex;
+    justify-content : center;
+    align-items: center; 
+}
+
+.container11 {
+    margin-top: 10px;
+    margin-left: -70px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.Jambon {
+    height: 150px;
+    width: 413px;
+    background-color: rgb(225, 0, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Beurre {
+    margin-top: 50px;
+    height: 100px;
+    width: 413px;
+    background-color: rgb(255, 125, 3);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Haut {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(2, 226, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.container12 {
+    height: 30px;
+    width: 1884px;
+    margin-top: 10px;
+    border-radius : 8px;
+    padding-left: 10px;
+    padding-right : 10px;
+    background-color: rgb(240, 0, 240);
+    display: flex;
+    align-items: center;
+}
+
+.Texte2 {
+    margin-left: 1130px;
+    margin-right: 10px;
+}
+
+.div {
+    height: 18px;
+    width: 24px;
+    background-color: rgb(2, 226, 255);
+    background-color: rgb(2, 226, 255);
+    border-radius : 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.C12 {
+    height: 60px;
+    width: 315px;
+    background-color: rgb(2, 255, 35);
+    border-radius : 8px;
+    display: flex;
+    justify-content : center;
+    align-items: center; 
+}
+
+.container11 {
+    margin-top: 10px;
+    margin-left: -70px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.Jambon {
+    height: 150px;
+    width: 413px;
+    background-color: rgb(225, 0, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Beurre {
+    margin-top: 50px;
+    height: 100px;
+    width: 413px;
+    background-color: rgb(255, 125, 3);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.Haut {
+    height: 60px;
+    width: 413px;
+    background-color: rgb(2, 226, 255);
+    border-radius : 8px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center; 
+}
+
+.container12 {
+    height: 30px;
+    width: 1884px;
+    margin-top: 10px;
+    border-radius : 8px;
+    padding-left: 10px;
+    padding-right : 10px;
+    background-color: rgb(240, 0, 240);
+    display: flex;
+    align-items: center;
+}
+
+.Texte2 {
+    margin-left: 1130px;
+    margin-right: 10px;
+}
+
+.div {
+    height: 18px;
+    width: 24px;
+    background-color: rgb(2, 226, 255);
+}
