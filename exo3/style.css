@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+    height: 50vh;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#form {
+    display: flex;
+    gap : 10px;
+}
+
+#number, #firstname, #lastname {
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 2px 2px 5px #4836a3;
+}
+
+#button {
+    height: 50px;
+    width: 100px;
+    border: none;
+    box-shadow: 2px 2px 5px #4836a3;
+    font-size: large;
+}

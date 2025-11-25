@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Exo Modal</title>
+</head>
+<body>
+
+    <button onclick="openModal()">Ouvrir la modal</button>
+    
+    <div class = "overlay"></div>
+
+        <div class="modal">
+
+            <div class="modalheader">
+                <h2 class="modalHeader">Titre</h2>
+                <div class="modalClose" onclick="closeModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="modalBody">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, tempore!
+            </p>
+            </div>
+
+            <div class="modalFooter">
+                <button class="modalFooterButton" onclick="closeModal()">Fermer</button>
+            </div>
+
+        </div>
+
+    <script>
+
+        function openModal() {
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('.modal').classList.add('modalOpen')
+        }
+
+        function closeModal() {
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('.modal').classList.remove('modalOpen')
+        }
+
+    </script>
+      
+    
+</body>
+</html>
