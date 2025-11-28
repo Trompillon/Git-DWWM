@@ -1,0 +1,78 @@
+<?php
+// 1. Inclure le fichier de connexion à la base de données
+include 'db.php'; 
+
+// Démarrer une session (crucial pour garder l'utilisateur connecté)
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    if (!empty($_POST['email']) && !empty($_POST['password'])) {
+        
+        $email = htmlspecialchars($_POST['email']);
+        $password = $_POST['password'];
+
+        // 2. Préparer la requête pour récupérer l'utilisateur 
+        // On sélectionne toutes les colonnes, mais on va surtout utiliser 'password_hash'
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch();
+
+        // 3. Vérifier si l'utilisateur existe
+        if ($user) {
+            // 4. Vérifier si le mot de passe correspond au hash stocké 
+            if (password_verify($password, $user['password_hash'])) { // Changement ici
+        
+                // Connexion réussie !
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_email'] = $user['email'];
+               
+                // Rediriger vers une page sécurisée (ex: profil.php)
+                header('Location: index.php'); // Changez 'index.php' par votre page d'accueil après connexion
+                exit;
+
+            } else {
+                $erreur = "Email ou mot de passe incorrect.";
+            }
+        } else {
+            $erreur = "Email ou mot de passe incorrect.";
+        }
+    } else {
+        $erreur = "Veuillez remplir tous les champs.";
+    }
+}
+// Fin du code de traitement PHP
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection</title>
+</head>
+<body>
+
+    <form class="formConnexion" action="connexion" method="post">
+        <h1>Connexion</h1>
+
+        <label for="email">Email</label>
+        <input class="formInput" type="email" name="email" id="email" required>
+        <br>
+        <br>
+
+        <label for="password">Mot de passe</label>
+        <input class="formInput" type="password" name="password" id="password" required>
+        <br>
+        <br>
+
+        <br>
+        <button type="submit" id="btn">Connexion</button>
+
+        <p>
+            <a href="inscription.php">Vous n'êtes pas inscrit?</a>
+        </p>
+    </form>
+    
+</body>
+</html>

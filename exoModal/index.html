@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <button onclick="openModal()">Ouvrir la modal</button>
+    <button id = button onclick="openModal()">Ouvrir la modal</button>
     
     <div class = "overlay"></div>
 
@@ -38,12 +38,15 @@
 
         function openModal() {
             document.querySelector('.overlay').style.display = 'block';
-            document.querySelector('.modal').classList.add('modalOpen')
+            document.querySelector('.modal').style.display = 'block';
+
+            setTimeout(closeModal, 3000);
         }
 
         function closeModal() {
             document.querySelector('.overlay').style.display = 'none';
-            document.querySelector('.modal').classList.remove('modalOpen')
+            document.querySelector('.modal').style.display = 'none';
+
         }
 
     </script>

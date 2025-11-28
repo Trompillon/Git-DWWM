@@ -31,9 +31,8 @@ if (isset($_POST['number']) && isset($_POST['firstname']) && isset($_POST['lastn
             $syllableN = $syllablesN[$index];
             $nom .= $syllableN;
         }
-        // echo "$prenom $nom <br> ";
 
-        
+        // echo "$prenom $nom <br> ";
 
         try {
             $stmt = $pdo->prepare("INSERT INTO listnames (firstname, lastname) VALUES (?, ?)");
