@@ -11,7 +11,7 @@ $prix = 19.99; // Nombre décimal
 // La fonction var_dump() en PHP est utilisée pour afficher des informations détaillées sur une ou plusieurs variables.
 //  Elle est particulièrement utile pour le débogage, car elle affiche le type et la valeur de la variable.
 // var_dump($prenom);
-//var_dump($prenom, $nom, $age, $is_student, $prix); 
+// var_dump($prenom, $nom, $age, $is_student, $prix); 
 
 // --- 2. Affichage de texte ---
 

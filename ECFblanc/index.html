@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+    <title>ECFblanc</title>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav1">
+                <h1>CHEIN</h1>
+            </div>
+
+            <div class="nav2">
+                <ul>
+                    <li><a href="https://google.com" target="_blank">Accueil</a></li>
+                    <li><a href="https://google.com" target="_blank">Produits</a></li>
+                    <li><a href="https://google.com" target="_blank">À propos</a></li>
+                    <li><a href="https://google.com" target="_blank">Contact</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <h1>Nos Produits(ne contient pas de poupées)</h1>
+
+        <div class="mainContainer1">
+
+            <div class = "pub" >
+                <img src="pc.webp" alt="un laptop">
+                <div class="pubText">
+                    <h2>Ordinateur Portable</h2>
+                    <p>PC portable haute performance pour professionnels</p>
+                    <p id = "tarif"> 899, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal1')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalA', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="nokia.webp" alt="un smartphone">
+                <div class="pubText">
+                    <h2>Smartphone</h2>
+                    <p>Téléphone dernière génération avec appareil photo 800MP</p>
+                    <p id = "tarif"> 699, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal2')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalB', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="casque-audio-crabe.jpg" alt="un casque audio en forme de crabe">
+                <div class="pubText">
+                    <h2>Casque Audio</h2>
+                    <p>Casque sans fil avec réduction de bruit active</p>
+                    <p id = "tarif"> 249, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal3')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalC', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mainContainer2">
+
+            <div class = "pub" >
+                <img src="tablette-de-choco.jpg" alt="une tablette de chocolat">
+                <div class="pubText">
+                    <h2>Tablette</h2>
+                    <p>Tablette 10 pouces idéale pour la lecture et le streaming</p>
+                    <p id = "tarif"> 399, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal4')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalD', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="connected-watch.webp" alt="une montre">
+                <div class="pubText">
+                    <h2>Montre connectée</h2>
+                    <p>Montre intelligente avec suivi santé et notifications</p>
+                    <p id = "tarif"> 299, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal5')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalE', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="camera-gundam.webp" alt="un appareil photo en forme de gundam">
+                <div class="pubText">
+                    <h2>Appareil Photo Canon</h2>
+                    <p>Appareil photo Optimus Gundam 666MP</p>
+                    <p id = "tarif"> 1299, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal6')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalF', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mainContainer3">
+
+            <div class = "pub" >
+                <img src="bt.jpg" alt="une enceinte">
+                <div class="pubText">
+                    <h2>Enceinte Bluetooth</h2>
+                    <p>Enceinte portable étanche avec son 362°</p>
+                    <p id = "tarif"> 89, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal7')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalG', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="GameWatchFire.jpg" alt="un jeu Game and watch">
+                <div class="pubText">
+                    <h2>Console de Jeux</h2>
+                    <p>Console nouvelle génération avec SSD ultra-rapide(bien sur!)</p>
+                    <p id = "tarif"> 499, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal8')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalH', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "pub" >
+                <img src="clavier.webp" alt="un clavier mécanique">
+                <div class="pubText">
+                    <h2>Clavier mécanique</h2>
+                    <p>Clavier gaming RGB avec switches mécaniques</p>
+                    <p id = "tarif"> 129, 99 €</p>
+                    <div class="buttons">
+                        <button class="buttonOpen1" onclick="openModal('modal9')">Voir détails</button>
+                        <button class="buttonOpen2" onclick="openModal('modalI', true)">❤️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal1">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Ordinateur Portable </h2>
+                </div>
+
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="pc.webp" alt="un laptop">
+                    <p>PC portable haute performance pour professionnels</p>
+                    <p id = "tarif"> 899, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal1')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal2">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Smartphone </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="nokia.webp" alt="un téléphone portable">
+                    <p>Téléphone dernière génération avec appareil photo 800MP</p>
+                    <p id = "tarif"> 699, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal2')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal3">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Smartphone </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="casque-audio-crabe.jpg" alt="un casque en forme de crabe">
+                    <p>Casque sans fil avec réduction de bruit active</p>
+                    <p id = "tarif"> 249, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal3')">Fermer</button>
+                </div>
+
+            </div>
+            
+            <div class="modal4">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Tablette </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="tablette-de-choco.jpg" alt="une tablette de chocolat">
+                    <p>Tablette 10 pouces idéale pour la lecture et le streaming</p>
+                    <p id = "tarif"> 399, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal4')">Fermer</button>
+                </div>
+
+            </div> 
+
+            <div class="modal5">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Montre connectée </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="connected-watch.webp" alt="montre connectée">
+                    <p>Montre intelligence avec suivi santé et notifications</p>
+                    <p id = "tarif"> 299, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal5')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal6">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Appareil Photo Canon </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="camera-gundam.webp" alt="un appareil photo gundam">
+                    <p>Appareil photo Optimus Gundam</p>
+                    <p id = "tarif"> 1299, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal6')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal7">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Enceinte Bluetooth </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="bt.jpg" alt="enceinte bluetooth">
+                    <p>Enceinte portable étanche avec son 360°</p>
+                    <p id = "tarif"> 89, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal7')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal8">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Console de Jeux </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="GameWatchFire.jpg" alt="un jeu Game and Watch">
+                    <p>Console nouvelle génération avec SSD ultra-rapide</p>
+                    <p id = "tarif"> 499, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal8')">Fermer</button>
+                </div>
+
+            </div>
+
+            <div class="modal9">
+
+                <div class="modalheader1">
+                    <h2 class="modalHeader">Clavier Mécanique </h2>
+                </div>
+
+                <div class="modalBody1">
+                    <img id="imagemodal" src="clavier.webp" alt="un clavier en forme de machine à écrire">
+                    <p>Clavier gaming RGB avec switches mécaniques</p>
+                    <p id = "tarif"> 129, 99 €</p>
+                </div>
+
+                <div class="modalFooter1">
+                    <button class="modalFooterButton" onclick="closeModal('modal9')">Fermer</button>
+                </div>
+                
+            </div>
+
+            <div class="modalA">
+                <p>❤️ Ordinateur portable ajouté aux favoris</p>
+            </div>
+
+            <div class="modalB">
+                <p>❤️ Smartphone ajouté aux favoris</p>
+            </div>
+
+            <div class="modalC">
+                <p>❤️ Casque Audio ajouté aux favoris</p>
+            </div>
+
+            <div class="modalD">
+                <p>❤️ Tablette ajouté aux favoris</p>
+            </div>
+
+            <div class="modalE">
+                <p>❤️ Montre connectée portable ajouté aux favoris</p>
+            </div>
+
+            <div class="modalF">
+                <p>❤️ Appareil Photo Canon ajouté aux favoris</p>
+            </div>
+
+            <div class="modalG">
+                <p>❤️ Enceinte Bluetooth ajouté aux favoris</p>
+            </div>
+
+            <div class="modalH">
+                <p>❤️ Console de Jeux ajouté aux favoris</p>
+            </div>
+
+            <div class="modalI">
+                <p>❤️ Clavier Mécanique ajouté aux favoris</p>
+            </div>
+
+    </main>
+
+    <footer>
+
+        <div class="footer1">
+            <p>© 2025 CHEIN - Tous droits réservés</p>
+        </div>
+
+        <div class="footer2">
+            <ul>
+                <li><a href="https://google.com" target="_blank">Mentions légales</a></li>
+                <li><a href="https://google.com" target="_blank">Politique de confidentialité</a></li>
+                <li><a href="https://google.com" target="_blank">CGV-CGU</a></li>
+                <li><a href="https://google.com" target="_blank">Nous contacter(il vaut mieux pas)</a></li>
+            </ul>
+        </div>
+
+    </footer>
+    
+</body>
+</html>

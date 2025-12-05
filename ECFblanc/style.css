@@ -1,0 +1,259 @@
+@font-face {
+    font-family: "HolyGolden";
+    src: url("HolyGolden.ttf");
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .nav2 ul,
+    .footer2 ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .pub {
+        width: 90%;
+    }
+
+    .pub img {
+        height: 180px;
+    }
+
+    /* Les modals prennent toute la largeur sur mobile */
+    .modal1, .modal2, .modal3, .modal4,
+    .modal5, .modal6, .modal7, .modal8, .modal9 {
+        width: 90%;
+    }
+
+    /* Pop-ups favoris */
+    .modalA, .modalB, .modalC, .modalD,
+    .modalE, .modalF, .modalG, .modalH, .modalI {
+        width: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: large;
+    }
+}
+
+/* ===== Header & Nav ===== */
+header {
+    margin: 0;
+}
+
+nav {
+    color: white;
+    background-color: rgb(44, 62, 80);
+}
+
+.nav1 h1 {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.nav2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav2 ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.nav2 ul li:hover {
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== Titres ===== */
+h1 {
+    font-family: "HolyGolden";
+    text-align: center;
+}
+
+/* ===== Main Containers ===== */
+.mainContainer1,
+.mainContainer2,
+.mainContainer3 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+/* ===== Produit ===== */
+.pub {
+    width: 400px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pub:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.pub img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.pubText {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+#tarif {
+    font-size: 30px;
+    color: green;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* ===== Boutons ===== */
+.buttonOpen1,
+.modalFooterButton {
+    width: 120px;
+    height: 50px;
+    font-size: large;
+    background-color: rgb(78, 78, 190);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonOpen1:hover,
+.modalFooterButton:hover,
+.buttonOpen2:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.buttonOpen2 {
+    width: 120px;
+    height: 50px;
+    font-size: large;
+    background-color: grey;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* ===== Modals ===== */
+.modal1, .modal2, .modal3, .modal4,
+.modal5, .modal6, .modal7, .modal8, .modal9 {
+    position: fixed;
+    border: 2px solid black;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+    background-color: white;
+}
+
+.modal1 img,
+.modal2 img,
+.modal3 img,
+.modal4 img,
+.modal5 img,
+.modal6 img,
+.modal7 img,
+.modal8 img,
+.modal9 img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#imagemodal {
+    width: 400px;
+    height: 400px;
+}
+
+#imagemodal:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== Pop-ups favoris ===== */
+.modalA, .modalB, .modalC, .modalD,
+.modalE, .modalF, .modalG, .modalH, .modalI {
+    position: fixed;
+    border: 2px solid black;
+    color: white;
+    font-size: x-large;
+    top: 15%;
+    left: 80%;
+    width: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+    background-color: rgb(45, 182, 45);
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: rgb(44, 62, 80);
+    margin-top: 20px;
+}
+
+.footer1 {
+    padding-top: 10px;
+    text-align: center;
+    color: white;
+}
+
+.footer2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(93, 93, 195);
+}
+
+.footer2 ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+header a:visited,
+footer a:visited {
+    color: rgb(93, 195, 187); /* même couleur que les liens normaux pour les liens déjà visités */
+}

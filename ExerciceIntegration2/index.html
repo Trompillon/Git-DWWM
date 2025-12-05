@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+    <title>Cdiscount : des prix bas qui ont de la voix!</title>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav1">
+                <img id="logo" src="logoCDiscount.png" alt="logoCDiscount">
+                <input type="text" id="searchInput" placeholder="Et si tu arrêtais tes achats compulsif abruti ?">
+                <ul>
+                    <li>Se connecter</li>
+                    <li>Mon panier</li>
+                </ul>
+            </div>
+            <div class="nav2">
+                <ul>
+                    <li>Menu</li>
+                    <li>Black Tuesday</li>
+                    <li>Noël</li>
+                    <li>Voyages</li>
+                    <li>Forfait mobile</li>
+                    <li>Assurance Zen</li>
+                    <li>Reconditionné</li>
+                    <li>Paiement x10</li>
+                    <li>Programme de fidélité</li>
+                </ul>
+            </div>
+            <div class="nav3">
+                <p><b>Nouveau pigeon ? -10€ dès 50€ d'achat pour votre première commande! <u>Profitez-en abruti !</u></b></p>
+            </div>
+        </nav>
+    </header>
+
+    <br>
+
+    <main>
+        <div class="container">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="slide">
+                        <img src="Diapo1.png"
+                            alt="Image 1">
+                    </div>
+                    <div class="slide">
+                        <img src="Diapo2.png"
+                            alt="Image 2">
+                    </div>
+                    <div class="slide">
+                        <img src="Diapo3.png"
+                            alt="Image 3">
+                    </div>
+                    <div class="slide">
+                        <img src="Diapo4.png"
+                            alt="Image 4">
+                    </div>
+                    <div class="slide">
+                        <img src="Diapo5.png"
+                            alt="Image 5">
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button id="prev">«</button>
+                    <button id="next">»</button>
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class = "overlay"></div>
+
+        <div class = "containerPub">
+            <div class = "pub" >
+                <img id="argent" src="argent.jpg" alt="des sous">
+                <div class="pubText">
+                    <p>Acheter de l'argent !</p>
+                    <p>⭐⭐⭐⭐⭐</p>
+                    <p>Payez en 4 fois !</p>
+                    <p id = "tarif"> 125, 00 €</p>
+                    <button id="button1"onclick="openModal1()">Voir plus</button>
+                </div>
+            </div>
+
+            <div class = "pub">
+                <img id="couilles" src="couilles.png" alt="des testicules">
+                <div class="pubText">
+                    <p>Acheter une paire de couilles !</p>
+                    <p>⭐⭐⭐⭐</p>
+                    <p>Payez en 10 fois !</p>
+                    <p id = "tarif"> 200, 00 €</p>
+                    <button id="button2"onclick="openModal2()">Voir plus</button>
+                </div>
+            </div>
+
+            <div class = "pub">
+                <img id="air" src="airdeMontcuq.png" alt="canette d'air">
+                <div class="pubText">
+                    <p>Acheter de l'air de Montcuq !</p>
+                    <p>⭐⭐⭐⭐⭐</p>
+                    <p>Payez en 4 fois !</p>
+                    <p id = "tarif"> 75, 00 €</p>
+                    <button id="button3"onclick="openModal3()">Voir plus</button>
+                </div>
+            </div>
+        </div>
+
+    <br>
+
+    
+        <div class="modal1">
+
+            <div class="modalheader1">
+                <h2 class="modalHeader">De l'argent ! </h2>
+            </div>
+
+            <div class="modalBody1">
+                <img src="argent.jpg" alt="des sous">
+                <p>Acheter de l'argent !</p>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>Payez en 4 fois !</p>
+                <p id = "tarif"> 125, 00 €</p>
+                <button class="commandez">Je commande !</button>
+            </div>
+
+            <div class="modalFooter1">
+                <button class="modalFooterButton" onclick="closeModal1()">Fermer</button>
+            </div>
+
+        </div>
+
+        <div class="modal2">
+
+            <div class="modalheader2">
+                <h2 class="modalHeader"> Une paire de couilles</h2>
+            </div>
+
+            <div class="modalBody2">
+                <img src="couilles.png" alt="des couilles">
+                <p>Acheter une paire de couilles !</p>
+                <p>⭐⭐⭐⭐</p>
+                <p>Payez en 10 fois !</p>
+                <p id = "tarif"> 200, 00 €</p>
+                <button class="commandez">Je commande !</button>
+
+            </div>
+
+            <div class="modalFooter2">
+                <button class="modalFooterButton" onclick="closeModal2()">Fermer</button>
+            </div>
+
+        </div>
+
+        <div class="modal3">
+
+            <div class="modalheader3">
+                <h2 class="modalHeader"> Air de Montcuq</h2>
+            </div>
+
+            <div class="modalBody3">
+                <img src="airdeMontcuq.png" alt="air">
+                <p>Acheter de l'air de Montcuq !</p>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>Payez en 4 fois !</p>
+                <p id = "tarif"> 75, 00 €</p>
+                <button class="commandez">Je commande !</button>
+            </div>
+
+            <div class="modalFooter3">
+                <button class="modalFooterButton" onclick="closeModal3()">Fermer</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+
+        <div class="footer1">
+            <p>Paiment sécurisé</p>
+            <p>Entreprise française</p>
+            <p>14 jours pour changer d'avis</p>
+        </div>
+
+        <div class="footer2">
+            <ul class="ul1">
+                <li><b>Espace client</b></li>
+                <li>Accueil de l’espace client</li>
+                <li>Mon suivi de commande</li>
+                <li>Se connecter</li>
+            </ul>
+            <ul class="ul2">
+                <li><b>Nos services et engagements</b></li>
+                <li>Les modes et frais de livraison</li>
+                <li>Les moyens de paiement</li>
+                <li>Nos engagements RSE</li>
+                <li>Devenir vendeur</li>
+            </ul>
+            <ul class="ul3">
+                <li><b>Aide et support</b></li>
+                <li>Contact service client</li>
+                <li>Notifier du contenu illicite</li>
+                <li>Rappels de produits</li>
+                <li>Qui sommes-nous ?</li>
+                <li>Accessibilité numérique</li>
+            </ul>
+            <ul class="ul4">
+                <li><b>Informations légales</b></li>
+                <li>Conditions générales de vente</li>
+                <li>Conditions générales d’utilisation marketplace</li>
+                <li>Mentions légales</li>
+                <li>Référencement et classement</li>
+                <li>Protection de la vie privée et des cookies</li>
+                <li>Gérer mes cookies</li>
+                <li>Eco-participation et reprise</li>
+                <li>Rapport de transparence DSA</li>
+            </ul>
+
+        </div>
+        
+    </footer>
+    
+</body>
+</html>

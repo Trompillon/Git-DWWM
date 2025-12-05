@@ -18,31 +18,73 @@ estimateScore(8);
 estimateScore(21);
 0 0 7 | 2 1 3 | 3 0 2 | 3 3 0
 
-Les transformations ne peuvent pas dépasser le nombre d’essais.
+Pour chaque nombre possible d’essais,
+pour chaque nombre possible de transformations associé à ce nombre d’essais,
+et pour chaque nombre possible de pénalités,
+on calcule le total de points et on garde la combinaison si le total correspond exactement au score demandé.
 
-Il faut examiner toutes les possibilités sans dépasser le score.
 
-Retourner un string contenant toutes les combinaisons possibles. -->
+
 
 <?php
 
     function estimateScore(int $score) {
 
-        foreach ($score as ) {
-            
-        }
+        
+            $tableauEssais = "";
+            $tableauPenalites = "";
+            $tableauTransformation = "";
 
-        $points = 1;
-        $essai = $points*5;
-        $penalite = $points*3;
-        $essaiValide = boolean;
+        foreach ($nbEssais as $psbltEssai) {
+            $tableauEssais .= $psbltEssai;
 
-        if ($essaiValide = true) {
-                $penalite = $points*2;
-        }
-            else {
-                $penalite = $points*0;
+            foreach ($nbTransformations as $psbltTransfo) {
+                $tableauTransformation .= $psbltTransfo;
             }
+
+        }
+
+        foreach ($nbPenalites as $psltPenalites) {
+            $tableauPenalites .= $psbltPenalites;
+        }
+
+
+        // $psbltEssai = (int $score)/5;
+        // $psbltTransfo = 
+
+        // $nbEssais = $score/5;
+        // $nbPenalites = $score/3;
+        // $nbTransformations = $score/2;
+
+        return $score = "$nbEssais | $nbTransformations | $nbPenalites"
+
+
+        // $score = $nbEssais + $nbTransformations + $nbPénalités;
+        // $calcul = implode(",", );
+
+        // $points = 1;
+        // $essai = $points*5;
+        // $penalite = $points*3;
+        // $essaiValide = boolean;
+        // $transformation = boolean;
+
+        // if ($essaiValide = true) {
+        //     .= $points*5;
+        // }
+
+        // if ($essaiValide = false) {
+        //     $transformation = false;
+        // }
+
+        // if ($transformation = true)
+        //     .= $points*2;
+        // else {
+        //     .= $points+0;
+        // }
+
+        // if ($essaiValide = true) {
+        //     $transformation = true or false;
+        // }
 
     }
 

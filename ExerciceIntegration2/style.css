@@ -1,0 +1,356 @@
+#logo {
+    height: 80px;
+    width: 250px;
+}
+
+#searchInput {
+    height: 40px;
+    width: 1000px;
+    border-radius: 15px;
+    font-size: large;
+}
+
+nav {
+    color: white;
+}
+
+
+.nav1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+}
+
+.nav1 ul {
+    display: flex;
+    list-style: none;
+}
+
+.nav1 ul li {
+    border-radius: 15px;
+    background-color: blueviolet;
+    padding: 10px;
+    margin: 10px;
+}
+
+.nav1 ul li:hover {
+    background-color: #45a049; 
+    transform: translateY(-3px); 
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
+}
+
+.nav2 {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background-color: blue;
+}
+
+.nav2 ul {
+    margin-left: 170px;
+    display: flex;
+    list-style: none;
+}
+
+.nav2 ul li {
+    margin: 5px;
+    padding: 10px;
+    background-color: blueviolet;
+    border-radius: 15px;
+
+}
+
+.nav2 ul li:hover {
+    background-color: #45a049; 
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.nav3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+}
+
+.container {
+    overflow: hidden;
+    /* Cache les éléments qui dépassent du container */
+}
+/* Définition du carousel */
+.carousel {
+    position: relative;
+    /* Le carousel est positionné relativement à son parent */
+}
+/* Définition de l'élément contenant les diapositives */
+.carousel-inner {
+    display: flex;
+    /* Affiche les éléments en ligne */
+    /* overflow: hidden; */
+    /* Cache les éléments qui dépassent */
+    height: 100%;
+    /* Hauteur égale à 100% de la hauteur de la vue */
+    flex-wrap: nowrap;
+    /* Empêche les éléments de se placer sur plusieurs lignes */
+}
+/* Définition des diapositives */
+.slide {
+    flex: 0 0 100%;
+    /* Largeur de chaque diapositive est de 100% */
+    height: 100%;
+    /* Hauteur de chaque diapositive est de 100% */
+    transition: .5s ease-in-out;
+    /* Ajout d'une animation douce pour la transition entre les diapositives */
+}
+/* Définition de l'affichage de l'image de chaque diapositive */
+.slide img {
+    width: 100%;
+    /* Largeur de l'image est de 100% */
+    height: 100%;
+    /* Hauteur de l'image est de 100% */
+    object-fit: cover;
+    /* Couvre tout l'espace disponible */
+}
+/* Définition des boutons de contrôle du carousel */
+.carousel-controls {
+    position: absolute;
+    /* Les boutons sont absolument positionnés */
+    z-index: 5;
+    /* Ils sont placés au-dessus des autres éléments */
+    left: 5%;
+    /* La distance à gauche est de 10% */
+    right: 5%;
+    /* La distance à droite est de 10% */
+    top: 50%;
+    /* La distance du haut est de 50% */
+    display: flex;
+    /* Affiche les boutons en ligne */
+    justify-content: space-between;
+    /* Espacement égal entre les boutons */
+}
+
+/* Style des boutons de contrôle */
+.carousel-controls button {
+    padding: 10px;
+    /* Ajout de padding pour un meilleur contrôle */
+}
+
+/* Définition des points de contrôle */
+.carousel-dots {
+    position: absolute;
+    /* Les points sont absolument positionnés */
+    z-index: 5;
+    /* Ils sont placés au-dessus des autres éléments */
+    left: 50%;
+    /* La distance à gauche est de 50% */
+    right: 50%;
+    /* La distance à droite est de 50% */
+    bottom: 10%;
+    /*La distance du bas est de 10% */
+    display: flex;
+    /* Affiche les points en ligne */
+    justify-content: center;
+    /* Centrage des points */
+}
+
+#prev {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+#next {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}   
+
+.modal1 {
+    position: fixed;
+    border: 2px solid black;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+}
+
+.modal2 {
+    position: fixed;
+    border: 2px solid black;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+}
+
+.modal3 {
+    position: fixed;
+    border: 2px solid black;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+}
+
+.modalOpen1 {
+    display: block;
+}
+
+.modalClose1 {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.modalOpen2 {
+    display: block;
+}
+
+.modalClose2 {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.modalOpen3 {
+    display: block;
+}
+
+.modalClose3 {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.modal1 img,
+.modal2 img,
+.modal3 img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.modal1,
+.modal2,
+.modal3 {
+    background: white;
+}
+
+
+.containerPub {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.pub {
+    border: 2px solid black;
+    margin-left: 50px;
+    display: flex;
+    align-items: center;    
+    margin-top: 20px;
+    padding-right: 10px;
+}
+
+#argent {
+    margin-left: 10px;
+    height: 150px;
+    width: 250px;
+}
+
+#couilles {
+    margin-left: 10px;
+    height: 150px;
+    width: 250px;
+}
+
+#air {
+    margin-left: 10px;
+    height: 150px;
+    width: 250px;
+}
+
+.pubText {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+#tarif {
+    font-size: 30px;
+    color: red;
+}
+
+.commandez {
+    width: 300px;
+    height: 80px;
+    font-size: xx-large;
+    background-color: blueviolet;
+    margin-bottom: 20px;
+}
+
+.commandez:hover {
+    background-color: #45a049; 
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.footer1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    justify-content: space-around;
+    font-size: large;
+    border-bottom: 2px solid white;
+
+}
+
+.footer2 {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    justify-content: space-around;
+    font-size: large;
+}
+
+.footer2 ul {
+    list-style: none;
+}
