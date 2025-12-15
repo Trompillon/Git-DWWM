@@ -1,0 +1,92 @@
+$primary-color: #3498db;
+$secondary-color: #8ecaa7;
+$danger-color: #e74c3c;
+$border-radius: 5px;
+
+@mixin flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button($bg, $color: white) {
+  background-color: $bg;
+  color: $color;
+  border: none;
+  border-radius: $border-radius;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($bg, 10%);
+  }
+}
+
+.shop {
+    padding: 16px;
+
+    &__header {
+        @include flex();
+
+    .shop__title {
+        font-size: 2rem;
+    }
+
+    .shop__btn {
+        &--primary {
+            @include button($primary-color);
+        }
+        &--secondary {
+            @include button($secondary-color);
+        }
+    }
+  }
+
+    .products {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+    }
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: $border-radius;
+    padding: 16px;
+    text-align: center;
+    position: relative;
+
+    &--featured {
+        border: 2px solid $primary-color;
+    }
+
+    &__title {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    &__price {
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+
+    &__btn {
+        @include button($primary-color);
+    }
+
+    &__badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+
+        &:hover {
+        opacity: 0.8;
+        }
+
+  }
+}
+
+
+

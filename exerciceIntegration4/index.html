@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+</head>
+<body>
+
+    <header>
+        <div class="headerContainer">
+            <div class="navTop">
+                <ul>
+                    <li>Télécharger l'appli Groupon</li>
+                    <li>Ma liste de Favoris</li>
+                    <li>Vendre sur Groupon</li>
+                    <li>Aide</li>
+                    <li>S'inscrire</li>
+                </ul>
+            </div>
+            <div class="navBot">
+                <img width="100px" height="50px" src="img/grouponLogo.png" alt="Logo Groupon">
+                <div class="categoriesContainer">
+                    <button id="btnCategories" class="btnCategories">Catégories</button>
+                    <div class="hidden" id="categories">
+                        <ul>
+                            <h4>Par destinataire</h4>
+                            <li>Pour lui</li>
+                            <li>Pour elle</li>
+                            <li>Pour les enfants</li>
+                            <li>Pour les couples</li>
+                            <li>Pour les animaux de compagnie</li>
+                        </ul>
+                        <ul>
+                            <h4>Par intérêt</h4>
+                            <li>Pour les gourmands</li>
+                            <li>Pour se détendre</li>
+                            <li>Pour les soins</li>
+                            <li>Pour les amateurs de sport</li>
+                            <li>Pour s'amuser</li>
+                            <li>Pour une pendaison de crémaillère</li>
+                            <li>Pour les voyageurs</li>
+                            <li>Pour apprendre</li>
+                        </ul>
+                        <ul>
+                            <h4>Plus</h4>
+                            <li>Cartes cadeaux</li>
+                            <li>Cartes personnalisées</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="searchBar">
+                    <input type="text" class="search"  placeholder="🔍 Recherche">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="red" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <input type="text" class="localisation"  placeholder="Localisation">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                <a href="https://Google.com"><svg class="logo white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></a>
+                <a href="https://Google.com"><svg class="logo white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></a>
+                <select name="connexion" class="connexion">
+                    <option value="">Se connecter</option>
+                    <option value="">Email</option>
+                    <option value="">Mot de passe</option>
+                </select>
+            </div>
+        </div>    
+    </header>
+
+    <main>
+        <div class="banner">
+        <a href="https://google.com"><img src="img/bandeau.png" alt="un bandeau avec offres promotionnelles"></a>
+        </div>
+
+        <p class="titre"><b>Bonjour</b>, Faites-vous plaisir dès maintenant.</p>
+
+        <!-- MainContainer -->
+
+        <div class="mainContainer"></div>
+    </main>
+
+    <footer>
+
+        <div class="footerTop">
+            <ul>
+                <h3>Entreprise</h3>
+                <li>A propos de Groupon</li>
+                <li>Recrutement</li>
+                <li>City Guide</li>
+                <li>Presse</li>
+            </ul>
+            <ul>
+                <h3>Travailler avec Groupon</h3>
+                <li>Rejoindre la MarketPlace Groupon</li>
+                <li>Faire une campagne Groupon</li>
+                <li>Partenaires</li>
+                <li>Affiliation</li>
+                <li>Code de conduite Vendeur Groupon</li>
+            </ul>
+            <ul>
+                <h3>Plus</h3>
+                <li>Politique de confidentialité</li>
+                <li>Service Membres</li>
+                <li>FAQ</li>
+                <li>Code Promo</li>
+                <li>Signaler un contenu illégal</li>
+                <li>Gestion des plaintes</li>
+                <li>Le Règlement DSA</li>
+            </ul>
+            <div class="select">
+                <h3>Sites Groupon</h3>
+                <select name="pays" id="pays">
+                    <option value="">France</option>
+                    <option value="">USA</option>
+                    <option value="">UK</option>
+                    <option value="">Deutchland</option>
+                    <option value="">Italia</option>
+                    <option value="">Ireland</option>
+                </select>
+            </div>
+            <div class="pubs">
+                <a href="https://google.com"><img src="img/pub1.png" alt="une pub"></a>
+                <a href="https://google.com"><img src="img/pub2.png" alt="une autre pub"></a>
+            </div>
+        </div>
+        <div class="footerBot">
+            <h3>Offres exceptionnelles dans votre région</h3>
+            <p>Les deals Groupon offrent un moyen simple d'obtenir des réductions importantes tout en découvrant de nouveaux établissements dans votre ville. Profitez de promo aux alentours sur des restaurants, spa, hôtels, salles de sport, coiffures, esthéticiennes, manucures et plus encore... Prenez inspiration pour vos idées de cadeaux sur Groupon : trouvez de deals incroyables Black Friday, Cadeaux de la fête des mères, Cadeaux Pour Lui, Cadeaux Pour Elle, Cadeaux Pour Eux, Cadeaux d'anniversaire et cadeaux à prix raisonnables.</p>
+        </div>
+
+    </footer>
+
+    <script src="main.js"></script>
+    
+</body>
+</html>

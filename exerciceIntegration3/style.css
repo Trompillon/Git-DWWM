@@ -1,0 +1,6 @@
+header {
+  background-image: url("backgroundHeader.jpg");
+  background-size: cover;       /* Pour remplir l’écran */
+  background-position: center;  /* Pour centrer l’image */
+  background-repeat: no-repeat; /* Pour éviter les mosaïques */
+}
