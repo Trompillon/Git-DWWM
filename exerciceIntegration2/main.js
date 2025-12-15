@@ -151,3 +151,23 @@
             document.querySelector('.modal3').style.display = 'none';
 
         }
+
+// Carousel dynamique
+
+// /const images = [
+//     "Diapo1.png",
+//     "Diapo2.png",
+//     "Diapo3.png",
+//     "Diapo4.png",
+//     "Diapo5.png",
+//     "Diapo6.png" // nouvelle slide ajoutée facilement
+// ];
+
+// const carouselInner = document.querySelector(".carousel-inner");
+
+// images.forEach((src, index) => {
+//     const slide = document.createElement("div");
+//     slide.classList.add("slide");
+//     slide.innerHTML = `<img src="${src}" alt="Image ${index + 1}">`;
+//     carouselInner.appendChild(slide);
+// });

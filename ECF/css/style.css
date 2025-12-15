@@ -1,0 +1,141 @@
+@font-face {
+    font-family: "Pacifico-Regular";
+    src: url("../font/Pacifico-Regular.ttf") format("truetype");
+}
+
+@media (max-width: 768px) {
+    .logo {
+        display: none;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+
+.my-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    background-color: black;
+    color: whitesmoke;
+}
+
+.title {
+    font-size: 50px;
+    font-family: "Pacifico-Regular";
+}
+
+.emoji {
+    padding-right: 10px;
+    font-size: 50px;
+    color: transparent;  
+    text-shadow: 0 0 0 pink
+}
+
+.logo {
+    position: absolute;
+    right: 50px;
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+/* MAIN */
+
+main {
+    background-color: blanchedalmond;
+    margin-top: 0;
+    padding-top: 45px;
+    padding-bottom: 50px;
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 0;
+    padding-top: 25px;
+    padding-bottom: 40px;
+}
+
+.pub {
+    font-family: "Pacifico-Regular";
+    width: 500px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 5px black;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+.pub:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.pub img {
+    border-radius: 5px;
+    width: 100%;
+    height: 250px;
+}
+
+.pubText {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.tarif {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.image-wrapper {
+    position: relative;
+}
+
+.image {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.note {
+    position: absolute;
+    padding: 10px;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: gold;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+    /* FOOTER */
+
+footer {
+    font-family: "Pacifico-Regular";
+    text-align: center;
+    background-color: black;
+    color: whitesmoke;
+    margin: 0;
+    padding: 20px;
+}
+
+footer p{
+    font-size: 30px;
+    padding: 15px;
+    margin: 0
+}
