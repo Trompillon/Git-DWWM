@@ -18,9 +18,5 @@ bouton.addEventListener('click', () => {
     const couleur = getRandomColor();           // génère une couleur aléatoire
     document.body.style.backgroundColor = couleur; // applique la couleur au fond
     console.log(document.body.style.backgroundColor)
-    console.log(12 + 5)
-    console.log(5 * 4)
-    console.log(50 / 5)
-    console.log(20 - 5)
 });
 

@@ -1,0 +1,14 @@
+main {
+    text-align: center;
+}
+
+
+html {
+	background-color: #ececec;
+	color: #212121;
+}
+
+html.dark {
+	background-color: #212121;
+	color: #ececec;
+}
