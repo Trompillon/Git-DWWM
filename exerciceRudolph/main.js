@@ -1,3 +1,9 @@
+//sound
+
+let jumpSound = new Audio("./sounds/jump-rudolph.mp3");
+let music = new Audio("./sounds/music-rudolph.mp3");
+let gameOverMusic = new Audio("./sounds/game-over.mp3");
+
 //board
 
 let board;
@@ -40,6 +46,7 @@ let velocityX = -8; //gifts moving left speed
 let velocityY = 0;
 let gravity = .4;
 
+let gameStarted = false;
 let gameOver = false;
 let score = 0;
 
@@ -53,21 +60,26 @@ window.onload = function() {
     rudoImg = new Image();
     rudoImg.src = "./img/rudolph.png";
     rudoImg.onload = function() {
-        context.drawImage(rudoImg, rudo.x, rudo.y, rudo.width, rudo.height);
+    context.drawImage(rudoImg, rudo.x, rudo.y, rudo.width, rudo.height);
     }
 
     gift1Img = new Image();
-    gift1Img.src = "./img/gift.png";
+    gift1Img.src = "./img/sucre-dorge.png";
 
     gift2Img = new Image();
-    gift2Img.src = "./img/blueGift.png";
+    gift2Img.src = "./img/candy.png";
 
     gift3Img = new Image();
-    gift3Img.src = "./img/candy.png";
+    gift3Img.src = "./img/blue-gift.png";
+
+    music = new Audio("./sounds/music-rudolph.mp3");
+    music.loop = true;
+    music.play();
 
     requestAnimationFrame(update);
     setInterval(placeGift, 1000); //1000 milliseconds = 1 second
     document.addEventListener("keydown", moveRudo);
+
 }
 
 function update() {
@@ -89,15 +101,30 @@ function update() {
         context.drawImage(gift.img, gift.x, gift.y, gift.width, gift.height);
 
         if (detectCollision(rudo, gift)) {
-            gameOver = true;
+        gameOver = true;
+
+            // Rudolph mort
             rudoImg.src = "./img/rudo-dead.png";
             rudoImg.onload = function() {
                 context.drawImage(rudoImg, rudo.x, rudo.y, rudo.width, rudo.height);
             }
-        }
+
+            // Image Game Over
+            let gameOverImg = new Image();
+            gameOverImg.src = "./img/game-over.png";
+            gameOverImg.onload = function() {
+                context.drawImage(gameOverImg, boardWidth/2 - 150, boardHeight/2 - 50, 300, 100);
+            }
+
+            // Arrêt musique
+            music.pause();
+            music.currentTime = 0;
+            gameOverMusic.play();
+}
+
     }
 
-     //score
+    //score
     context.fillStyle="black";
     context.font="20px courier";
     score++;
@@ -112,8 +139,8 @@ function moveRudo(e) {
     if ((e.code == "Space" || e.code == "ArrowUp") && rudo.y == rudoY) {
         //jump
         velocityY = -10;
+        jumpSound.play();
     }
-
 }
 
 function placeGift() {

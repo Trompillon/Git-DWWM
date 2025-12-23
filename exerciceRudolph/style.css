@@ -1,6 +1,19 @@
+@font-face {
+    font-family: "SuperShiny";
+    src: url("./fonts/SuperShiny-0v0rG.ttf") format("truetype");
+}
+
 body {
-    font-family:'Courier New', Courier, monospace;
     text-align: center;
+    background-color: black;
+}
+
+h1 {
+    font-family: 'SuperShiny';
+    font-size: 80px;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #board {
