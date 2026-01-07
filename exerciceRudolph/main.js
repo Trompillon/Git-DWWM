@@ -13,6 +13,7 @@ let context;
 
 
 //rudolph
+
 let rudoWidth = 88;
 let rudoHeight = 94;
 let rudoX = 50;
@@ -27,6 +28,7 @@ let rudo = {
 }
 
 //cadeaux
+
 let giftArray = [];
 
 let gift1Width = 34;
@@ -42,6 +44,7 @@ let gift2Img;
 let gift3Img;
 
 //physics
+
 let velocityX = -8; //gifts moving left speed
 let velocityY = 0;
 let gravity = .4;
@@ -90,11 +93,13 @@ function update() {
     context.clearRect(0, 0, board.width, board.height);
 
     //rudolph
+
     velocityY += gravity;
     rudo.y = Math.min(rudo.y + velocityY, rudoY); //apply gravity to current rudo.y, making sure it doesn't exceed the ground
     context.drawImage(rudoImg, rudo.x, rudo.y, rudo.width, rudo.height);
 
     //gift
+
     for (let i = 0; i < giftArray.length; i++) {
         let gift = giftArray[i];
         gift.x += velocityX;
@@ -104,12 +109,14 @@ function update() {
         gameOver = true;
 
             // Rudolph mort
+
             rudoImg.src = "./img/rudo-dead.png";
             rudoImg.onload = function() {
                 context.drawImage(rudoImg, rudo.x, rudo.y, rudo.width, rudo.height);
             }
 
             // Image Game Over
+
             let gameOverImg = new Image();
             gameOverImg.src = "./img/game-over.png";
             gameOverImg.onload = function() {
@@ -117,6 +124,7 @@ function update() {
             }
 
             // Arrêt musique
+
             music.pause();
             music.currentTime = 0;
             gameOverMusic.play();
@@ -125,6 +133,7 @@ function update() {
     }
 
     //score
+
     context.fillStyle="black";
     context.font="20px courier";
     score++;
@@ -149,6 +158,7 @@ function placeGift() {
     }
 
     //place gift
+    
     let gift = {
         img : null,
         x : giftX,
