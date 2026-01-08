@@ -15,12 +15,17 @@
 
     <div id="result"></div>
 
-    <div id="answer"></div>
+    <div id="answersContainer"></div>
+
+    <button id="next">Question suivante</button>
 
     <script>
         
         let result = document.getElementById("result");
+        let answersContainer = document.getElementById("answersContainer");
+        let next = document.getElementById("next");
 
+        function getFetch(){
         fetch("getQuestions.php")
         .then(function(response){
                 if(response.ok){
@@ -40,18 +45,8 @@
             <h3>${data.question}</h3>
 
             <p> ${data.difficulty}</p>
-
-            <button classe="button">${data.bonne_reponse}</button>
-
-            <button classe="button">${data.mauvaise_reponse1}</button>
-
-            <button classe="button">${data.mauvaise_reponse2}</button>
-
-            <button classe="button">${data.mauvaise_reponse3}</button>
-
-        </div>
     
-        `;
+        </div> `;
 
         const answers = [
             data.bonne_reponse,
@@ -60,14 +55,53 @@
             data.mauvaise_reponse3,
         ];
 
-        let button = document.querySelectorAll("button");
-        button.addEventListener("click", () => { 
-            
-           
-        })
+        shuffle(answers);
+
+        function shuffle(array){
+            for(let i= array.length - 1; i > 0; i--){
+                const random = Math.floor(Math.random() * (i + 1));
+
+                [array[i], array[random]] = [array[random], array[i]]
+            }
+        }
+
+        const display = document.createElement("div");
+            display.classList.add("display"); 
+
+            answers.forEach(answer => {
+                const btn = document.createElement("button");
+                btn.classList.add("button");
+                btn.textContent = answer;
+                display.appendChild(btn);
+            });
+
+            answersContainer.appendChild(display);
+
+
+        let button = document.querySelectorAll(".button");
+        button.forEach(btn => {
+
+        btn.addEventListener("click", () => {
+            if (btn.textContent === data.bonne_reponse) {
+                result.innerHTML += `<p>Correct !</p>`;
+                btn.style.backgroundColor = "#008000";
+            }
+            else {
+                result.innerHTML += `<p>C'est perdu !</p>`;
+                btn.style.backgroundColor = "#FF0000";
+            }})
 
         })
+        })
+        }
 
+        getFetch();
+
+        next.addEventListener("click", () => {
+            getFetch();
+
+        })
+    
     </script>
 
 </body>

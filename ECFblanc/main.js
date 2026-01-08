@@ -99,8 +99,6 @@ const products = [
     
 ];
 
-
-
 function displayProducts() {
     const container = document.querySelector(".mainContainer");
     products.forEach(product => {
