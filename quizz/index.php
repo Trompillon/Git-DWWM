@@ -15,6 +15,8 @@
 
     <div id="result"></div>
 
+    <button id="displayAnswers">Afficher/Cacher les réponses</button>
+
     <div id="answersContainer"></div>
 
     <button id="next">Question suivante</button>
@@ -42,9 +44,9 @@
 
             <h3> Catégorie ${data.theme}</h3>
 
-            <h3>${data.question}</h3>
+            <h3> ${data.question}</h3>
 
-            <p> ${data.difficulty}</p>
+            <h3> ${data.difficulty}</p>
     
         </div> `;
 
@@ -68,6 +70,8 @@
         const display = document.createElement("div");
             display.classList.add("display"); 
 
+            answersContainer.innerHTML = "";
+
             answers.forEach(answer => {
                 const btn = document.createElement("button");
                 btn.classList.add("button");
@@ -77,6 +81,9 @@
 
             answersContainer.appendChild(display);
 
+        displayAnswers.addEventListener("click", () => {
+            display.classList.toggle("visible");
+        })
 
         let button = document.querySelectorAll(".button");
         button.forEach(btn => {

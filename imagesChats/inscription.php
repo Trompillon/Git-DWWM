@@ -23,28 +23,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
                 // 4. Préparer et exécuter la requête d'insertion (CORRIGÉE)
                 $stmt = $pdo->prepare("
-                INSERT INTO users (login, email, password_hash, role, created_at) 
-                VALUES (:login, :email, :password_hash, :role, :created_at)
+                INSERT INTO users (login, email, password, created_at) 
+                VALUES (:login, :email, :password, :created_at)
                 ");
     
                 $stmt->execute([
                     'login' => $email, // Utiliser l'email comme login par défaut
                     'email' => $email,
-                    'password_hash' => $hashed_password, // Changement ici
-                    'role' => $role_par_defaut,
+                    'password' => $hashed_password, // Changement ici
                     'created_at' => $date_creation
                 ]);
 
                 $message_succes = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
 
             } catch (PDOException $e) {
+                die($e->getMessage());
                 // Gérer les erreurs, par exemple, si l'email existe déjà
-                if ($e->getCode() == 23000) { // Code d'erreur pour les violations de contrainte (UNIQUE)
-                    $erreur = "Cet email est déjà utilisé.";
-                } else {
-                    $erreur = "Une erreur est survenue lors de l'inscription.";
-                    // Loguer $e->getMessage() pour le débogage, mais ne pas l'afficher à l'utilisateur final.
-                }
+                // if ($e->getCode() == 23000) { // Code d'erreur pour les violations de contrainte (UNIQUE)
+                //     $erreur = "Cet email est déjà utilisé.";
+                // } else {
+                //     $erreur = "Une erreur est survenue lors de l'inscription.";
+                //     // Loguer $e->getMessage() pour le débogage, mais ne pas l'afficher à l'utilisateur final.
+                // }
             }
         }
     } else {
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     
-    <form class="formInscription" action="inscription" method="post">
+    <form class="formInscription" action="inscription.php" method="POST">
         <h1>Inscription</h1>
 
         <label for="email">Adresse Email</label>

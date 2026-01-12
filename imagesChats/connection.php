@@ -21,14 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 3. Vérifier si l'utilisateur existe
         if ($user) {
             // 4. Vérifier si le mot de passe correspond au hash stocké 
-            if (password_verify($password, $user['password_hash'])) { // Changement ici
+            if (password_verify($password, $user['password'])) { // Changement ici
         
                 // Connexion réussie !
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_email'] = $user['email'];
                
                 // Rediriger vers une page sécurisée (ex: profil.php)
-                header('Location: index.php'); // Changez 'index.php' par votre page d'accueil après connexion
+                header('Location: index.php');
                 exit;
 
             } else {
@@ -53,17 +53,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-    <form class="formConnexion" action="connexion" method="post">
+    <form class="formConnexion" action="connection.php" method="post">
         <h1>Connexion</h1>
 
         <label for="email">Email</label>
         <input class="formInput" type="email" name="email" id="email" required>
         <br>
-        <br>
 
         <label for="password">Mot de passe</label>
         <input class="formInput" type="password" name="password" id="password" required>
-        <br>
         <br>
 
         <br>

@@ -2,7 +2,6 @@
 
 require 'db.php';
 
-//Requête préparée pour éviter les injections SQL
     $sql = "SELECT * FROM User";
     $stmt = $pdo->query($sql);
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -67,6 +66,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'added') {
     <tbody>
 
 <?php
+
     if (!empty($users)) {
         foreach($users as $user){
             ?>
