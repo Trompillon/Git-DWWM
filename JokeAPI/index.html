@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Site des blagues</title>
 </head>
 <body>
 
@@ -14,11 +14,12 @@
 
         <label for="language">Langue</label>
         <select name="language" id="language">
-            <option value="English">🇬🇧 English</option>
-            <option value="French">🇫🇷 Français</option>
-            <option value="German">🇩🇪 Deutsch</option>
-            <option value="Spanish">🇪🇸 Español</option>
-            <option value="Czech">🇨🇿 čeština</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="cs">🇨🇿 čeština</option>
+            <option value="pt">🇵🇹 Português</option>
         </select>
 
         <label for="category">Catégorie</label>
@@ -40,18 +41,18 @@
 
         <fieldset>
             <legend>Exclure</legend>
-            <input type="radio" id="" name="exclude" value="NSFW">NSFW
-            <input type="radio" id="" name="exclude" value="Religion">Religion
-            <input type="radio" id="" name="exclude" value="Politic">Politique
-            <input type="radio" id="" name="exclude" value="Racism">Racisme
-            <input type="radio" id="" name="exclude" value="Sexism">Sexisme
-            <input type="radio" id="" name="exclude" value="Vulgar">Vulgaire
+            <input type="checkbox" id="" name="exclude" value="NSFW">NSFW
+            <input type="checkbox" id="" name="exclude" value="Religion">Religion
+            <input type="checkbox" id="" name="exclude" value="Politic">Politique
+            <input type="checkbox" id="" name="exclude" value="Racism">Racisme
+            <input type="checkbox" id="" name="exclude" value="Sexism">Sexisme
+            <input type="checkbox" id="" name="exclude" value="Vulgar">Vulgaire
         </fieldset>
 
-        <select name="joketype" id="joketype">
-            <option value="One">1 blague</option>
-            <option value="Two">2 blagues</option>
-            <option value="Three">3 blagues</option>
+        <select name="jokenumber" id="jokenumber">
+            <option value="1">1 blague</option>
+            <option value="2">2 blagues</option>
+            <option value="3">3 blagues</option>
         </select>
 
         <button id="jokes">Obtenir des blagues</button>

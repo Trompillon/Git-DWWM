@@ -1,0 +1,8 @@
+body {
+    text-align: center;
+}
+
+fieldset {
+  width: fit-content;
+  margin: 0 auto;
+}
