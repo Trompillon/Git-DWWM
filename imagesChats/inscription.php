@@ -69,16 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="email">Adresse Email</label>
         <input class="formInput" type="email" name="email" id="email" required>
         <br>
-        <br>
 
         <label for="password">Mot de passe</label>
         <input class="formInput" type="password" name="password" id="password" required>
         <br>
-        <br>
 
         <label for="confirmPassword">Confirmez le Mot de passe</label>
         <input class="formInput" type="password" name="confirmPassword" id="confirmPassword" required>
-        <br>
         <br>
 
         <br>

@@ -18,18 +18,17 @@ require 'db.php';
 
     <h1>Ajouter vos photos de chats !</h1>
 
-    <form class="formAJout" action="ajout" method="POST">
+    <form class="insert" action="insert.php" enctype="multipart/form-data" method="POST">
 
         <input class="formInput" type="text" name="catName" id="catName" placeholder="nom du chat">
 
         <input class="formInput" type="text" name="description" id="description" placeholder="Faites nous une petite description de votre compagnon">
 
-        <input class="formInput" type="file" name="catImage" id="catImage" accept="image/jpg, image/png, image/jpeg">
+        <input class="formInput" type="file" name="imagePath" id="imagePath" accept="image/jpg, image/png, image/jpeg">
 
         <button type="submit" id="btn">Submit</button>
 
     </form>
-
     
 </body>
 </html>

@@ -1,0 +1,1 @@
+<?php echo '<p>alpha.php</p>'; ?>

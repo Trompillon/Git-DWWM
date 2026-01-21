@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
             if (isset($_SESSION['user_id'])) {
                 // Menu pour utilisateur connecté
                 ?>
-                <li><a href="getCats.php">Chats</a></li>
+                <li><a href="getCats.php">Ajouter un chat</a></li>
 
                 <?php
 

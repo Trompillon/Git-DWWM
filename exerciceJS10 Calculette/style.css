@@ -12,13 +12,13 @@ body {
     font-family: sans-serif;
 }
 
-.calculatrice {
+.calculator {
     background-color: blueviolet;
     display: flex;
     flex-direction: column;
 }
 
-.ecran {
+.screen {
     width: 100%;
     height: 100px;
     background-color: rgb(198, 218, 226);
@@ -29,9 +29,10 @@ body {
     align-items: flex-end;
     padding: 5px;
     font-size: 25px;
+    color: black;
 }
 
-.touches {
+.buttons {
     display: grid;
     grid-template-columns: repeat(4, 50px);
     grid-template-rows: repeat(5, 50px);

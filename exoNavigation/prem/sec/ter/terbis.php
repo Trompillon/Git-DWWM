@@ -1,0 +1,1 @@
+<?php echo '<p>terbis.php</p>'; ?>

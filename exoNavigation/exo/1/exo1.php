@@ -1,0 +1,1 @@
+<?php echo '<p>exo1.php</p>'; ?>
