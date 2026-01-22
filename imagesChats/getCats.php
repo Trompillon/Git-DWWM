@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require 'db.php';
 
@@ -18,13 +19,13 @@ require 'db.php';
 
     <h1>Ajouter vos photos de chats !</h1>
 
-    <form class="insert" action="insert.php" enctype="multipart/form-data" method="POST">
+    <form action="insert.php" enctype="multipart/form-data" method="post">
 
         <input class="formInput" type="text" name="catName" id="catName" placeholder="nom du chat">
 
-        <input class="formInput" type="text" name="description" id="description" placeholder="Faites nous une petite description de votre compagnon">
+        <input class="formInput" type="text" name="catDescription" id="catDescription" placeholder="Faites nous une petite description de votre compagnon">
 
-        <input class="formInput" type="file" name="imagePath" id="imagePath" accept="image/jpg, image/png, image/jpeg">
+        <input class="formInput" type="file" name="img">
 
         <button type="submit" id="btn">Submit</button>
 
