@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (!empty($_POST['login']) && !empty($_POST['password'])) {
         
-        $login = htmlspecialchars($_POST['login']);
+        $login = trim($_POST['login']);
         $password = $_POST['password'];
 
         // 2. Préparer la requête pour récupérer l'utilisateur 
@@ -53,6 +53,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Connexion</title>
 </head>
 <body>
+
+    <?php
+    if (!empty($_GET['action']) && $_GET['action'] === 'added') {
+        $message_succes = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+    }
+    ?>
+
+    <?php if (!empty($erreur)) : ?>
+    <p class="error"><?= $erreur ?></p>
+    <?php endif; ?>
+
+    <?php if (!empty($message_succes)) : ?>
+    <p class="success"><?= $message_succes ?></p>
+    <?php endif; ?>
+
 
     <div class="form-wrapper">
         <form class="formConnexion" action="connexion.php" method="post">

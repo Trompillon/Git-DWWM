@@ -23,7 +23,6 @@ validateInput(user, regexUser);
 validateInput(mail, regexMail);
 validateInput(psw, regexPassword);
 
-
 // submitBtn.addEventListener("click", ()=> {
 
 //     const userValue = user.value;

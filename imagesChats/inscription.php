@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si tous les champs sont remplis
     if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
         
-        $login = htmlspecialchars($_POST['login']);
-        $email = htmlspecialchars($_POST['email']);
+        $login = trim($_POST['login']);
+        $email = trim($_POST['email']);
         $password = $_POST['password']; // Mot de passe non haché
         $confirmPassword = $_POST['confirmPassword'];
 
@@ -35,8 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'created_at' => $date_creation
                 ]);
 
-                $message_succes = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
-                header('Location: connexion.php');
+                header('Location: connexion.php?action=added');
                 exit;
 
             } catch (PDOException $e) {
@@ -66,6 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Inscription</title>
 </head>
 <body>
+
+    <?php if (!empty($erreur)) : ?>
+    <p class="error"><?= $erreur ?></p>
+    <?php endif; ?>
+
     
     <div class="form-wrapper">
         <form class="formInscription" action="inscription.php" method="POST">

@@ -9,11 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // var_dump ($_FILES);
 
 // On vérifie que tous les champs attendus existent ET ne sont pas vides
-    if (isset($_POST['catName']) && isset($_POST['catDescription']) && isset($_FILES['imagePath'])) {
+    if (isset($_POST['catName']) && isset($_POST['catDescription']) && isset($_FILES['imagePath']) && isset($_POST['catColor'])) {
         //On sécurise les données reçues
         if ($_FILES['imagePath']['error'] !== 0) {
             die("Erreur lors de l'upload du fichier.");
         }
+        $catColor = ($_POST['catColor']);
         $catName = ($_POST['catName']);
         $catDescription = ($_POST['catDescription']);
         $maxSize = 2 * 1024 * 1024; // 2 Mo en octets
@@ -35,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imagePath = $fileName;
 
             try {
-                $stmt = $pdo->prepare("INSERT INTO cats (catName, catDescription, imagePath, user_id) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$catName, $catDescription, $imagePath, $_SESSION['user_id']]);
+                $stmt = $pdo->prepare("INSERT INTO cats (catName, catDescription, catColor, imagePath, user_id) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$catName, $catDescription, $catColor, $imagePath, $_SESSION['user_id']]);
 
             } catch (PDOException $e) {
                 echo "Erreur : " . $e->getMessage();

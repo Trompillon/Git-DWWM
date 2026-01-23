@@ -7,7 +7,10 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 <nav>
     <ul>
-        <li class="logo">Catpix, le site des chats sympas 🐾</li>
+        <li class="logo">
+        <img src="img/logo-catpix.png" alt="Catpix Logo" class="logo-img">
+        <span class="logo-text">CatPix, le site des chats sympas</span>
+        </li>
         <li><a href="index.php">Accueil</a></li>
         <?php
             if (isset($_SESSION['user_id'])) {

@@ -30,6 +30,15 @@ require 'db.php';
             <label for="imagePath">Image</label>
             <input class="formInput" type="file" name="imagePath" id="imagePath" accept=".jpg, .png, .jpeg, .webp" required>
 
+            <label for="catColor">Choississez une couleur !</label>
+            <select name="catColor" id="catColor">
+                <option value="#ff6b6b">Rouge</option>
+                <option value="#4dabf7">Bleu</option>
+                <option value="#69db7c">Vert</option>
+                <option value="#ffd43b">Jaune</option>
+                <option value="#845ef7">Violet</option>
+            </select>
+
             <button type="submit" id="btn">Ajouter</button>
         </form>
     </div>

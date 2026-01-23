@@ -26,13 +26,15 @@ require 'db.php';
         $stmt = $pdo->query("SELECT cats.*, users.login FROM cats JOIN users ON cats.user_id = users.id ORDER BY cats.created_at DESC");
 
         while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+        $color = !empty($cat['catColor']) ? $cat['catColor'] : '#333';
+
         echo '<div class="cat-card">';
         echo '<img src="uploadCats/' . htmlspecialchars($cat['imagePath']) . '" alt="Chat">';
-        echo '<p class="cat-name">' . htmlspecialchars($cat['catName']) . '</p>';
+        echo '<p class="cat-name" style="color: ' . htmlspecialchars($color) . ';">🐾 ' . htmlspecialchars($cat['catName']) . ' 🐾</p>';
         echo '<p class="cat-description">' . htmlspecialchars($cat['catDescription']) . '</p>';
         echo '<p class="cat-user">Posté par : ' . htmlspecialchars($cat['login']) . '</p>';
         echo '</div>';
-
         }
         ?>
     </div>

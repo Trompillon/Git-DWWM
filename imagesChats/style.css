@@ -1,7 +1,20 @@
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     .cat-card {
         width: 90%;
     }
+
+    .logo-text {
+        display: none;
+    }
+
+    .logo-img {
+        width: 30px;
+    }
+}
+
+@font-face {
+    font-family: "ChewyPudding";
+    src: url("fonts/ChewyPudding.ttf") format("truetype");
 }
 
 body {
@@ -27,6 +40,10 @@ nav ul {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    font-family: 'ChewyPudding'; 
+    font-size: xx-large;
+    font-weight: bold;
+    color:#5682e0;
 }
 
 /* Liens */
@@ -58,12 +75,24 @@ nav ul li span {
     font-weight: bold;
 }
 
-/* Logo si tu ajoutes un li pour ça */
 nav ul li.logo {
     margin-right: auto;
     font-size: 20px;
     font-weight: bold;
     color: #fff;
+}
+
+.logo-text {
+    font-size: xx-large;
+    font-weight: bold;
+    color:#5682e0;
+}
+
+.logo-img {
+    width: 40px;   
+    height: auto;  
+    vertical-align: middle; 
+    margin-right: 8px;
 }
 
 nav a {
@@ -87,6 +116,9 @@ nav ul li.user {
 
 /* Titre de page */
 h1 {
+    font-family: 'ChewyPudding';
+    font-size: 60px;
+    font-weight: bold;
     text-align: center;
     font-size: 36px;
     margin: 30px 0 20px 0;
@@ -261,4 +293,16 @@ h1 {
 
 #btn:hover {
     background-color: #5682e0;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
