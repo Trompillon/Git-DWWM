@@ -17,19 +17,23 @@ require 'db.php';
     
     <?php include 'header.php'; ?>
 
-    <h1>Ajouter vos photos de chats !</h1>
+    <div class="form-wrapper">
+        <form class="formulaire" action="insert.php" enctype="multipart/form-data" method="post">
+            <h1>Ajouter vos photos de chats !</h1>
 
-    <form action="insert.php" enctype="multipart/form-data" method="post">
+            <label for="catName">Nom du chat</label>
+            <input class="formInput" type="text" name="catName" id="catName" placeholder="Nom du chat" required>
 
-        <input class="formInput" type="text" name="catName" id="catName" placeholder="nom du chat">
+            <label for="catDescription">Description</label>
+            <textarea class="formInput" name="catDescription" id="catDescription" placeholder="Faites-nous une petite description" required></textarea>
 
-        <input class="formInput" type="text" name="catDescription" id="catDescription" placeholder="Faites nous une petite description de votre compagnon">
+            <label for="imagePath">Image</label>
+            <input class="formInput" type="file" name="imagePath" id="imagePath" accept=".jpg, .png, .jpeg, .webp" required>
 
-        <input class="formInput" type="file" name="img">
+            <button type="submit" id="btn">Ajouter</button>
+        </form>
+    </div>
 
-        <button type="submit" id="btn">Submit</button>
-
-    </form>
     
 </body>
 </html>

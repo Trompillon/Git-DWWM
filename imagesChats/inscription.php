@@ -5,8 +5,9 @@ include 'db.php';
 // Le code de traitement doit être avant l'affichage HTML
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si tous les champs sont remplis
-    if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
+    if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
         
+        $login = htmlspecialchars($_POST['login']);
         $email = htmlspecialchars($_POST['email']);
         $password = $_POST['password']; // Mot de passe non haché
         $confirmPassword = $_POST['confirmPassword'];
@@ -28,13 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ");
     
                 $stmt->execute([
-                    'login' => $email, // Utiliser l'email comme login par défaut
+                    'login' => $login,
                     'email' => $email,
                     'password' => $hashed_password, // Changement ici
                     'created_at' => $date_creation
                 ]);
 
                 $message_succes = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+                header('Location: connexion.php');
+                exit;
 
             } catch (PDOException $e) {
                 die($e->getMessage());
@@ -59,28 +62,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Inscription</title>
 </head>
 <body>
     
-    <form class="formInscription" action="inscription.php" method="POST">
-        <h1>Inscription</h1>
+    <div class="form-wrapper">
+        <form class="formInscription" action="inscription.php" method="POST">
+            <h1>Inscription</h1>
 
-        <label for="email">Adresse Email</label>
-        <input class="formInput" type="email" name="email" id="email" required>
-        <br>
+            <label for="pseudo">Pseudo</label>
+            <input class="formInput" type="text" name="login" id="login" required>
+            <br>
 
-        <label for="password">Mot de passe</label>
-        <input class="formInput" type="password" name="password" id="password" required>
-        <br>
+            <label for="email">Adresse Email</label>
+            <input class="formInput" type="email" name="email" id="email" required>
+            <br>
 
-        <label for="confirmPassword">Confirmez le Mot de passe</label>
-        <input class="formInput" type="password" name="confirmPassword" id="confirmPassword" required>
-        <br>
+            <label for="password">Mot de passe</label>
+            <input class="formInput" type="password" name="password" id="password" required>
+            <br>
 
-        <br>
-        <button type="submit" id="btn">Inscription</button>
-    </form>
+            <label for="confirmPassword">Confirmez le Mot de passe</label>
+            <input class="formInput" type="password" name="confirmPassword" id="confirmPassword" required>
+            <br>
+
+            <br>
+            <button type="submit" id="btn">Inscription</button>
+        </form>
+    </div>
 
 </body>
 </html>

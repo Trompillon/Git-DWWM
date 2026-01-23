@@ -7,15 +7,15 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    if (!empty($_POST['login']) && !empty($_POST['password'])) {
         
-        $email = htmlspecialchars($_POST['email']);
+        $login = htmlspecialchars($_POST['login']);
         $password = $_POST['password'];
 
         // 2. Préparer la requête pour récupérer l'utilisateur 
         // On sélectionne toutes les colonnes, mais on va surtout utiliser 'password_hash'
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE login = :login");
+        $stmt->execute(['login' => $login]);
         $user = $stmt->fetch();
 
         // 3. Vérifier si l'utilisateur existe
@@ -25,17 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                 // Connexion réussie !
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_login'] = $user['login'];
                
                 // Rediriger vers une page sécurisée (ex: profil.php)
                 header('Location: index.php');
                 exit;
 
             } else {
-                $erreur = "Email ou mot de passe incorrect.";
+                $erreur = "Login ou mot de passe incorrect.";
             }
         } else {
-            $erreur = "Email ou mot de passe incorrect.";
+            $erreur = "Login ou mot de passe incorrect.";
         }
     } else {
         $erreur = "Veuillez remplir tous les champs.";
@@ -49,28 +49,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connection</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Connexion</title>
 </head>
 <body>
 
-    <form class="formConnexion" action="connection.php" method="post">
-        <h1>Connexion</h1>
+    <div class="form-wrapper">
+        <form class="formConnexion" action="connexion.php" method="post">
+            <h1>Connexion</h1>
 
-        <label for="email">Email</label>
-        <input class="formInput" type="email" name="email" id="email" required>
-        <br>
+            <label for="pseudo">Pseudo</label>
+            <input class="formInput" type="text" name="login" id="login" required>
+            <br>
 
-        <label for="password">Mot de passe</label>
-        <input class="formInput" type="password" name="password" id="password" required>
-        <br>
+            <label for="password">Mot de passe</label>
+            <input class="formInput" type="password" name="password" id="password" required>
+            <br>
 
-        <br>
-        <button type="submit" id="btn">Connexion</button>
+            <br>
+            <button type="submit" id="btn">Connexion</button>
 
-        <p>
-            <a href="inscription.php">Vous n'êtes pas inscrit?</a>
-        </p>
-    </form>
+            <p>
+                <a href="inscription.php">Vous n'êtes pas inscrit?</a>
+            </p>
+        </form>
+    </div>
     
 </body>
 </html>

@@ -20,7 +20,22 @@ require 'db.php';
 
     <main>
 
-    
+    <div class="gallery">
+        <?php
+        // Récupération des chats depuis la BDD
+        $stmt = $pdo->query("SELECT cats.*, users.login FROM cats JOIN users ON cats.user_id = users.id ORDER BY cats.created_at DESC");
+
+        while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo '<div class="cat-card">';
+        echo '<img src="uploadCats/' . htmlspecialchars($cat['imagePath']) . '" alt="Chat">';
+        echo '<p class="cat-name">' . htmlspecialchars($cat['catName']) . '</p>';
+        echo '<p class="cat-description">' . htmlspecialchars($cat['catDescription']) . '</p>';
+        echo '<p class="cat-user">Posté par : ' . htmlspecialchars($cat['login']) . '</p>';
+        echo '</div>';
+
+        }
+        ?>
+    </div>
 
     </main>
 
