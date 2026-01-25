@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id="btn">Charger les utilisateurs</button>
+    <ul id="liste">
+    </ul>
+
+    <script>
+
+        const btn = document.getElementById("btn");
+        const list = document.getElementById("liste");
+
+        btn.addEventListener("click", () => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response => response.json())
+            .then(users => {
+            list.innerHTML = ""; // on vide la liste
+
+            users.forEach(user => {
+                const li = document.createElement("li");
+                li.textContent = `${user.name} - ${user.email}`;
+                list.appendChild(li);
+            });
+            })
+            .catch(error => {
+            console.error(error);
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
