@@ -71,7 +71,6 @@ if (!$film) {
         </form>
 
         <div id="listeCommentaires"></div>
-
         
     </div>
 

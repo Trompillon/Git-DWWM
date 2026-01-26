@@ -8,8 +8,7 @@
 <body>
 
     <button id="btn">Charger les utilisateurs</button>
-    <ul id="liste">
-    </ul>
+    <ul id="liste"></ul>
 
     <script>
 
@@ -20,7 +19,7 @@
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
             .then(users => {
-            list.innerHTML = ""; // on vide la liste
+            list.innerHTML = "";
 
             users.forEach(user => {
                 const li = document.createElement("li");
