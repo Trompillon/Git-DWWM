@@ -23,6 +23,7 @@ if (isset($_GET['valider']) && isset($_GET['recherche'])) {
         $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
 ?>
 
 <!DOCTYPE html>
