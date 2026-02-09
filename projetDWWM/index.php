@@ -9,6 +9,10 @@
     <title>Le Donjon du Magicien Fou</title>
 </head>
 <body>
+
+    <?php include 'header.php'; ?>
     
+    <img src="img/banner.png" alt="Bannière de représentation ia du donjon du magicien fou">
+
 </body>
 </html>
