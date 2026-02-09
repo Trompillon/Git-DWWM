@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
                 // 4. Préparer et exécuter la requête d'insertion (CORRIGÉE)
                 $stmt = $pdo->prepare("
-                INSERT INTO users (login, email, password, created_at) 
+                INSERT INTO user (login, email, password, created_at) 
                 VALUES (:login, :email, :password, :created_at)
                 ");
     

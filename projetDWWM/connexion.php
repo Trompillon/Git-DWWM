@@ -7,15 +7,15 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    if (!empty($_POST['login']) && !empty($_POST['password'])) {
+    if (!empty($_POST['email']) && !empty($_POST['password'])) {
         
-        $login = trim($_POST['login']);
+        $email = trim($_POST['email']);
         $password = $_POST['password'];
 
         // 2. Préparer la requête pour récupérer l'utilisateur 
         // On sélectionne toutes les colonnes, mais on va surtout utiliser 'password_hash'
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE login = :login");
-        $stmt->execute(['login' => $login]);
+        $stmt = $pdo->prepare("SELECT * FROM user WHERE email = :email");
+        $stmt->execute(['email' => $email]);
         $user = $stmt->fetch();
 
         // 3. Vérifier si l'utilisateur existe
@@ -32,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit;
 
             } else {
-                $erreur = "Login ou mot de passe incorrect.";
+                $erreur = "Email ou mot de passe incorrect.";
             }
         } else {
-            $erreur = "Login ou mot de passe incorrect.";
+            $erreur = "Email ou mot de passe incorrect.";
         }
     } else {
         $erreur = "Veuillez remplir tous les champs.";
@@ -73,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="formConnexion" action="connexion.php" method="post">
             <h1>Connexion</h1>
 
-            <label for="pseudo">Pseudo</label>
-            <input class="formInput" type="text" name="login" id="login" required>
+            <label for="email">Email</label>
+            <input class="formInput" type="text" name="email" id="email" required>
             <br>
 
             <label for="password">Mot de passe</label>

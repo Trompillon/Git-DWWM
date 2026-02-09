@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,10 @@
     <?php include 'header.php'; ?>
     
     <img src="img/banner.png" alt="Bannière de représentation ia du donjon du magicien fou">
+
+    <button><a href="inscription.php">S"inscrire !</a></button>
+
+    <p>Plongez dans un donjon mystérieux où vos choix façonnent l’histoire à la manière des livres dont vous êtes le héros. Gérez votre inventaire, affrontez des créatures, et découvrez les secrets du Donjon du Magicien Fou!</p>
 
 </body>
 </html>
