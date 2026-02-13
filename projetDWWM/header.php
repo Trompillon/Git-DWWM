@@ -14,7 +14,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 ?>
                 <li><a href="game/game.php">Continuer l'aventure</a></li>
                 <a href="#" id="btnInventaire"><img src="img/backpack.png" alt="icone sac à dos"></a>
-                <li><a href="game/game.php?action=new">Nouvelle aventure</a></li>
+                <li><a href="game/choose_class.php">Nouvelle aventure</a></li>
                 <li><a href="deconnexion.php">Déconnexion</a></li>
                 <?php
 
