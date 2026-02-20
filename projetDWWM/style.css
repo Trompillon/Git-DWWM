@@ -11,3 +11,24 @@
   font-weight: 100 900;
   font-style: italic;
 }
+
+#inventoryModal {
+    display: none;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white; 
+    border: 2px solid black; 
+    padding: 20px; 
+    z-index: 1000;
+}
+
+#inventoryContent {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#closeInventory {
+    margin-top: 10px;
+    padding: 5px 10px;
+}

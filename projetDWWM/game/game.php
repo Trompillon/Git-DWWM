@@ -11,6 +11,9 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Définir $userId pour les requêtes
+$userId = $_SESSION['user_id'];
+
 // Passage actuel : soit nouveau, soit envoyé par le choix
 if (isset($_POST['choice_id'])) {
     $choiceId = $_POST['choice_id'];
@@ -29,6 +32,58 @@ if (isset($_POST['choice_id'])) {
     $currentPassageId = $_SESSION['current_passage_id'] ?? 1;
 }
 
+var_dump($_GET);
+die();
+
+// 1. Récupérer le personnage lié au user connecté
+$stmtChar = $pdo->prepare("SELECT id FROM characters WHERE user_id = ?");
+$stmtChar->execute([$userId]);
+$char = $stmtChar->fetch();
+
+if (!$char) {
+    die("Aucun personnage trouvé.");
+}
+
+$charId = $char['id'];
+
+
+// 2. Récupérer les objets liés au passage actuel
+$stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
+$stmtItems->execute([$currentPassageId]);
+$itemsToAdd = $stmtItems->fetchAll();
+
+
+// 3. Ajouter / mettre à jour l'inventaire
+foreach ($itemsToAdd as $item) {
+
+    $itemId   = $item['item_id'];
+    $quantity = $item['quantity'];
+
+    // Vérifier si l'objet existe déjà
+    $stmtCheck = $pdo->prepare("SELECT id FROM inventory WHERE char_id = ? AND item_id = ?");
+    $stmtCheck->execute([$charId, $itemId]);
+    $existing = $stmtCheck->fetch();
+
+    if ($existing) {
+
+        // Si oui → on augmente la quantité
+        $stmtUpdate = $pdo->prepare("
+            UPDATE inventory
+            SET quantity = quantity + ?
+            WHERE char_id = ? AND item_id = ?
+        ");
+        $stmtUpdate->execute([$quantity, $charId, $itemId]);
+
+    } else {
+
+        // Sinon → on l'ajoute
+        $stmtInsert = $pdo->prepare("
+            INSERT INTO inventory (char_id, item_id, quantity)
+            VALUES (?, ?, ?)
+        ");
+        $stmtInsert->execute([$charId, $itemId, $quantity]);
+    }
+}
 
 $stmtPassage = $pdo->prepare("SELECT * FROM story WHERE id = ?");
 $stmtPassage->execute([$currentPassageId]);
@@ -56,6 +111,8 @@ $images = $stmtImages->fetch();
 </head>
 
 <body>
+
+    <?php include '../header.php'; ?>
 
     <?php if ($images): ?>
         <img src="../img/<?= htmlspecialchars($images['img_url']) ?>" alt="Images du passage">

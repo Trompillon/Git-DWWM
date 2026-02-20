@@ -5,7 +5,7 @@ require '../db.php';
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
 
-// $userId = $_SESSION['user_id'] ?? null;
+$userId = $_SESSION['user_id'] ?? null;
 if (!$userId) {
     header("Location: ../connexion.php");
     exit;
@@ -70,7 +70,7 @@ if (isset($_POST['class'])) {
     $stmtInsert->execute([$userId, $name, $class, $hp_max, $hp_current, $mana_max, $mana_current, $attack_base, $defense_base, $gold_pieces]);
 
     $_SESSION['current_passage_id'] = 2; // passage “introduction après le choix de classe”
-        header("Location: game.php");
+        header("Location:/projetDWWM/game/game.php");
         exit;
 
 }
@@ -86,20 +86,22 @@ if (isset($_POST['class'])) {
 </head>
 <body>
 
-<div id="story">
-    <p><?= htmlspecialchars($passage['content']) ?></p>
+    <?php include '../header.php'; ?>
 
-    <?php if ($image): ?>
-        <img src="../img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
-    <?php endif; ?>
-</div>
+    <div id="story">
+        <p><?= htmlspecialchars($passage['content']) ?></p>
 
-<div id="choices">
-    <form method="POST">
-        <button type="submit" name="class" value="Guerrier">Je suis un(e) puissant(e) Guerrier(e) !</button>
-        <button type="submit" name="class" value="Mage">Je suis un(e) Mage doté(e) de pouvoirs magiques...</button>
-    </form>
-</div>
+        <?php if ($image): ?>
+            <img src="../img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
+        <?php endif; ?>
+    </div>
+
+    <div id="choices">
+        <form method="POST">
+            <button type="submit" name="class" value="Guerrier">Je suis un(e) puissant(e) Guerrier(e) !</button>
+            <button type="submit" name="class" value="Mage">Je suis un(e) Mage doté(e) de pouvoirs magiques...</button>
+        </form>
+    </div>
 
 </body>
 </html>
