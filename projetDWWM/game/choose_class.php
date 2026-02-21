@@ -68,11 +68,20 @@ if (isset($_POST['class'])) {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NOW(), NOW())
     ");
     $stmtInsert->execute([$userId, $name, $class, $hp_max, $hp_current, $mana_max, $mana_current, $attack_base, $defense_base, $gold_pieces]);
+    
+    // Création du personnage...
+    
+    // Définir le passage d'intro selon la classe
+    if ($class === 'Guerrier') {
+        $_SESSION['current_passage_id'] = 2;
+    } elseif ($class === 'Mage') {
+        $_SESSION['current_passage_id'] = 3;
+    }
 
-    $_SESSION['current_passage_id'] = 2; // passage “introduction après le choix de classe”
-        header("Location:/projetDWWM/game/game.php");
-        exit;
+    $_SESSION['class'] = $class; // stocker la classe pour plus tard si besoin
 
+    header("Location: game.php");
+    exit;
 }
 
 ?>

@@ -14,26 +14,58 @@ if (!isset($_SESSION['user_id'])) {
 // Définir $userId pour les requêtes
 $userId = $_SESSION['user_id'];
 
-// Passage actuel : soit nouveau, soit envoyé par le choix
 if (isset($_POST['choice_id'])) {
     $choiceId = $_POST['choice_id'];
 
-    $stmt = $pdo->prepare("SELECT to_story_id FROM choice WHERE id = ?");
+    // Récupérer le choix avec toutes les conditions
+    $stmt = $pdo->prepare("
+        SELECT to_story_id, gold_change, required_gold,
+               required_class, required_mana, mana_change
+        FROM choice
+        WHERE id = ?
+    ");
     $stmt->execute([$choiceId]);
-    $target = $stmt->fetch();
+    $choice = $stmt->fetch();
 
-    $currentPassageId = $target['to_story_id'];
+    if (!$choice) exit("Choix invalide.");
 
-    // On met à jour la session pour que le passage courant reste enregistré
-    $_SESSION['current_passage_id'] = $currentPassageId;
+    // Récupérer le personnage
+    $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ? AND is_deleted = 0");
+    $stmtChar->execute([$_SESSION['user_id']]);
+    $character = $stmtChar->fetch();
+
+    // Vérifier classe
+    if ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
+        exit("Votre classe ne permet pas ce choix.");
+    }
+
+    // Vérifier or/mana avant application
+    if ($character['gold_pieces'] < $choice['required_gold']) {
+        exit("Pas assez d'or pour ce choix.");
+    }
+    if ($character['mana_current'] < $choice['required_mana']) {
+        exit("Pas assez de mana pour ce choix.");
+    }
+
+    // Appliquer conséquences
+    $newGold = max(0, $character['gold_pieces'] + $choice['gold_change']);
+    $newMana = max(0, $character['mana_current'] + $choice['mana_change']);
+
+    $stmtUpdate = $pdo->prepare("UPDATE characters SET gold_pieces = ?, mana_current = ? WHERE id = ?");
+    $stmtUpdate->execute([$newGold, $newMana, $character['id']]);
+
+    // Mettre à jour le passage
+    $_SESSION['current_passage_id'] = $choice['to_story_id'];
+
+    header("Location: game.php");
+    exit;
 
 } else {
-    // Si on a déjà une session, on prend ce passage
     $currentPassageId = $_SESSION['current_passage_id'] ?? 1;
 }
 
-var_dump($_GET);
-die();
+// var_dump($_GET);
+// die();
 
 // 1. Récupérer le personnage lié au user connecté
 $stmtChar = $pdo->prepare("SELECT id FROM characters WHERE user_id = ?");
@@ -123,11 +155,31 @@ $images = $stmtImages->fetch();
     </div>
 
     <div id="choices">
-        <?php foreach($choices as $choice): ?>
+        <?php foreach ($choices as $choice): ?>
+
+            <?php
+            // Filtrer uniquement par classe
+            if ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
+                continue;
+            }
+
+            $canTake = true;
+            if ($choice['required_gold'] > 0 && $character['gold_pieces'] < $choice['required_gold']) {
+                $canTake = false;
+            }
+            if ($choice['required_mana'] > 0 && $character['mana_current'] < $choice['required_mana']) {
+                $canTake = false;
+            }
+            ?>
+
             <form method="POST">
                 <input type="hidden" name="choice_id" value="<?= $choice['id'] ?>">
                 <button type="submit"><?= htmlspecialchars($choice['choice']) ?></button>
+                <?php if (!$canTake): ?>
+                    <small>Vous n'avez pas assez de ressources pour ce choix.</small>
+                <?php endif; ?>
             </form>
+
         <?php endforeach; ?>
     </div>
 

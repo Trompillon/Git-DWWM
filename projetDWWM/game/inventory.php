@@ -34,12 +34,11 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$charId]);
 $items = $stmt->fetchAll();
 
-// var_dump($items); exit;
+$stmt = $pdo->prepare("SELECT gold_pieces FROM characters WHERE user_id = ? AND is_deleted = 0");
+$stmt->execute([$_SESSION['user_id']]);
+$character = $stmt->fetch();
 
-if (empty($items)) {
-    echo "<p>Votre inventaire est vide.</p>";
-    exit;
-}
+// var_dump($items); exit;
 
 echo "<h3>Inventaire</h3>";
 
@@ -47,4 +46,11 @@ foreach ($items as $item) {
     echo "<p><strong>" . htmlspecialchars($item['name']) . "</strong> x" . 
          intval($item['quantity']) . "<br>";
     echo "<small>" . htmlspecialchars($item['description']) . "</small></p>";
+}
+
+echo "<p><strong>Or :</strong> " . intval($character['gold_pieces']) . " 🪙</p>";
+
+if (empty($items)) {
+    echo "<p>Votre inventaire est vide.</p>";
+    exit;
 }
