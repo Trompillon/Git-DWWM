@@ -91,18 +91,21 @@ if (isset($_POST['class'])) {
 <head>
     <meta charset="UTF-8">
     <title>Choix de Classe</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="shortcut icon" href="../img/icon.png">
 </head>
 <body>
 
     <?php include '../header.php'; ?>
 
     <div id="story">
-        <p><?= htmlspecialchars($passage['content']) ?></p>
-
-        <?php if ($image): ?>
-            <img src="../img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
+        <?php if (!empty($image)): ?>
+            <div class="story-img-wrapper">
+                <img src="../img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
+            </div>
         <?php endif; ?>
+
+        <p><?= htmlspecialchars($passage['content']) ?></p>
     </div>
 
     <div id="choices">
@@ -111,6 +114,8 @@ if (isset($_POST['class'])) {
             <button type="submit" name="class" value="Mage">Je suis un(e) Mage doté(e) de pouvoirs magiques...</button>
         </form>
     </div>
+
+    <?php include '../footer.php'; ?>
 
 </body>
 </html>

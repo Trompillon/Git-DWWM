@@ -30,9 +30,11 @@ if (isset($_POST['choice_id'])) {
     if (!$choice) exit("Choix invalide.");
 
     // Récupérer le personnage
-    $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ? AND is_deleted = 0");
+    $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ?");
     $stmtChar->execute([$_SESSION['user_id']]);
     $character = $stmtChar->fetch();
+
+    // var_dump($character);
 
     // Vérifier classe
     if ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
@@ -68,15 +70,15 @@ if (isset($_POST['choice_id'])) {
 // die();
 
 // 1. Récupérer le personnage lié au user connecté
-$stmtChar = $pdo->prepare("SELECT id FROM characters WHERE user_id = ?");
+$stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ?");
 $stmtChar->execute([$userId]);
-$char = $stmtChar->fetch();
+$character = $stmtChar->fetch();
 
-if (!$char) {
+if (!$character) {
     die("Aucun personnage trouvé.");
 }
 
-$charId = $char['id'];
+$charId = $character['id'];
 
 
 // 2. Récupérer les objets liés au passage actuel
@@ -137,7 +139,6 @@ $images = $stmtImages->fetch();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
-    <script src="../script.js" defer></script>
     <link rel="shortcut icon" href="../img/icon.png">
     <title>Game</title>
 </head>
@@ -146,13 +147,15 @@ $images = $stmtImages->fetch();
 
     <?php include '../header.php'; ?>
 
+    <div id="story">
     <?php if ($images): ?>
-        <img src="../img/<?= htmlspecialchars($images['img_url']) ?>" alt="Images du passage">
+        <div class="story-img-wrapper">
+            <img src="../img/<?= htmlspecialchars($images['img_url']) ?>" alt="Images du passage">
+        </div>
     <?php endif; ?>
 
-    <div id="story">
-        <?= htmlspecialchars($passage['content']) ?>
-    </div>
+    <?= htmlspecialchars($passage['content']) ?>
+</div>
 
     <div id="choices">
         <?php foreach ($choices as $choice): ?>
@@ -183,6 +186,7 @@ $images = $stmtImages->fetch();
         <?php endforeach; ?>
     </div>
 
+    <?php include '../footer.php'; ?>
     
 </body>
 </html>

@@ -7,9 +7,6 @@ if (!isset($_SESSION['user_id'])) {
 
 require '../db.php';
 
-// var_dump($charId);
-// die();
-
 $userId = $_SESSION['user_id'];
 
 // Récupérer le personnage du user
@@ -23,6 +20,9 @@ if (!$char) {
 
 $charId = $char['id'];
 
+// var_dump($charId);
+// die();
+
 $sql = "
     SELECT items.name, items.description, inventory.quantity
     FROM inventory
@@ -34,7 +34,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$charId]);
 $items = $stmt->fetchAll();
 
-$stmt = $pdo->prepare("SELECT gold_pieces FROM characters WHERE user_id = ? AND is_deleted = 0");
+$stmt = $pdo->prepare("SELECT gold_pieces FROM characters WHERE user_id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $character = $stmt->fetch();
 
