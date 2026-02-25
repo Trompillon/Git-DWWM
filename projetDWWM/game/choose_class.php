@@ -69,6 +69,17 @@ if (isset($_POST['class'])) {
     ");
     $stmtInsert->execute([$userId, $name, $class, $hp_max, $hp_current, $mana_max, $mana_current, $attack_base, $defense_base, $gold_pieces]);
     
+    // --- AJOUT DES SORTS DE DÉPART ---
+    $charId = $pdo->lastInsertId();
+
+    if ($class === 'Mage') {
+        $defaultSpells = [1, 2]; // Charme et Trait de feu
+        $stmtSpell = $pdo->prepare("INSERT INTO character_spells (char_id, spell_id) VALUES (?, ?)");
+        foreach ($defaultSpells as $spellId) {
+            $stmtSpell->execute([$charId, $spellId]);
+        }
+    }
+
     // Création du personnage...
     
     // Définir le passage d'intro selon la classe

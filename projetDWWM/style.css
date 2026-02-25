@@ -1,20 +1,18 @@
 @font-face {
   font-family: "Merriweather";
-  src: url("/fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  src: url("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Merriweather";
-  src: url("/fonts/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  src: url("fonts/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: italic;
 }
 
-/* =========================
-   VARIABLES
-========================= */
+/* VARIABLES */
 
 :root {
   --primary: #0f172a;
@@ -25,9 +23,7 @@
   --font-main: 'Merriweather', serif;
 }
 
-/* =========================
-   RESET
-========================= */
+/* RESET */
 
 * {
   margin: 0;
@@ -44,9 +40,7 @@ body {
   min-height: 100vh;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAVBAR */
 
 .navbar {
     background-color: var(--primary);
@@ -90,56 +84,168 @@ body {
     filter: brightness(1.2);
 }
 
-/* =========================
-   MODAL INVENTAIRE
-========================= */
-
-.inventory-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.85); /* overlay sombre */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.inventory-content {
-    background-color: #ffffff;
-    color: var(--text-dark);
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    width: 90%;
-    max-height: 80%;
-    overflow-y: auto;
-    text-align: left;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.inventory-modal button#closeInventory {
-    margin-top: 15px;
-    padding: 8px 16px;
-    background-color: var(--primary);
-    color: var(--text-light);
-    border: none;
-    border-radius: 6px;
+.nav-right .grimoire-btn img {
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    font-family: var(--font-main);
-    font-size: 0.95rem;
     transition: 0.3s ease;
 }
 
-.inventory-modal button#closeInventory:hover {
+.nav-right .grimoire-btn img:hover {
     filter: brightness(1.2);
 }
 
-/* =========================
-   BANNER IMAGE
-========================= */
+/* MODAL INVENTAIRE */
+
+.inventory-modal {
+    display: none; /* fermé par défaut */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(15,23,42,0.85);
+    justify-content: center; align-items: center;
+    z-index: 9999;
+    font-family: 'Cinzel', serif;
+}
+
+.inventory-content {
+    background: linear-gradient(145deg, #fef3e7, #ffe8c2);
+    color: #2b1d0e;
+    padding: 25px 30px;
+    border-radius: 15px;
+    max-width: 600px; width: 90%;
+    max-height: 80%; overflow-y: auto;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border: 4px solid #8b5e3c;
+    position: relative;
+}
+
+#closeInventory {
+    position: absolute;
+    top: 10px; right: 10px;
+    padding: 6px 12px;
+    background-color: #8b5e3c;
+    color: #fff8e7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#closeInventory:hover { background-color: #a0522d; transform: scale(1.05); }
+
+.inventory-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #603813;
+    text-shadow: 2px 2px #8b5e3c;
+}
+
+.inventory-item {
+    background-color: rgba(255, 238, 205, 0.8);
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    border-left: 4px solid #a0522d;
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    color: #2b1d0e;
+}
+
+.inventory-gold {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #b8860b;
+}
+
+.inventory-item-description {
+    color: #3498db; /* bleu pour la description */
+    font-style: italic; /* optionnel pour la différencier encore */
+    margin-left: 5px; /* léger décalage si tu veux */
+}
+
+/* MODALE GRIMOIRE */
+
+.grimoire-modal {
+    display: none; /* fermé par défaut */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15,23,42,0.5); /* semi-transparent */
+    justify-content: flex-end; /* aligné à droite */
+    align-items: flex-start;     /* en haut */
+    z-index: 9999;
+    padding-top: 60px;   /* espace depuis le haut */
+    padding-right: 20px; /* espace depuis la droite */
+    font-family: 'Cinzel', serif;
+}
+
+.grimoire-modal .inventory-content {
+    max-width: 400px;      /* un peu plus petit que l'inventaire */
+    width: 100%;
+    max-height: 80%;
+    overflow-y: auto;
+    background: linear-gradient(145deg, #f8f0d8, #e6d5a8);
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(155, 89, 182, 0.6);
+    padding: 25px 20px;
+    border: 4px solid #8b5e3c;
+    color: #3a1e0d;
+    text-align: left;
+    position: relative;
+}
+
+/* Bouton fermer grimoire */
+#closeGrimoire {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    background-color: #8b5e3c;
+    color: #fff8e7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#closeGrimoire:hover {
+    background-color: #a0522d;
+    transform: scale(1.05);
+}
+
+/* Titre grimoire */
+.grimoire-title {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #603813;
+    text-shadow: 2px 2px #8b5e3c;
+    margin-bottom: 15px;
+}
+
+/* Contenu des sorts/items */
+.grimoire-item {
+    background-color: rgba(255, 238, 205, 0.8);
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    border-left: 4px solid #9b59b6; /* violet pour mage */
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    color: #2b1d0e;
+}
+
+.grimoire-item-description {
+    color: #9b59b6; /* violet clair pour la description */
+    font-style: italic;
+    margin-left: 5px;
+}
+
+/* BANNER IMAGE */
+
+.banner-content {
+    text-align: center;
+    font-size: x-large;
+}
 
 .banner img {
   width: 100%;
@@ -147,9 +253,8 @@ body {
   display: block;
 }
 
-/* =========================
-   CONTENT SECTION
-========================= */
+/* 
+   CONTENT SECTION */
 
 .content {
   background-color: #ffffff;
@@ -165,9 +270,7 @@ body {
   font-size: 0.95rem;
 }
 
-/* =========================
-   BUTTON GOLD
-========================= */
+/* BUTTON GOLD */
 
 .btn-gold {
   display: inline-block; /* important pour le <a> */
@@ -194,9 +297,7 @@ body {
   filter: brightness(1.1);
 }
 
-/* =========================
-   FORMULAIRES CONNEXION / INSCRIPTION
-========================= */
+/* FORMULAIRES CONNEXION / INSCRIPTION */
 
 .form-wrapper {
     background-color: #ffffff;
@@ -329,9 +430,9 @@ body {
     filter: brightness(1.1);
 }
 
-/* =========================
-   FOOTER
-========================= */
+#choices form button.choice.mage { background-color: #9b59b6; color: white; }
+
+/* FOOTER */
 
 .footer {
   background-color: var(--primary);
@@ -343,4 +444,60 @@ body {
   margin-top: auto;
 }
 
+/* DIALOGUES */
 
+.npc-friendly { font-family: 'Helvetica', serif; color: green; }
+.npc-enemy { font-family: 'Comic Sans Ms', serif; color: red; }
+
+/* HUD */
+
+#hud {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    width: 220px;
+    padding: 12px;
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    color: white;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.bar {
+    position: relative;
+    width: 100%;
+    height: 18px;
+    background: #333;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.bar .fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.health .fill {
+    background: linear-gradient(to right, #7a0000, #ff2a2a);
+}
+
+.mana .fill {
+    background: linear-gradient(to right, #001f7a, #3aa0ff);
+}
+
+.bar span {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    top: 1px;
+    pointer-events: none;
+}
+
+.gold {
+    text-align: center;
+    margin-top: 6px;
+}

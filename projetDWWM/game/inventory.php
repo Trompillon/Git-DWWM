@@ -40,17 +40,23 @@ $character = $stmt->fetch();
 
 // var_dump($items); exit;
 
-echo "<h3>Inventaire</h3>";
+?>
 
-foreach ($items as $item) {
-    echo "<p><strong>" . htmlspecialchars($item['name']) . "</strong> x" . 
-         intval($item['quantity']) . "<br>";
-    echo "<small>" . htmlspecialchars($item['description']) . "</small></p>";
-}
+<h3 class="inventory-title">Inventaire</h3>
 
-echo "<p><strong>Or :</strong> " . intval($character['gold_pieces']) . " 🪙</p>";
-
-if (empty($items)) {
-    echo "<p>Votre inventaire est vide.</p>";
-    exit;
-}
+<?php if (!empty($items)): ?>
+    <?php foreach ($items as $item): ?>
+        <div class="inventory-item">
+            <div class="inventory-item-header">
+                <span class="item-name"><?= htmlspecialchars($item['name']) ?></span>
+                <span class="item-quantity">x<?= intval($item['quantity']) ?></span>
+            </div>
+            <div class="inventory-item-description">
+                <?= htmlspecialchars($item['description']) ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <p class="inventory-gold"><strong>Or :</strong> <?= intval($character['gold_pieces']) ?> 🪙</p>
+<?php else: ?>
+    <p>Votre inventaire est vide.</p>
+<?php endif; ?>

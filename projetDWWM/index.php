@@ -14,8 +14,10 @@
     <main class="banner">
         <img src="img/banner.png" alt="Bannière de représentation IA du donjon du magicien fou">
         <div class="banner-content">
+            <br>
+            <p>Plongez dans un donjon mystérieux où vos choix façonnent l’histoire à la manière des livres dont vous êtes le héros. Gérez votre inventaire, affrontez des créatures, et découvrez les secrets du Donjon du Magicien Fou !</p>
             <a href="inscription.php" class="btn-gold">S'inscrire !</a>
-            <p>Plongez dans un donjon mystérieux où vos choix façonnent l’histoire à la manière des livres dont vous êtes le héros. Gérez votre inventaire, affrontez des créatures, et découvrez les secrets du Donjon du Magicien Fou!</p>
+            <br>
         </div>
     </main>
 
