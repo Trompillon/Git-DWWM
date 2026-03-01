@@ -5,16 +5,20 @@ require '../db.php';
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
 
+/* ============================
+   Vérification de connexion
+============================ */
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../connexion.php");
     exit;
 }
 
-// Définir $userId pour les requêtes
 $userId = $_SESSION['user_id'];
 
-    /* CHOIX */
+/* ============================
+   TRAITEMENT DES CHOIX DU JOUEUR
+============================ */
 
 if (isset($_POST['choice_id'])) {
     $choiceId = $_POST['choice_id'];
@@ -39,6 +43,10 @@ if (isset($_POST['choice_id'])) {
     $character = $stmtChar->fetch();
 
     // var_dump($character);
+
+    /* ----------------------------
+       Vérifications : conditions
+    ---------------------------- */
 
     $canTake = true;
 
@@ -68,7 +76,10 @@ if (isset($_POST['choice_id'])) {
         $error_msg = "Pas assez de mana pour ce choix.";
     }
 
-    // Appliquer conséquences seulement si autorisé
+    /* ----------------------------
+       Appliquer conséquences si autorisé
+    ---------------------------- */
+
     if ($canTake) {
         $newGold = max(0, $character['gold_pieces'] + $choice['gold_change']);
         $newMana = max(0, $character['mana_current'] + $choice['mana_change']);
@@ -92,6 +103,10 @@ if (isset($_POST['choice_id'])) {
 // var_dump($_GET);
 // die();
 
+/* ============================
+   Récupération du personnage
+============================ */
+
 // 1. Récupérer le personnage lié au user connecté
 $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ?");
 $stmtChar->execute([$userId]);
@@ -105,12 +120,19 @@ if (!$character) {
 
 $charId = $character['id'];
 
+/* ----------------------------
+   Initialiser passage courant
+   (Nouvelle partie ou continuer)
+---------------------------- */
 
 // 2. Récupérer les objets liés au passage actuel
 $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
 $stmtItems->execute([$currentPassageId]);
 $itemsToAdd = $stmtItems->fetchAll();
 
+/* ============================
+   Récupération des objets du passage
+============================ */
 
 // 3. Ajouter / mettre à jour l'inventaire
 foreach ($itemsToAdd as $item) {
@@ -144,6 +166,10 @@ foreach ($itemsToAdd as $item) {
     }
 }
 
+/* ============================
+   Récupération du passage et choix
+============================ */
+
 $stmtPassage = $pdo->prepare("SELECT * FROM story WHERE id = ?");
 $stmtPassage->execute([$currentPassageId]);
 $passage = $stmtPassage->fetch();
@@ -172,6 +198,10 @@ $images = $stmtImages->fetch();
 
     <?php include '../header.php'; ?>
 
+<!-- ============================
+     HUD : PV, PM, Or
+============================ -->   
+
     <?php if ($character): ?>
         <div id="hud">
             <div class="bar health">
@@ -198,6 +228,10 @@ $images = $stmtImages->fetch();
         <div class="error-message"><?= htmlspecialchars($error_msg) ?></div>
     <?php endif; ?>
 
+<!-- ============================
+     Texte du passage
+============================ -->
+
     <div id="story">
     <?php if ($images): ?>
         <div class="story-img-wrapper">
@@ -222,8 +256,11 @@ $images = $stmtImages->fetch();
 
         echo $text;
     ?>
-
     </div>
+
+<!-- ============================
+     Choix du joueur
+============================ -->
 
     <div id="choices">
         <?php foreach ($choices as $choice): ?>
