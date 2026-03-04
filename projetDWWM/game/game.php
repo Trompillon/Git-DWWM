@@ -5,12 +5,15 @@ require '../db.php';
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
 
+// définir la base URL
+define('BASE_URL', '/projetDWWM/');
+
 /* ============================
    Vérification de connexion
 ============================ */
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../connexion.php");
+    header("Location: " . BASE_URL . "connexion/connexion.php");
     exit;
 }
 
@@ -50,16 +53,6 @@ if (isset($_POST['choice_id'])) {
 
     $canTake = true;
 
-    if (!$canTake) {
-    if ($choice['required_gold'] > 0 && $character['gold_pieces'] < $choice['required_gold']) {
-        $error_msg_choice = "Pas assez d'or pour ce choix.";
-    } elseif ($choice['required_mana'] > 0 && $character['mana_current'] < $choice['required_mana']) {
-        $error_msg_choice = "Pas assez de mana pour ce choix.";
-    } elseif ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
-        $error_msg_choice = "Votre classe ne permet pas ce choix.";
-    }
-}
-
     // Vérifier classe
     if ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
         $canTake = false;
@@ -71,6 +64,7 @@ if (isset($_POST['choice_id'])) {
         $canTake = false;
         $error_msg = "Pas assez d'or pour ce choix.";
     }
+
     if ($character['mana_current'] < $choice['required_mana']) {
         $canTake = false;
         $error_msg = "Pas assez de mana pour ce choix.";
@@ -91,6 +85,13 @@ if (isset($_POST['choice_id'])) {
         // Mettre à jour le passage
         $_SESSION['current_passage_id'] = $choice['to_story_id'];
 
+        // $stmt = $pdo->prepare("
+        // UPDATE char_progress
+        // SET current_story_id = ?, updated_at = NOW()
+        // WHERE char_id = ?
+        // ");
+        // $stmt->execute([$choice['to_story_id'], $_SESSION['char_id']]);
+
         // Redirection vers la page de jeu
         header("Location: game.php");
         exit;
@@ -98,13 +99,19 @@ if (isset($_POST['choice_id'])) {
 
 } else {
     $currentPassageId = $_SESSION['current_passage_id'] ?? 1;
+
+    // $stmt = $pdo->prepare("
+    // SELECT current_story_id FROM char_progress WHERE char_id = ?
+    // ");
+    // $stmt->execute([$_SESSION['char_id']]);
+    // $currentPassageId = $stmt->fetchColumn() ?: 1;
 }
 
 // var_dump($_GET);
 // die();
 
 /* ============================
-   Récupération du personnage
+   Récupération des objets du passage
 ============================ */
 
 // 1. Récupérer le personnage lié au user connecté
@@ -114,25 +121,16 @@ $character = $stmtChar->fetch();
 
 // Si aucun personnage, rediriger vers choose_class.php
 if (!$character) {
-    header("Location: choose_class.php");
+    header("Location: " . BASE_URL . "game/choose_class.php");
     exit;
 }
 
 $charId = $character['id'];
 
-/* ----------------------------
-   Initialiser passage courant
-   (Nouvelle partie ou continuer)
----------------------------- */
-
 // 2. Récupérer les objets liés au passage actuel
 $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
 $stmtItems->execute([$currentPassageId]);
 $itemsToAdd = $stmtItems->fetchAll();
-
-/* ============================
-   Récupération des objets du passage
-============================ */
 
 // 3. Ajouter / mettre à jour l'inventaire
 foreach ($itemsToAdd as $item) {
@@ -189,14 +187,14 @@ $images = $stmtImages->fetch();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="../img/icon.png">
+    <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>img/icon.png">
     <title>Game</title>
 </head>
 
 <body>
 
-    <?php include '../header.php'; ?>
+    <?php include __DIR__ . '/../components/header.php'; ?>
 
 <!-- ============================
      HUD : PV, PM, Or
@@ -251,8 +249,7 @@ $images = $stmtImages->fetch();
 
         // Mais remettre les spans non échappés
         $text = str_replace(['&lt;span class=&quot;npc-friendly&quot;&gt;', '&lt;span class=&quot;npc-enemy&quot;&gt;', '&lt;/span&gt;'], 
-                            ['<span class="npc-friendly">','<span class="npc-enemy">','</span>'], 
-                            $text);
+                            ['<span class="npc-friendly">','<span class="npc-enemy">','</span>'], $text);
 
         echo $text;
     ?>
@@ -270,39 +267,19 @@ $images = $stmtImages->fetch();
         if ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
             continue;
         }
-
-        // Initialiser
-        $canTake = true;
-        $error_msg_choice = "";
-
-        // Vérifier conditions
-        if ($choice['required_gold'] > 0 && $character['gold_pieces'] < $choice['required_gold']) {
-            $canTake = false;
-            $error_msg_choice = "Pas assez d'or pour ce choix.";
-        } elseif ($choice['required_mana'] > 0 && $character['mana_current'] < $choice['required_mana']) {
-            $canTake = false;
-            $error_msg_choice = "Pas assez de mana pour ce choix.";
-        } elseif ($choice['required_class'] && $choice['required_class'] !== $character['class']) {
-            $canTake = false;
-            $error_msg_choice = "Votre classe ne permet pas ce choix.";
-        }
         ?>
 
         <form method="POST">
             <input type="hidden" name="choice_id" value="<?= $choice['id'] ?>">
-            <button type="submit" class="choice <?= $choice['required_class'] ? strtolower($choice['required_class']) : '' ?>" <?= !$canTake ? 'disabled' : '' ?>>
+            <button type="submit" class="choice <?= $choice['required_class'] ? strtolower($choice['required_class']) : '' ?>">
             <?= htmlspecialchars($choice['choice']) ?>
             </button>
         </form>
 
-        <?php if (!$canTake && !empty($error_msg_choice)): ?>
-            <div class="error-message"><?= htmlspecialchars($error_msg_choice) ?></div>
-        <?php endif; ?>
-
         <?php endforeach; ?>
     </div>
 
-    <?php include '../footer.php'; ?>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
     
 </body>
 </html>

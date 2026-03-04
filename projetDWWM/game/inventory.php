@@ -56,7 +56,7 @@ $character = $stmt->fetch();
             </div>
         </div>
     <?php endforeach; ?>
-    <p class="inventory-gold"><strong>Or :</strong> <?= intval($character['gold_pieces']) ?> 🪙</p>
+    <p class="inventory-gold">Or : <?= intval($character['gold_pieces']) ?> 🪙</p>
 <?php else: ?>
     <p>Votre inventaire est vide.</p>
 <?php endif; ?>

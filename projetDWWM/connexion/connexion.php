@@ -1,6 +1,11 @@
 <?php
-// 1. Inclure le fichier de connexion à la base de données
-include 'db.php'; 
+
+require_once __DIR__ . '/../db.php'; 
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
+define('BASE_URL', '/projetDWWM/');
 
 // Démarrer une session (crucial pour garder l'utilisateur connecté)
 session_start();
@@ -25,10 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                 // Connexion réussie !
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_login'] = $user['login'];
                
                 // Rediriger vers une page sécurisée (ex: profil.php)
-                header('Location: index.php');
+                header('Location: ' . BASE_URL . 'index.php');
                 exit;
 
             } else {
@@ -49,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
     <title>Connexion</title>
 </head>
 <body>
@@ -70,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <div class="form-wrapper">
-        <form class="formConnexion" action="connexion.php" method="post">
+        <form class="formConnexion" action="<?= BASE_URL ?>connexion/connexion.php" method="post">
             <h1>Connexion</h1>
 
             <label for="email">Email</label>
@@ -83,14 +87,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <br>
             <button type="submit" id="btn">Connexion</button>
-
+            <br>
+            <br>
+            
             <p>
-                <a href="inscription.php">Vous n'êtes pas inscrit?</a>
+                <a href="<?= BASE_URL ?>connexion/inscription.php">Vous n'êtes pas inscrit?</a>
             </p>
         </form>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
     
 </body>
 </html>

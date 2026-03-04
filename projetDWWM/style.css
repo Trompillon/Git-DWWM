@@ -1,15 +1,30 @@
-@font-face {
-  font-family: "Merriweather";
-  src: url("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
+@media (max-width: 600px) {
+    #hud {
+        display: none;
+    }
+
+    .banner-content p {
+        display: none;
+    }
+
+    .footer {
+        text-align: center;
+    }
+
 }
 
 @font-face {
-  font-family: "Merriweather";
-  src: url("fonts/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: italic;
+    font-family: "Merriweather";
+    src: url("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Merriweather";
+    src: url("fonts/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
 }
 
 /* VARIABLES */
@@ -248,9 +263,9 @@ body {
 }
 
 .banner img {
-  width: 100%;
-  height: auto;
-  display: block;
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* 

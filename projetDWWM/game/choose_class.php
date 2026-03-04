@@ -5,9 +5,12 @@ require '../db.php';
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
 
+// définir la base URL
+define('BASE_URL', '/projetDWWM/');
+
 $userId = $_SESSION['user_id'] ?? null;
 if (!$userId) {
-    header("Location: ../connexion.php");
+    header("Location: " . BASE_URL . "connexion/connexion.php");
     exit;
 }
 
@@ -79,8 +82,6 @@ if (isset($_POST['class'])) {
             $stmtSpell->execute([$charId, $spellId]);
         }
     }
-
-    // Création du personnage...
     
     // Définir le passage d'intro selon la classe
     if ($class === 'Guerrier') {
@@ -89,9 +90,9 @@ if (isset($_POST['class'])) {
         $_SESSION['current_passage_id'] = 3;
     }
 
-    $_SESSION['class'] = $class; // stocker la classe pour plus tard si besoin
+    // $_SESSION['class'] = $class; // stocker la classe pour plus tard si besoin
 
-    header("Location: game.php");
+    header("Location: " . BASE_URL . "game/game.php");
     exit;
 }
 
@@ -102,17 +103,17 @@ if (isset($_POST['class'])) {
 <head>
     <meta charset="UTF-8">
     <title>Choix de Classe</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="../img/icon.png">
+    <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>img/icon.png">
 </head>
 <body>
 
-    <?php include '../header.php'; ?>
+    <?php include __DIR__ . '/../components/header.php'; ?>
 
     <div id="story">
         <?php if (!empty($image)): ?>
             <div class="story-img-wrapper">
-                <img src="../img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
+                <img src="<?= BASE_URL ?>img/<?= htmlspecialchars($image['img_url']) ?>" alt="Image du passage">
             </div>
         <?php endif; ?>
 
@@ -126,7 +127,7 @@ if (isset($_POST['class'])) {
         </form>
     </div>
 
-    <?php include '../footer.php'; ?>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>
 </html>

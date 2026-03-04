@@ -2,20 +2,22 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+define('BASE_URL', '/projetDWWM/');
 ?>
 
 <nav class="navbar">
     <ul class="nav-left">
-        <li><a href="/projetDWWM/index.php">Accueil</a></li>
+        <li><a href="<?= BASE_URL ?>index.php">Accueil</a></li>
 
         <?php if (isset($_SESSION['user_id'])) : ?>
-            <li><a href="/projetDWWM/game/game.php">Continuer l'aventure</a></li>
-            <li><a href="/projetDWWM/game/choose_class.php">Nouvelle aventure</a></li>
-            <li><a href="/projetDWWM/deconnexion.php">Déconnexion</a></li>
+            <li><a href="<?= BASE_URL ?>game/game.php">Continuer l'aventure</a></li>
+            <li><a href="<?= BASE_URL ?>game/choose_class.php">Nouvelle aventure</a></li>
+            <li><a href="<?= BASE_URL ?>connexion/deconnexion.php">Déconnexion</a></li>
         <?php else : ?>
 
-            <li><a href="connexion.php">Se connecter</a></li>
-            <li><a href="inscription.php">S'inscrire</a></li>
+            <li><a href="<?= BASE_URL ?>connexion/connexion.php">Se connecter</a></li>
+            <li><a href="<?= BASE_URL ?>connexion/inscription.php">S'inscrire</a></li>
         <?php endif; ?>
 
     </ul>
@@ -25,11 +27,11 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="nav-right">
         <?php if ($character['class'] === 'Mage'): ?>
             <a href="#"id="btnGrimoire" class="grimoire-btn <?= strtolower($character['class']) ?>">
-                <img src="/projetDWWM/img/grimoire.png" alt="Icône de Grimoire">
+                <img src="<?= BASE_URL ?>img/grimoire.png" alt="Icône de Grimoire">
             </a>
         <?php endif; ?>
         <a href="#" id="btnInventory" class="inventory-btn">
-            <img src="/projetDWWM/img/backpack.png" alt="Icône sac à dos">
+            <img src="<?= BASE_URL ?>img/backpack.png" alt="Icône sac à dos">
         </a>
     </div>
 
@@ -66,14 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const inventoryContent = document.getElementById('inventoryContent');
 
     if (btnInventory) {
-        btnInventory.addEventListener('click', function(e) {
-            e.preventDefault();
-            fetch('/projetDWWM/game/inventory.php')
-                .then(res => res.text())
-                .then(data => {
-                    inventoryContent.innerHTML = data;
-                    inventoryModal.style.display = 'flex';
-                });
+        btnInventory.addEventListener('click', () => {
+            fetch('<?= BASE_URL ?>game/inventory.php')
+            .then(res => res.text())
+            .then(data => {
+                inventoryContent.innerHTML = data;
+                inventoryModal.style.display = 'flex';
+        });
         });
     }
 
@@ -94,9 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const grimoireContent = document.getElementById('grimoireContent');
 
     if (btnGrimoire) {
-        btnGrimoire.addEventListener('click', function(e) {
-            e.preventDefault();
-            fetch('/projetDWWM/game/grimoire.php') // créer ce fichier côté serveur
+        btnGrimoire.addEventListener('click', () => {
+            fetch('<?= BASE_URL ?>game/grimoire.php') // créer ce fichier côté serveur
                 .then(res => res.text())
                 .then(data => {
                     grimoireContent.innerHTML = data;

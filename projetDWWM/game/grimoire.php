@@ -20,6 +20,9 @@ if (!$char) {
 
 $charId = $char['id'];
 
+// var_dump($charId);
+// die();
+
 // Récupérer les sorts appris par le personnage
 $sql = "
     SELECT spells.name, spells.description
@@ -40,9 +43,7 @@ $spells = $stmt->fetchAll();
     <?php foreach ($spells as $spell): ?>
         <div class="grimoire-item">
             <div class="grimoire-item-name"><?= htmlspecialchars($spell['name']) ?></div>
-            <div class="grimoire-item-description">
-                <?= htmlspecialchars($spell['description']) ?>
-            </div>
+            <div class="grimoire-item-description"> <?= htmlspecialchars($spell['description']) ?></div>
         </div>
     <?php endforeach; ?>
 <?php else: ?>

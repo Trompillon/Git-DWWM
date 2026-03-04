@@ -1,6 +1,9 @@
 <?php
-// 1. Inclure le fichier de connexion à la base de données
-include 'db.php'; 
+
+require_once __DIR__ . '/../db.php'; 
+
+// définir la base URL
+define('BASE_URL', '/projetDWWM/');
 
 // Le code de traitement doit être avant l'affichage HTML
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'created_at' => $date_creation
                 ]);
 
-                header('Location: connexion.php?action=added');
+                header('Location: ' . BASE_URL . 'connexion/connexion.php?action=added');
                 exit;
 
             } catch (PDOException $e) {
@@ -61,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
     <title>Inscription</title>
 </head>
 <body>
@@ -75,11 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="formInscription" action="inscription.php" method="POST">
             <h1>Inscription</h1>
 
-            <label for="pseudo">Pseudo</label>
-            <input class="formInput" type="text" name="login" id="login" required>
-            <br>
-
-            <label for="email">Adresse Email</label>
+            <label for="email">Email</label>
             <input class="formInput" type="email" name="email" id="email" required>
             <br>
 
@@ -96,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>
 </html>
