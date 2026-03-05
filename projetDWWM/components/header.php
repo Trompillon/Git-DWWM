@@ -11,7 +11,7 @@ define('BASE_URL', '/projetDWWM/');
         <li><a href="<?= BASE_URL ?>index.php">Accueil</a></li>
 
         <?php if (isset($_SESSION['user_id'])) : ?>
-            <li><a href="<?= BASE_URL ?>game/game.php">Continuer l'aventure</a></li>
+            <li><a href="<?= BASE_URL ?>game/resume_game.php">Continuer l'aventure</a></li>
             <li><a href="<?= BASE_URL ?>game/choose_class.php">Nouvelle aventure</a></li>
             <li><a href="<?= BASE_URL ?>connexion/deconnexion.php">Déconnexion</a></li>
         <?php else : ?>

@@ -2,10 +2,6 @@
 session_start();
 require '../db.php';
 
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
-
-// définir la base URL
 define('BASE_URL', '/projetDWWM/');
 
 $userId = $_SESSION['user_id'] ?? null;
@@ -34,6 +30,9 @@ $stmtCheck->execute([$userId]);
 $character = $stmtCheck->fetch();
 
 if ($character) {
+    // Note pour ton titre pro : à cause des clés étrangères, 
+    // assure-toi que ta BDD est en "ON DELETE CASCADE" sur char_id, 
+    // sinon il faudra supprimer manuellement char_progress avant character.
     $stmtDel = $pdo->prepare("DELETE FROM characters WHERE user_id = ?");
     $stmtDel->execute([$userId]);
 }
@@ -42,29 +41,23 @@ if ($character) {
 if (isset($_POST['class'])) {
     $class = $_POST['class'];
 
-    // Définir les stats de base selon la classe
     switch($class) {
         case 'Guerrier':
-            $hp_max = 50;
-            $mana_max = 0;
-            $attack_base = 3;
-            $defense_base = 2;
+            $hp_max = 50; $mana_max = 0; $attack_base = 3; $defense_base = 2;
+            $startPassageId = 2;
             break;
         case 'Mage':
-            $hp_max = 30;
-            $mana_max = 50;
-            $attack_base = 2;
-            $defense_base = 1;
+            $hp_max = 30; $mana_max = 50; $attack_base = 2; $defense_base = 1;
+            $startPassageId = 3;
             break;
-        // autres classes si besoin
     }
 
     $hp_current = $hp_max;
     $mana_current = $mana_max;
     $gold_pieces = 50;
-    $name = $class; // ou demander un nom dans un input
+    $name = $class;
 
-    // Création du perso en BDD
+    // 1. Création du perso
     $stmtInsert = $pdo->prepare("
         INSERT INTO characters
         (user_id, name, class, hp_max, hp_current, mana_max, mana_current, attack_base, defense_base, gold_pieces, is_deleted, created_at, updated_at)
@@ -72,30 +65,27 @@ if (isset($_POST['class'])) {
     ");
     $stmtInsert->execute([$userId, $name, $class, $hp_max, $hp_current, $mana_max, $mana_current, $attack_base, $defense_base, $gold_pieces]);
     
-    // --- AJOUT DES SORTS DE DÉPART ---
+    // 2. RECUPERER L'ID DU PERSO (VITAL)
     $charId = $pdo->lastInsertId();
+    $_SESSION['char_id'] = $charId; // Sans ça, game.php te jette !
 
+    // 3. Gestion des sorts pour le Mage
     if ($class === 'Mage') {
-        $defaultSpells = [1, 2]; // Charme et Trait de feu
+        $defaultSpells = [1, 2]; 
         $stmtSpell = $pdo->prepare("INSERT INTO character_spells (char_id, spell_id) VALUES (?, ?)");
         foreach ($defaultSpells as $spellId) {
             $stmtSpell->execute([$charId, $spellId]);
         }
     }
     
-    // Définir le passage d'intro selon la classe
-    if ($class === 'Guerrier') {
-        $_SESSION['current_passage_id'] = 2;
-    } elseif ($class === 'Mage') {
-        $_SESSION['current_passage_id'] = 3;
-    }
-
-    // $_SESSION['class'] = $class; // stocker la classe pour plus tard si besoin
+    // 4. INITIALISER LA SAUVEGARDE EN BDD (VITAL)
+    // C'est ce qui permettra au bouton "Continuer" de fonctionner plus tard
+    $stmtProgress = $pdo->prepare("INSERT INTO char_progress (char_id, current_story_id, updated_at) VALUES (?, ?, NOW())");
+    $stmtProgress->execute([$charId, $startPassageId]);
 
     header("Location: " . BASE_URL . "game/game.php");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
