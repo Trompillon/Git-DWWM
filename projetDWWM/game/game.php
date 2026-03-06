@@ -1,11 +1,11 @@
 <?php
 session_start();
-require '../db.php';
 
-// Active les erreurs pour voir s'il y a un souci SQL
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../db.php';
 
-define('BASE_URL', '/projetDWWM/');
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 /* =========================================
    1. RÉCUPÉRATION DU PERSONNAGE (SÉCURITÉ)
@@ -17,7 +17,7 @@ if (!$userId) {
     exit;
 }
 
-// On récupère le perso lié à l'user (Méthode ultra-fiable)
+// On récupère le perso lié à l'user
 $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ?");
 $stmtChar->execute([$userId]);
 $character = $stmtChar->fetch();
@@ -76,6 +76,19 @@ $stmtPos = $pdo->prepare("SELECT current_story_id FROM char_progress WHERE char_
 $stmtPos->execute([$charId]);
 $progress = $stmtPos->fetch();
 $currentPassageId = $progress ? $progress['current_story_id'] : 1;
+
+// --- AJOUT : DÉTECTION DU COMBAT ---
+$stmtFight = $pdo->prepare("SELECT monsters_id FROM story_fights WHERE story_id = ?");
+$stmtFight->execute([$currentPassageId]);
+$encounter = $stmtFight->fetch();
+
+$isFighting = false;
+if ($encounter) {
+    $isFighting = true;
+    // On garde l'ID du monstre pour le bouton plus bas
+    $monsterId = $encounter['monsters_id'];
+}
+// --- FIN AJOUT ---
 
 // B. GESTION DES OBJETS (S'exécute à l'affichage du passage)
 $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
@@ -184,16 +197,28 @@ $character = $stmtChar->fetch();
     </div>
 
     <div id="choices">
-        <?php foreach ($choices as $choice): ?>
-            <?php if ($choice['required_class'] && $choice['required_class'] !== $character['class']) continue; ?>
+        <?php if ($isFighting): ?>
+            <div class="combat-encounter">
+                <form action="fight.php" method="POST">
+                    <input type="hidden" name="monster_id" value="<?= $monsterId ?>">
+                    <button type="submit" class="btn-fight">
+                        ⚔️ Combattre
+                    </button>
+                </form>
+            </div>
 
-            <form method="POST">
-                <input type="hidden" name="choice_id" value="<?= $choice['id'] ?>">
-                <button type="submit" class="choice <?= $choice['required_class'] ? strtolower($choice['required_class']) : '' ?>">
-                    <?= htmlspecialchars($choice['choice']) ?>
-                </button>
-            </form>
-        <?php endforeach; ?>
+        <?php else: ?>
+            <?php foreach ($choices as $choice): ?>
+                <?php if ($choice['required_class'] && $choice['required_class'] !== $character['class']) continue; ?>
+
+                <form method="POST">
+                    <input type="hidden" name="choice_id" value="<?= $choice['id'] ?>">
+                    <button type="submit" class="choice <?= $choice['required_class'] ? strtolower($choice['required_class']) : '' ?>">
+                        <?= htmlspecialchars($choice['choice']) ?>
+                    </button>
+                </form>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 
     <?php include __DIR__ . '/../components/footer.php'; ?>

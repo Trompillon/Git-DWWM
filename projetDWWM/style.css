@@ -47,12 +47,12 @@
 }
 
 body {
-  font-family: var(--font-main);
-  background-color: var(--primary);
-  color: var(--text-light);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    font-family: var(--font-main);
+    background-color: var(--primary);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* NAVBAR */
@@ -77,15 +77,72 @@ body {
     margin-right: 20px;
 }
 
+.nav-left li {
+    list-style: none;
+    margin-right: 20px;
+    position: relative; 
+    overflow: hidden; /* Garde le reflet à l'intérieur */
+    display: inline-block;
+}
+
 .nav-left li a {
+    display: inline-block;
+    padding: 5px 0; /* Un peu d'espace pour la ligne en dessous */
     color: var(--text-light);
     text-decoration: none;
     font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
     transition: 0.3s ease;
 }
 
+/* 1. L'EFFET DE REFLET (Flash) */
+.nav-left li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent
+    );
+    /* IMPORTANT : On met transition à 0s ici pour que le retour soit invisible */
+    transition: all 0s; 
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* 2. L'EFFET DE SOULIGNEMENT (Underline animé) */
+.nav-left li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; /* Départ à zéro */
+    height: 2px;
+    background-color: var(--secondary);
+    transition: width 0.3s ease;
+}
+
+/* --- ACTIONS AU SURVOL --- */
+
+/* Déclenche le reflet */
+.nav-left li:hover::before {
+    left: 150%;
+    transition: all 0.6s ease;
+}
+
+/* Déclenche le soulignement */
+.nav-left li:hover a::after {
+    width: 100%; /* La ligne se déploie */
+}
+
 .nav-left li a:hover {
-    text-decoration: underline;
+    color: var(--secondary); /* Optionnel : le texte s'éclaire un peu */
 }
 
 .nav-right .inventory-btn img {
@@ -96,7 +153,8 @@ body {
 }
 
 .nav-right .inventory-btn img:hover {
-    filter: brightness(1.2);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8)) brightness(1.5);
+    transform: scale(1.1); /* Un léger zoom aide à la visibilité */
 }
 
 .nav-right .grimoire-btn img {
@@ -107,7 +165,8 @@ body {
 }
 
 .nav-right .grimoire-btn img:hover {
-    filter: brightness(1.2);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8)) brightness(1.5);
+    transform: scale(1.1); /* Un léger zoom aide à la visibilité */
 }
 
 /* MODAL INVENTAIRE */
@@ -272,44 +331,45 @@ body {
    CONTENT SECTION */
 
 .content {
-  background-color: #ffffff;
-  color: var(--text-dark);
-  text-align: center;
-  padding: 40px 20px;
+    background-color: #ffffff;
+    color: var(--text-dark);
+    text-align: center;
+    padding: 40px 20px;
 }
 
 .content p {
-  max-width: 700px;
-  margin: 20px auto 0;
-  line-height: 1.6;
-  font-size: 0.95rem;
+    max-width: 700px;
+    margin: 20px auto 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 /* BUTTON GOLD */
 
 .btn-gold {
-  display: inline-block; /* important pour le <a> */
-  background-color: var(--secondary);
-  color: var(--text-dark);
-  padding: 12px 24px;  /* augmente un peu pour la lisibilité */
-  border: none;
-  border-radius: 6px;  /* petit arrondi */
-  cursor: pointer;
-  font-family: var(--font-main);
-  font-size: 1rem;
-  font-weight: bold;
-  text-decoration: none; /* supprime le soulignement si c'est un <a> */
-  transition: 0.3s ease;
-  margin-top: 10px;
+    display: inline-block; /* important pour le <a> */
+    background-color: var(--secondary);
+    color: var(--text-dark);
+    padding: 12px 24px;  /* augmente un peu pour la lisibilité */
+    border: none;
+    border-radius: 6px;  /* petit arrondi */
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none; /* supprime le soulignement si c'est un <a> */
+    transition: 0.3s ease;
+    margin-top: 10px;
 }
 
 .btn-gold.large {
-  padding: 16px 32px;
-  font-size: 1.1rem;
+    padding: 16px 32px;
+    font-size: 1.1rem;
 }
 
 .btn-gold:hover {
-  filter: brightness(1.1);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8)) brightness(1.5);
+    transform: scale(1.1); /* Un léger zoom aide à la visibilité */
 }
 
 /* FORMULAIRES CONNEXION / INSCRIPTION */
@@ -429,7 +489,8 @@ body {
     margin: 30px auto 50px;
 }
 
-#choices form button {
+#choices form button,
+#choices form button.btn-fight {
     background-color: var(--secondary);
     color: var(--text-dark);
     padding: 12px 24px;
@@ -443,7 +504,7 @@ body {
 }
 
 #choices form button:hover {
-    filter: brightness(1.1);
+    filter: brightness(1.8);
 }
 
 #choices form button.choice.mage { background-color: #9b59b6; color: white; }
@@ -451,13 +512,13 @@ body {
 /* FOOTER */
 
 .footer {
-  background-color: var(--primary);
-  color: var(--text-light);
-  font-size: 0.75rem;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
+    background-color: var(--primary);
+    color: var(--text-light);
+    font-size: 0.75rem;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
 }
 
 /* DIALOGUES */
@@ -516,4 +577,21 @@ body {
 .gold {
     text-align: center;
     margin-top: 6px;
+}
+
+.rgpd {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px 25px;
+    text-align: center;
+    font-family: var(--font-main);
+    color: var(--text-dark);  
+    background-color: var(--text-light);
+    border-radius: 12px;      
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    line-height: 1.6;
+}
+
+.rgpd ul {
+    list-style: none;
 }

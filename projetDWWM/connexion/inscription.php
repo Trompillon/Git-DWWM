@@ -1,9 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../db.php'; 
-
-// définir la base URL
-define('BASE_URL', '/projetDWWM/');
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../db.php';
 
 // Le code de traitement doit être avant l'affichage HTML
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -92,6 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <br>
             <button type="submit" id="btn">Inscription</button>
+            <br>
+            <br>
+
+            <p>
+                <a href="<?= BASE_URL ?>/rgpd.php">En créant un compte, vous acceptez notre Politique de confidentialité</a>
+            </p>
         </form>
     </div>
 

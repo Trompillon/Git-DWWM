@@ -1,7 +1,6 @@
 <?php
 
-// définir la base URL
-define('BASE_URL', '/projetDWWM/');
+require_once __DIR__ . '/../config.php'; 
 
 session_start();
 session_unset();

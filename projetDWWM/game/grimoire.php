@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     exit("Accès refusé");
 }
 
-require '../db.php';
+require_once __DIR__ . '/../db.php';
 
 $userId = $_SESSION['user_id'];
 

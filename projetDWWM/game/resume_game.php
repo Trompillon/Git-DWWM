@@ -1,8 +1,11 @@
 <?php
 session_start();
-require '../db.php'; // Ajuste le chemin vers ton fichier de connexion BDD
 
-define('BASE_URL', '/projetDWWM/');
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../db.php';
+
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 $userId = $_SESSION['user_id'] ?? null;
 
