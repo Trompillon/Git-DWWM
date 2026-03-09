@@ -467,18 +467,18 @@ body {
 }
 
 .story-img-wrapper {
-    width: 80%;          /* largeur relative au parent, pas fixe */
-    max-width: 800px;    /* limite maximale pour pas exploser l'écran */
-    max-height: 450px;   /* limite hauteur si l'image est très grande */
-    margin: 20px auto;   /* centre l’image */
-    overflow: hidden;
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Petit bonus visuel */
 }
 
 .story-img-wrapper img {
-    width: 100%;         /* remplit le wrapper */
-    height: auto;        /* conserve le ratio naturel */
-    object-fit: contain; /* ratio conservé si le wrapper est plus petit */
-    display: block;
+    width: 100%;         /* L'image prend toute la largeur du wrapper */
+    height: auto;        /* Hauteur automatique selon le ratio de l'image */
+    display: block;      /* Enlève l'espace blanc sous l'image */
+    object-fit: contain; /* Sécurité : l'image ne sera JAMAIS déformée */
     border-radius: 6px;
 }
 
@@ -594,4 +594,161 @@ body {
 
 .rgpd ul {
     list-style: none;
+}
+
+/* Container global de l'arène de combat */
+.battle-arena {
+    position: fixed;
+    top: 80px; /* Juste en dessous du HUD joueur */
+    left: 20px;
+    width: 300px;
+    z-index: 900;
+}
+
+/* La boîte de stats du monstre */
+.stat-box.monster {
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.stat-box.monster h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ff4d4d;
+}
+
+/* La barre de vie */
+.hp-bar {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #555;
+    margin-bottom: 10px;
+}
+
+/* Le remplissage de la barre */
+.hp-fill {
+    transition: width 0.4s ease-out; /* Animation quand la vie baisse */
+    height: 100%;
+    /* On enlève le background: red du HTML pour mettre un dégradé plus sympa ici */
+    background: linear-gradient(90deg, #c0392b, #e74c3c) !important; 
+}
+
+/* Le texte DES PV à l'intérieur de la barre */
+.stat-box.monster span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none; /* Pour ne pas gêner le clic */
+}
+
+/* Section des actions juste en dessous */
+.fight-actions {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-attack, .btn-spell {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.1s, filter 0.2s;
+}
+
+.btn-attack {
+    background: #e67e22;
+    color: white;
+}
+
+.btn-spell {
+    background: #3498db;
+    color: white;
+}
+
+.btn-attack:hover, .btn-spell:hover {
+    filter: brightness(1.2);
+    transform: scale(1.02);
+}
+
+/* --- PAGE GAME OVER --- */
+.body-game-over {
+    background-color: #000;
+    color: #ff0000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.death-container {
+    text-align: center;
+    border: 2px solid #500;
+    padding: 50px;
+    background: radial-gradient(circle, rgba(40,0,0,1) 0%, rgba(0,0,0,1) 100%);
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.15);
+    border-radius: 5px;
+}
+
+.death-title {
+    font-family: 'Cinzel', serif; /* Si tu as une police médiévale, sinon serif */
+    font-size: 5rem;
+    letter-spacing: 15px;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    animation: bloodDrip 3s ease-in-out;
+}
+
+.death-log {
+    color: #bbbbbb;
+    font-style: italic;
+    font-size: 1.2rem;
+    margin: 20px 0 40px 0;
+    max-width: 500px;
+}
+
+.btn-retry {
+    display: inline-block;
+    padding: 15px 40px;
+    background: transparent;
+    color: #ff0000;
+    text-decoration: none;
+    border: 1px solid #500;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: all 0.4s ease;
+}
+
+.btn-retry:hover {
+    background: #ff0000;
+    color: #000;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+@keyframes bloodDrip {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
