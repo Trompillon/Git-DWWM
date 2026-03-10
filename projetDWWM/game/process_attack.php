@@ -2,8 +2,8 @@
 session_start();
 require_once __DIR__ . '/../db.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 $fightId = $_POST['fight_id'] ?? null;
 $action  = $_POST['action'] ?? null;

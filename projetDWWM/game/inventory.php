@@ -24,7 +24,7 @@ $charId = $char['id'];
 // die();
 
 $sql = "
-    SELECT items.name, items.description, inventory.quantity
+    SELECT items.id, items.name, items.description, items.heal_hp, items.heal_mana, inventory.quantity
     FROM inventory
     JOIN items ON inventory.item_id = items.id
     WHERE inventory.char_id = ?
@@ -46,16 +46,25 @@ $character = $stmt->fetch();
 
 <?php if (!empty($items)): ?>
     <?php foreach ($items as $item): ?>
-        <div class="inventory-item">
-            <div class="inventory-item-header">
-                <span class="item-name"><?= htmlspecialchars($item['name']) ?></span>
-                <span class="item-quantity">x<?= intval($item['quantity']) ?></span>
-            </div>
-            <div class="inventory-item-description">
-                <?= htmlspecialchars($item['description']) ?>
-            </div>
+    <div class="inventory-item" id="item-row-<?= $item['id'] ?>">
+        <div class="inventory-item-header">
+            <span class="item-name"><?= htmlspecialchars($item['name']) ?></span>
+            <span class="item-quantity">x<span class="qty-val"><?= intval($item['quantity']) ?></span></span>
         </div>
-    <?php endforeach; ?>
+        
+        <?php if ($item['heal_hp'] > 0 || $item['heal_mana'] > 0): ?>
+            <button class="btn-use-item" 
+                    onclick="useItem(<?= $item['id'] ?>)" 
+                    data-id="<?= $item['id'] ?>">
+                Utiliser
+            </button>
+        <?php endif; ?>
+
+        <div class="inventory-item-description">
+            <?= htmlspecialchars($item['description']) ?>
+        </div>
+    </div>
+<?php endforeach; ?>
     <p class="inventory-gold">Or : <?= intval($character['gold_pieces']) ?> 🪙</p>
 <?php else: ?>
     <p>Votre inventaire est vide.</p>

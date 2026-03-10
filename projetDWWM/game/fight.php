@@ -127,6 +127,7 @@ $character['hp_current'] = $activeFight['char_current_hp'];
     <title>Combat !</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
     <link rel="shortcut icon" href="<?= BASE_URL ?>img/icon.png">
+    <script src="../script.js" defer></script>
 </head>
 <body>
 
@@ -135,18 +136,18 @@ $character['hp_current'] = $activeFight['char_current_hp'];
     <?php if ($character): ?>
         <div id="hud">
             <div class="bar health">
-                <div class="fill" style="width: <?= ($character['hp_current'] / $character['hp_max']) * 100 ?>%;"></div>
-                <span><?= $character['hp_current'] ?> / <?= $character['hp_max'] ?> PV</span>
+                <div id="hp-fill" class="fill" style="width: <?= ($character['hp_current'] / $character['hp_max']) * 100 ?>%;"></div>
+                <span id="hp-text"><?= $character['hp_current'] ?> / <?= $character['hp_max'] ?> PV</span>
             </div>
 
             <?php if ($character['class'] === 'Mage'): ?>
                 <div class="bar mana">
-                    <div class="fill" style="width: <?= ($character['mana_current'] / $character['mana_max']) * 100 ?>%;"></div>
-                    <span><?= $character['mana_current'] ?> / <?= $character['mana_max'] ?> PM</span>
+                    <div id="mana-fill" class="fill" style="width: <?= ($character['mana_current'] / $character['mana_max']) * 100 ?>%;"></div>
+                    <span id="mana-text"><?= $character['mana_current'] ?> / <?= $character['mana_max'] ?> PM</span>
                 </div>
             <?php endif; ?>
 
-            <div class="gold">💰 <?= $character['gold_pieces'] ?></div>
+            <div class="gold">💰 <span id="gold-amount"><?= $character['gold_pieces'] ?></span></div>
         </div>
     <?php endif; ?>
 
@@ -189,6 +190,8 @@ $character['hp_current'] = $activeFight['char_current_hp'];
         </div>
     </section>
     </main>
+
+    <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>
 </html>
