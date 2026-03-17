@@ -24,7 +24,7 @@ $charId = $char['id'];
 // die();
 
 $sql = "
-    SELECT items.id, items.name, items.description, items.heal_hp, items.heal_mana, inventory.quantity
+    SELECT items.id, items.name, items.description, items.heal_hp, items.heal_mana, items.damage_on_use, inventory.quantity
     FROM inventory
     JOIN items ON inventory.item_id = items.id
     WHERE inventory.char_id = ?
@@ -52,7 +52,8 @@ $character = $stmt->fetch();
             <span class="item-quantity">x<span class="qty-val"><?= intval($item['quantity']) ?></span></span>
         </div>
         
-        <?php if ($item['heal_hp'] > 0 || $item['heal_mana'] > 0): ?>
+       <!-- Affichage des boutons -->
+        <?php if ($item['heal_hp'] > 0 || $item['heal_mana'] > 0 || $item['damage_on_use'] > 0): ?>
             <button class="btn-use-item" 
                     onclick="useItem(<?= $item['id'] ?>)" 
                     data-id="<?= $item['id'] ?>">

@@ -9,7 +9,14 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 
 <nav class="navbar">
-    <ul class="nav-left">
+
+    <button class="burger-menu" id="burgerMenu">
+        <span>☰</span> </button>
+
+    <ul class="nav-left" id="navLinks">
+        <li class="close-menu" id="closeMenu">
+            <span>&times;</span>
+        </li>
         <li><a href="<?= BASE_URL ?>index.php">Accueil</a></li>
 
         <?php if (isset($_SESSION['user_id'])) : ?>
@@ -117,4 +124,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target === grimoireModal) grimoireModal.style.display = 'none';
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const burger = document.getElementById('burgerMenu');
+    const navLinks = document.getElementById('navLinks');
+    const closeBtn = document.getElementById('closeMenu');
+
+    // OUVRIR
+    if (burger) {
+        burger.onclick = () => {
+            navLinks.classList.add('active');
+        };
+    }
+
+    // FERMER
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            navLinks.classList.remove('active');
+        };
+    }
+});
+
 </script>

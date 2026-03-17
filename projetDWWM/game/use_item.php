@@ -1,10 +1,6 @@
 <?php
 session_start();
-
 require_once __DIR__ . '/../db.php';
-
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
 
 if (!isset($_SESSION['user_id']) || !isset($_POST['item_id'])) {
     echo json_encode(['success' => false, 'message' => 'Action non autorisée']);
@@ -14,7 +10,7 @@ if (!isset($_SESSION['user_id']) || !isset($_POST['item_id'])) {
 $userId = $_SESSION['user_id'];
 $itemId = intval($_POST['item_id']);
 
-// 1. Récupérer le perso et l'item
+// 1. Récupérer le perso et l'item (AJOUT de damage_on_use ici)
 $stmt = $pdo->prepare("
     SELECT 
         characters.id, 
@@ -24,6 +20,7 @@ $stmt = $pdo->prepare("
         characters.mana_max, 
         items.heal_hp, 
         items.heal_mana, 
+        items.damage_on_use,
         inventory.quantity 
     FROM characters
     JOIN inventory ON characters.id = inventory.char_id
@@ -39,36 +36,67 @@ if (!$data || $data['quantity'] <= 0) {
     exit;
 }
 
-// 2. Calculer les nouveaux totaux (sans dépasser le max)
-$newHp = min($data['hp_max'], $data['hp_current'] + $data['heal_hp']);
-$newMana = min($data['mana_max'], $data['mana_current'] + $data['heal_mana']);
+$charId = $data['id'];
 
-// 3. Update BDD : On soigne le perso ET on réduit l'inventaire
+// --- LOGIQUE DE L'OBJET ---
+
 $pdo->beginTransaction();
 try {
-    // Update perso
-    // Dans use_item.php
-    $updateChar = $pdo->prepare("UPDATE characters SET hp_current = ?, mana_current = ? WHERE id = ?");
-    $updateChar->execute([$newHp, $newMana, $data['id']]);
+    // CAS A : C'est un objet de DÉGÂTS
+    if ($data['damage_on_use'] > 0) {
+        // On cherche le combat en cours
+        $stmtFight = $pdo->prepare("SELECT id, monster_current_hp FROM fights WHERE char_id = ? AND monster_current_hp > 0 LIMIT 1");
+        $stmtFight->execute([$charId]);
+        $fight = $stmtFight->fetch();
 
-    // Update inventaire
+        if (!$fight) {
+            throw new Exception("Aucun monstre à attaquer !");
+        }
+
+        $newMonsterHp = max(0, $fight['monster_current_hp'] - $data['damage_on_use']);
+        
+        // Update du monstre
+        $updateMonster = $pdo->prepare("UPDATE fights SET monster_current_hp = ? WHERE id = ?");
+        $updateMonster->execute([$newMonsterHp, $fight['id']]);
+
+        $response = [
+            'success' => true,
+            'type' => 'damage',
+            'newMonsterHp' => $newMonsterHp,
+            'remaining' => $data['quantity'] - 1
+        ];
+
+    } 
+    // CAS B : C'est un objet de SOIN (ton code actuel)
+    else {
+        $newHp = min($data['hp_max'], $data['hp_current'] + $data['heal_hp']);
+        $newMana = min($data['mana_max'], $data['mana_current'] + $data['heal_mana']);
+
+        $updateChar = $pdo->prepare("UPDATE characters SET hp_current = ?, mana_current = ? WHERE id = ?");
+        $updateChar->execute([$newHp, $newMana, $charId]);
+
+        $response = [
+            'success' => true,
+            'type' => 'heal',
+            'newHp' => $newHp,
+            'newMana' => $newMana,
+            'remaining' => $data['quantity'] - 1
+        ];
+    }
+
+    // MISE À JOUR COMMUNE : L'inventaire
     if ($data['quantity'] > 1) {
         $updateInv = $pdo->prepare("UPDATE inventory SET quantity = quantity - 1 WHERE char_id = ? AND item_id = ?");
-        $updateInv->execute([$data['id'], $itemId]);
+        $updateInv->execute([$charId, $itemId]);
     } else {
         $deleteInv = $pdo->prepare("DELETE FROM inventory WHERE char_id = ? AND item_id = ?");
-        $deleteInv->execute([$data['id'], $itemId]);
+        $deleteInv->execute([$charId, $itemId]);
     }
 
     $pdo->commit();
-    echo json_encode([
-        'success' => true, 
-        'newHp' => $newHp, 
-        'newMana' => $newMana, 
-        'remaining' => $data['quantity'] - 1
-    ]);
+    echo json_encode($response);
 
 } catch (Exception $e) {
     $pdo->rollBack();
-    echo json_encode(['success' => false, 'message' => 'Erreur BDD']);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }

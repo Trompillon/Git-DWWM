@@ -4,8 +4,8 @@ session_start();
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 /* =========================================
    1. SÉCURITÉ & RÉCUPÉRATION DU PERSO
@@ -21,13 +21,25 @@ $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE user_id = ?");
 $stmtChar->execute([$userId]);
 $character = $stmtChar->fetch();
 
+// 1. On vérifie d'abord si le perso existe
 if (!$character) {
     header("Location: " . BASE_URL . "game/choose_class.php");
     exit;
 }
 
+// 2. Maintenant qu'on est SÛR qu'il existe, on définit les IDs
 $charId = $character['id'];
 $_SESSION['char_id'] = $charId;
+
+// 3. Et ENFIN on récupère ses sorts
+$stmtSpells = $pdo->prepare("
+    SELECT s.* FROM spells s
+    JOIN character_spells cs ON s.id = cs.spell_id
+    WHERE cs.char_id = :char_id 
+    AND s.type = 'damage'
+");
+$stmtSpells->execute([':char_id' => $charId]);
+$offenseSpells = $stmtSpells->fetchAll();
 
 /* =========================================
    2. LOGIQUE DU COMBAT (MONSTRE)
@@ -55,13 +67,14 @@ $monster = $stmtMonster->fetch();
 $stmtCheck = $pdo->prepare("
     SELECT id FROM fights 
     WHERE char_id = :char_id 
-    AND monsters_id = :m_id 
+    AND monsters_id = :monsters_id 
     AND monster_current_hp > 0 
     LIMIT 1
 ");
+
 $stmtCheck->execute([
     ':char_id' => $charId,
-    ':m_id'    => $monsterId
+    ':monsters_id'    => $monsterId
 ]);
 $existingFight = $stmtCheck->fetch();
 
@@ -115,6 +128,22 @@ $stmtChar = $pdo->prepare("SELECT * FROM characters WHERE id = ?");
 $stmtChar->execute([$charId]);
 $character = $stmtChar->fetch();
 
+// On récupère le perso avec les infos de son arme équipée
+$stmtChar = $pdo->prepare("
+    SELECT 
+        c.*, 
+        i.name AS weapon_name, 
+        i.dice_type AS weapon_dice
+    FROM characters c
+    LEFT JOIN inventory inv ON c.id = inv.char_id
+    LEFT JOIN items i ON inv.item_id = i.id
+    WHERE c.id = ?
+    ORDER BY i.bonus_atk DESC -- On prend l'item avec le meilleur bonus (ton arme)
+    LIMIT 1
+");
+$stmtChar->execute([$charId]);
+$character = $stmtChar->fetch();
+
 // On force les PV du HUD à être ceux de la table fights
 $character['hp_current'] = $activeFight['char_current_hp'];
 
@@ -152,7 +181,7 @@ $character['hp_current'] = $activeFight['char_current_hp'];
     <?php endif; ?>
 
     <?php if (isset($_SESSION['combat_log'])): ?>
-        <div class="combat-log" style="background: rgba(0,0,0,0.8); color: white; padding: 15px; text-align: center; border: 2px solid #e74c3c; margin: 10px; border-radius: 8px; font-weight: bold;">
+        <div class="combat-log">
             <?= $_SESSION['combat_log']; ?>
             <?php unset($_SESSION['combat_log']); ?>
         </div>
@@ -168,26 +197,80 @@ $character['hp_current'] = $activeFight['char_current_hp'];
             <h3><?= htmlspecialchars($monster['name']) ?></h3>
             
             <div class="hp-bar">
-                <div class="hp-fill" style="width: <?= ($activeFight['monster_current_hp'] / $monster['hp_max']) * 100 ?>%;"></div>
-                <span><?= $activeFight['monster_current_hp'] ?> / <?= $monster['hp_max'] ?> HP</span>
+                <div id="monster-hp-fill" class="hp-fill" style="width: <?= ($activeFight['monster_current_hp'] / $monster['hp_max']) * 100 ?>%;"></div>
+                
+                <span id="monster-hp-text"><?= $activeFight['monster_current_hp'] ?> / <?= $monster['hp_max'] ?> HP</span>
             </div>
         </div>
 
         <div class="fight-actions">
-            <form action="process_attack.php" method="POST">
-                <input type="hidden" name="fight_id" value="<?= $currentFightId ?>">
-                
-                <button type="submit" name="action" value="attack" class="btn-attack">
-                    ⚔️ Attaquer
-                </button>
+            <div class="main-buttons" style="display: flex; gap: 10px;">
+                <button type="button" class="btn-action btn-attack" onclick="toggleAttack()" style="flex: 1;">⚔️ Attaquer</button>
 
                 <?php if (strtolower($character['class']) === 'mage'): ?>
-                    <button type="submit" name="action" value="spell" class="btn-spell">
-                        ✨ Lancer un sort
-                    </button>
+                    <button type="button" class="btn-action btn-spell" onclick="toggleSpells()" style="flex: 1;">✨ Magie</button>
                 <?php endif; ?>
-            </form>
+                
+            </div>
+
+            <div id="attack-list" class="spell-submenu" style="display:none;">
+                <form action="process_attack.php" method="POST">
+                    <input type="hidden" name="fight_id" value="<?= $currentFightId ?>">
+                    <input type="hidden" name="action" value="attack">
+                    
+                    <button type="submit" class="btn-spell-choice">
+                        <?= htmlspecialchars($character['weapon_name'] ?? 'Mains nues') ?> 
+                        <span style="font-size: 0.8em; opacity: 0.8;">
+                            (dmg: 1d<?= $character['weapon_dice'] ?? 4 ?> + <?= $character['attack_base'] ?>)
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="spell-list" class="spell-submenu" style="display:none;">
+                <?php if (!empty($offenseSpells)): ?>
+                    <?php foreach ($offenseSpells as $spell): ?>
+                        <form action="process_attack.php" method="POST">
+                            <input type="hidden" name="fight_id" value="<?= $currentFightId ?>">
+                            <input type="hidden" name="action" value="cast_spell">
+                            <input type="hidden" name="spell_id" value="<?= $spell['id'] ?>">
+                            
+                            <button type="submit" class="btn-spell-choice">
+                                <?= htmlspecialchars($spell['name']) ?> 
+                                <span style="font-size: 0.8em; opacity: 0.8;">
+                                    (cost: <?= $spell['mana_cost'] ?> PM | dmg: <?= $spell['damage_base'] ?>)
+                                </span>
+                            </button>
+                        </form>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p style="color: #666; font-style: italic; text-align: center;">Aucun sort de combat connu...</p>
+                <?php endif; ?>
+            </div>
         </div>
+
+    <script>
+        function toggleAttack() {
+            const attackList = document.getElementById('attack-list');
+            const spellList = document.getElementById('spell-list');
+                
+            // On ferme le menu sort si il est ouvert
+            if(spellList) spellList.style.display = 'none';
+                
+            attackList.style.display = (attackList.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function toggleSpells() {
+            const spellList = document.getElementById('spell-list');
+            const attackList = document.getElementById('attack-list');
+                
+            // On ferme le menu attaque si il est ouvert
+            if(attackList) attackList.style.display = 'none';
+                
+            spellList.style.display = (spellList.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+
     </section>
     </main>
 

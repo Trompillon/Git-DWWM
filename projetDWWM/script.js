@@ -8,25 +8,36 @@ function useItem(itemId) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            // 1. Appeler la fonction qui met à jour le HUD proprement
-            updateHUD(data);
-
-            // 2. Mettre à jour la quantité dans la modale d'inventaire
-            const itemRow = document.getElementById(`item-row-${itemId}`);
-            if (itemRow) {
-                if (data.remaining > 0) {
-                    // On cherche le span qui contient le chiffre de la quantité
-                    const qtyVal = itemRow.querySelector('.qty-val');
-                    if (qtyVal) qtyVal.innerText = data.remaining;
-                } else {
-                    itemRow.remove(); // Plus de potion ? On enlève la ligne
-                }
+        // Dans script.js, à l'intérieur de .then(data => { ... })
+if (data.success) {
+    if (data.type === 'damage') {
+        // --- CAS ATTACK ---
+        const monsterText = document.getElementById('monster-hp-text');
+        const monsterFill = document.getElementById('monster-hp-fill');
+        
+        if (monsterText) {
+            // On récupère le HP Max qui est déjà écrit dans le span (ex: "50 / 100 HP")
+            const parts = monsterText.textContent.split('/');
+            const maxHp = parts[1] ? parts[1].trim() : "??"; 
+            
+            // On met à jour le texte (ex: "40 / 100 HP")
+            monsterText.textContent = `${data.newMonsterHp} / ${maxHp}`;
+            
+            // On met à jour la barre visuelle
+            if (monsterFill) {
+                const percent = (data.newMonsterHp / parseInt(maxHp)) * 100;
+                monsterFill.style.width = percent + '%';
             }
-            console.log("Objet utilisé et HUD mis à jour !");
-        } else {
-            alert(data.message);
         }
+        console.log("Dégâts infligés au monstre !");
+    } else {
+        // --- CAS SOIN (ce qu'on avait avant) ---
+        updateHUD(data);
+    }
+
+    // Dans tous les cas, on met à jour l'inventaire
+    updateInventoryUI(itemId, data.remaining);
+}
     })
     .catch(error => console.error('Erreur Fetch:', error));
 }
@@ -64,6 +75,21 @@ function updateHUD(data) {
         if (manaFill) {
             const maxVal = parseInt(manaMax);
             manaFill.style.width = (data.newMana / maxVal * 100) + '%';
+        }
+    }
+}
+
+function updateInventoryUI(itemId, remaining) {
+    const itemRow = document.getElementById(`item-row-${itemId}`);
+    if (itemRow) {
+        const qtyVal = itemRow.querySelector('.qty-val');
+        if (qtyVal) {
+            const currentQty = parseInt(remaining);
+            if (currentQty > 0) {
+                qtyVal.innerText = currentQty;
+            } else {
+                itemRow.remove();
+            }
         }
     }
 }

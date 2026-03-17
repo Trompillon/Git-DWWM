@@ -33,6 +33,8 @@ $_SESSION['char_id'] = $charId; // On synchronise la session
 /* =========================================
    2. TRAITEMENT DU CHOIX (POST)
 ========================================= */
+$error='';
+
 if (isset($_POST['choice_id'])) {
     $choiceId = $_POST['choice_id'];
 
@@ -41,11 +43,11 @@ if (isset($_POST['choice_id'])) {
     $choice = $stmt->fetch();
 
     if ($choice) {
-        // Vérification des conditions
+        // 1. Vérification des conditions
         $canTake = true;
         if ($choice['required_class'] && $choice['required_class'] !== $character['class']) $canTake = false;
-        if ($character['gold_pieces'] < $choice['required_gold']) $canTake = false;
-        if ($character['mana_current'] < $choice['required_mana']) $canTake = false;
+        if ($character['gold_pieces'] < $choice['required_gold']) { $canTake = false; $error = "Pas assez d'or !"; }
+        if ($character['mana_current'] < $choice['required_mana']) { $canTake = false; $error = "Pas assez de mana !"; }
 
         if ($canTake) {
             // A. Mise à jour des Stats
@@ -56,11 +58,48 @@ if (isset($_POST['choice_id'])) {
             $stmtUpdate = $pdo->prepare("UPDATE characters SET gold_pieces = ?, mana_current = ?, hp_current = ? WHERE id = ?");
             $stmtUpdate->execute([$newGold, $newMana, $newHp, $charId]);
 
-            // B. Mise à jour de la Position
-            $stmtSave = $pdo->prepare("UPDATE char_progress SET current_story_id = ?, updated_at = NOW() WHERE char_id = ?");
-            $stmtSave->execute([$choice['to_story_id'], $charId]);
+            // B. GESTION DES OBJETS (Achat ET Automatique)
+            // On regarde si le passage de destination donne des objets
+            $nextPassageId = $choice['to_story_id'];
+            
+            $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
+            $stmtItems->execute([$nextPassageId]);
+            $itemsToGive = $stmtItems->fetchAll();
 
-            // C. REDIRECTION (On recharge pour traiter l'arrivée au nouveau passage)
+            foreach ($itemsToGive as $item) {
+                $itemId = $item['item_id'];
+                $qtyToAdd = $item['quantity'];
+
+                // On récupère le type pour savoir si on cumule (consommable) ou pas
+                $stmtItemInfo = $pdo->prepare("SELECT item_type FROM items WHERE id = ?");
+                $stmtItemInfo->execute([$itemId]);
+                $itemInfo = $stmtItemInfo->fetch();
+
+                if ($itemInfo) {
+                    // On regarde si l'objet est déjà dans l'inventaire
+                    $stmtCheck = $pdo->prepare("SELECT id, quantity FROM inventory WHERE char_id = ? AND item_id = ?");
+                    $stmtCheck->execute([$charId, $itemId]);
+                    $existing = $stmtCheck->fetch();
+
+                    if (!$existing) {
+                        // Pas encore dans l'inventaire -> Insertion
+                        $pdo->prepare("INSERT INTO inventory (char_id, item_id, quantity, created_at) VALUES (?, ?, ?, NOW())")
+                            ->execute([$charId, $itemId, $qtyToAdd]);
+                    } else {
+                        // Déjà présent : on cumule seulement si c'est un consommable (type 3)
+                        if ((int)$itemInfo['item_type'] === 3) {
+                            $pdo->prepare("UPDATE inventory SET quantity = quantity + ? WHERE id = ?")
+                                ->execute([$qtyToAdd, $existing['id']]);
+                        }
+                    }
+                }
+            }
+
+            // C. Mise à jour de la Position
+            $stmtSave = $pdo->prepare("UPDATE char_progress SET current_story_id = ?, updated_at = NOW() WHERE char_id = ?");
+            $stmtSave->execute([$nextPassageId, $charId]);
+
+            // D. REDIRECTION (Crucial pour éviter le bug du refresh)
             header("Location: " . BASE_URL . "game/game.php");
             exit;
         }
@@ -90,43 +129,7 @@ if ($encounter) {
 }
 // --- FIN AJOUT ---
 
-// B. GESTION DES OBJETS (S'exécute à l'affichage du passage)
-$stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
-$stmtItems->execute([$currentPassageId]);
-$itemsInRoom = $stmtItems->fetchAll();
-
-foreach ($itemsInRoom as $item) {
-    $itemId = $item['item_id'];
-    $qtyToAdd = $item['quantity'];
-
-    // 1. On récupère le type de l'objet (pour savoir si on stacke ou pas)
-    $stmtItemInfo = $pdo->prepare("SELECT item_type FROM items WHERE id = ?");
-    $stmtItemInfo->execute([$itemId]);
-    $itemInfo = $stmtItemInfo->fetch();
-    
-    if (!$itemInfo) continue;
-
-    // 2. On regarde si l'objet est déjà dans l'inventaire
-    $stmtCheck = $pdo->prepare("SELECT id, quantity FROM inventory WHERE char_id = ? AND item_id = ?");
-    $stmtCheck->execute([$charId, $itemId]);
-    $existing = $stmtCheck->fetch();
-
-    if (!$existing) {
-        // L'objet n'est pas là du tout -> On l'insère
-        $pdo->prepare("INSERT INTO inventory (char_id, item_id, quantity, created_at) VALUES (?, ?, ?, NOW())")
-            ->execute([$charId, $itemId, $qtyToAdd]);
-    } else {
-        // L'objet existe déjà ! 
-        // SI c'est un consommable (type 3), on AUGMENTE la quantité
-        if ((int)$itemInfo['item_type'] === 3) {
-            $pdo->prepare("UPDATE inventory SET quantity = quantity + ? WHERE id = ?")
-                ->execute([$qtyToAdd, $existing['id']]);
-        }
-        // Sinon (Arme/Armure), on ne fait rien car on l'a déjà.
-    }
-}
-
-// C. Récupérer les données finales pour la page
+// B. Récupérer les données finales pour la page
 $stmtPassage = $pdo->prepare("SELECT * FROM story WHERE id = ?");
 $stmtPassage->execute([$currentPassageId]);
 $passage = $stmtPassage->fetch();
@@ -159,6 +162,10 @@ $character = $stmtChar->fetch();
 <body>
 
     <?php include __DIR__ . '/../components/header.php'; ?>
+
+    <?php if (!empty($error)): ?>
+        <div class="error"><?= $error ?></div>
+    <?php endif; ?>
 
     <?php if ($character): ?>
         <div id="hud">

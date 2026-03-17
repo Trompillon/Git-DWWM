@@ -5,17 +5,29 @@ require_once __DIR__ . '/../db.php';
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
 
+/* =========================================
+   1. RÉCUPÉRATION DES DONNÉES
+========================================= */
 $fightId = $_POST['fight_id'] ?? null;
 $action  = $_POST['action'] ?? null;
+$spellId = $_POST['spell_id'] ?? null;
 
-if (!$fightId) { header("Location: game.php"); exit; }
+if (!$fightId) { 
+    header("Location: game.php"); 
+    exit; 
+}
 
-// 1. Récupération des données (Combat, Perso+Arme, Monstre)
+// Récupération du combat
 $stmtFight = $pdo->prepare("SELECT * FROM fights WHERE id = ?");
 $stmtFight->execute([$fightId]);
 $fight = $stmtFight->fetch();
 
-// Requête Perso avec jointure pour l'arme
+if (!$fight) {
+    header("Location: game.php");
+    exit;
+}
+
+// Récupération du Personnage avec son arme
 $stmtChar = $pdo->prepare("
     SELECT 
         characters.*, 
@@ -32,92 +44,121 @@ $stmtChar = $pdo->prepare("
 $stmtChar->execute([$fight['char_id']]);
 $player = $stmtChar->fetch();
 
+// Récupération du Monstre
 $stmtM = $pdo->prepare("SELECT * FROM monsters WHERE id = ?");
 $stmtM->execute([$fight['monsters_id']]);
 $monster = $stmtM->fetch();
 
-// 2. Préparation des variables de dés et sécurité
-$d10 = rand(1, 10);
+/* =========================================
+   2. INITIALISATION DU TOUR
+========================================= */
+$log = "";
+$newMonsterHp = $fight['monster_current_hp']; 
+$newPlayerHp  = $fight['char_current_hp'];
+
+// Sécurité sur les bonus
 $player['bonus_atk']   = $player['bonus_atk'] ?? 0;
 $player['weapon_dice'] = $player['weapon_dice'] ?? 4; 
 $player['armor_bonus'] = $player['armor_bonus'] ?? 0;
 
-// Utilisation de la variable corrigée
-$d_arme = rand(1, $player['weapon_dice']);
-
 /* =========================================
-   SYSTÈME DE COMBAT
+   3. LOGIQUE DES ACTIONS (EXCLUSIVE)
 ========================================= */
-$log = "";
 
-$newMonsterHp = $fight['monster_current_hp']; 
-$newPlayerHp  = $fight['char_current_hp'];
-$scoreAttaque = $player['attack_base'] + $player['bonus_atk'] + $d10;
+if ($action === 'cast_spell' && $spellId) {
+    /* -----------------------------------------
+       OPTION A : MAGIE (Succès Garanti, Pas de riposte)
+    ----------------------------------------- */
+    $stmtS = $pdo->prepare("SELECT * FROM spells WHERE id = ?");
+    $stmtS->execute([$spellId]);
+    $spell = $stmtS->fetch();
 
-if ($scoreAttaque >= $monster['armor_class']) {
-    // SUCCÈS : dégâts = (attack_base + d_arme) - defense_base monstre
-    $degats = ($player['attack_base'] + $d_arme) - $monster['defense_base'];
-    $degats = max(1, $degats);
+    if ($spell && $player['mana_current'] >= $spell['mana_cost']) {
+        // Dégâts bruts sans dé aléatoire
+        $degatsMagiques = $spell['damage_base'];
+        $newMonsterHp = max(0, $newMonsterHp - $degatsMagiques);
+        
+        // Décompte immédiat du Mana
+        $newMana = max(0, $player['mana_current'] - $spell['mana_cost']);
+        $pdo->prepare("UPDATE characters SET mana_current = ? WHERE id = ?")
+            ->execute([$newMana, $player['id']]);
 
-    $newMonsterHp = max(0, $fight['monster_current_hp'] - $degats);
-    $pdo->prepare("UPDATE fights SET monster_current_hp = ? WHERE id = ?")
-        ->execute([$newMonsterHp, $fightId]);
-    
-    $log = "⚔️ Vous touchez ! Le monstre subit $degats dégâts.";
+        // Mise à jour PV Monstre dans le combat
+        $pdo->prepare("UPDATE fights SET monster_current_hp = ? WHERE id = ?")
+            ->execute([$newMonsterHp, $fightId]);
+
+        $log = "✨ Vous incantez *" . htmlspecialchars($spell['name']) . "* ! Le monstre subit $degatsMagiques dégâts de feu.";
+    } else {
+        $_SESSION['combat_log'] = "❌ Pas assez de mana !";
+        header("Location: fight.php?monster_id=" . $fight['monsters_id']);
+        exit;
+    }
+
 } else {
-    // ÉCHEC : Riposte du Monstre
-    $d_monstre = rand(1, $monster['dice_type']);
-    $degatsRecus = ($monster['attack_base'] + $d_monstre) - $player['defense_base'] - $player['armor_bonus'];
-    $degatsRecus = max(1, $degatsRecus);
+    /* -----------------------------------------
+       OPTION B : ATTAQUE PHYSIQUE (Système de CA / Riposte)
+    ----------------------------------------- */
+    $d10 = rand(1, 10);
+    $scoreAttaque = $player['attack_base'] + $player['bonus_atk'] + $d10;
 
-    $newPlayerHp = max(0, $fight['char_current_hp'] - $degatsRecus);
-    $pdo->prepare("UPDATE fights SET char_current_hp = ? WHERE id = ?")
-        ->execute([$newPlayerHp, $fightId]);
-    
-    $log = "🛡️ Échec ! Le monstre riposte : -$degatsRecus PV.";
+    if ($scoreAttaque >= $monster['armor_class']) {
+        // SUCCÈS : Le joueur touche
+        $d_arme = rand(1, $player['weapon_dice']);
+        $degats = ($player['attack_base'] + $d_arme) - $monster['defense_base'];
+        $degats = max(1, $degats);
+        
+        $newMonsterHp = max(0, $newMonsterHp - $degats);
+        $pdo->prepare("UPDATE fights SET monster_current_hp = ? WHERE id = ?")
+            ->execute([$newMonsterHp, $fightId]);
+        
+        $log = "⚔️ Vous touchez ! Le monstre subit $degats dégâts.";
+    } else {
+        // ÉCHEC : Le monstre riposte uniquement ici
+        $d_monstre = rand(1, $monster['dice_type']);
+        $degatsRecus = ($monster['attack_base'] + $d_monstre) - ($player['defense_base'] + $player['armor_bonus']);
+        $degatsRecus = max(1, $degatsRecus);
+
+        $newPlayerHp = max(0, $newPlayerHp - $degatsRecus);
+        $pdo->prepare("UPDATE fights SET char_current_hp = ? WHERE id = ?")
+            ->execute([$newPlayerHp, $fightId]);
+        
+        $log = "🛡️ Échec ! Votre coup est paré et le monstre riposte : -$degatsRecus PV.";
+    }
 }
 
-// --- GESTION DE LA VICTOIRE ---
-if ($newMonsterHp <= 0) {
-    // 1. On finit le combat
-    $pdo->prepare("UPDATE fights SET monster_current_hp = 0 WHERE id = ?")
-        ->execute([$fightId]);
+/* =========================================
+   4. GESTION DE LA VICTOIRE OU DÉFAITE
+========================================= */
 
-    // 2. On va chercher l'ID de la suite dans story_fights
+// --- CAS : VICTOIRE ---
+if ($newMonsterHp <= 0) {
     $stmtWin = $pdo->prepare("
-        SELECT win_story_id 
-        FROM story_fights 
-        WHERE story_id = (
-        SELECT current_story_id FROM char_progress WHERE char_id = ?
-        )
+        SELECT win_story_id FROM story_fights 
+        WHERE story_id = (SELECT current_story_id FROM char_progress WHERE char_id = ?)
     ");
     $stmtWin->execute([$fight['char_id']]);
     $win = $stmtWin->fetch();
 
-    $nextStep = $win['win_story_id'] ?? 1; // Par défaut on remet au début si rien n'est rempli
+    $nextStep = $win['win_story_id'] ?? 1;
 
-    // 3. On téléporte le joueur au nouveau passage
     $pdo->prepare("UPDATE char_progress SET current_story_id = ? WHERE char_id = ?")
         ->execute([$nextStep, $fight['char_id']]);
 
-    $_SESSION['combat_log'] = "🏆 Victoire ! Le monstre est terrassé.";
-    
-    // 4. On renvoie sur game.php qui affichera le nouveau texte
+    $_SESSION['combat_log'] = $log . " 🏆 Victoire !";
     header("Location: game.php");
     exit;
 }
 
-// --- GESTION DE LA DÉFAITE ---
-if (isset($newPlayerHp) && $newPlayerHp <= 0) {
-    $_SESSION['combat_log'] = "💀 Vous avez péri au combat...";
-    // On met à jour les vrais PV du perso pour que le Game Over soit définitif
+// --- CAS : DÉFAITE ---
+if ($newPlayerHp <= 0) {
     $pdo->prepare("UPDATE characters SET hp_current = 0 WHERE id = ?")
         ->execute([$fight['char_id']]);
+    $_SESSION['combat_log'] = "💀 Vous avez succombé...";
     header("Location: game_over.php"); 
     exit;
 }
 
-// Si le combat continue
+// --- CONTINUATION DU COMBAT ---
 $_SESSION['combat_log'] = $log;
 header("Location: fight.php?monster_id=" . $fight['monsters_id']);
 exit;

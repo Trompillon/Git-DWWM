@@ -89,6 +89,18 @@ if (isset($_POST['class'])) {
     $stmtProgress = $pdo->prepare("INSERT INTO char_progress (char_id, current_story_id, updated_at) VALUES (?, ?, NOW())");
     $stmtProgress->execute([$charId, $startPassageId]);
 
+    // --- DONNER LES OBJETS DE DÉPART ---
+    // On regarde quels objets sont liés au passage de départ (ID 2 ou 3 selon la classe)
+    $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
+    $stmtItems->execute([$startPassageId]);
+    $startItems = $stmtItems->fetchAll();
+
+    foreach ($startItems as $item) {
+        $pdo->prepare("INSERT INTO inventory (char_id, item_id, quantity, created_at) VALUES (?, ?, ?, NOW())")
+            ->execute([$charId, $item['item_id'], $item['quantity']]);
+    }
+    // --- FIN AJOUT ---
+
     header("Location: " . BASE_URL . "game/game.php");
     exit;
 }
