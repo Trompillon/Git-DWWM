@@ -1,6 +1,13 @@
+/**
+ * Gère l'utilisation d'un objet (soin ou dégât) via une requête Fetch.
+ * @param {number|string} itemId - L'identifiant de l'objet à utiliser.
+ */
 function useItem(itemId) {
+    const csrfInput = document.getElementById('csrf_inventory');
+
     const formData = new FormData();
     formData.append('item_id', itemId);
+    formData.append('csrf_token', csrfInput ? csrfInput.value : '');
 
     fetch('use_item.php', {
         method: 'POST',
@@ -8,42 +15,43 @@ function useItem(itemId) {
     })
     .then(response => response.json())
     .then(data => {
-        // Dans script.js, à l'intérieur de .then(data => { ... })
-if (data.success) {
-    if (data.type === 'damage') {
-        // --- CAS ATTACK ---
-        const monsterText = document.getElementById('monster-hp-text');
-        const monsterFill = document.getElementById('monster-hp-fill');
-        
-        if (monsterText) {
-            // On récupère le HP Max qui est déjà écrit dans le span (ex: "50 / 100 HP")
-            const parts = monsterText.textContent.split('/');
-            const maxHp = parts[1] ? parts[1].trim() : "??"; 
-            
-            // On met à jour le texte (ex: "40 / 100 HP")
-            monsterText.textContent = `${data.newMonsterHp} / ${maxHp}`;
-            
-            // On met à jour la barre visuelle
-            if (monsterFill) {
-                const percent = (data.newMonsterHp / parseInt(maxHp)) * 100;
-                monsterFill.style.width = percent + '%';
+        if (data.success) {
+            // --- LOGIQUE DE MISE À JOUR VISUELLE ---
+            if (data.type === 'damage') {
+                // CAS DÉGÂTS : On met à jour le monstre
+                const monsterText = document.getElementById('monster-hp-text');
+                const monsterFill = document.getElementById('monster-hp-fill');
+                
+                if (monsterText) {
+                    const parts = monsterText.textContent.split('/');
+                    const maxHp = parts[1] ? parts[1].trim() : "??"; 
+                    monsterText.textContent = `${data.newMonsterHp} / ${maxHp}`;
+                    
+                    if (monsterFill) {
+                        const percent = (data.newMonsterHp / parseInt(maxHp)) * 100;
+                        monsterFill.style.width = percent + '%';
+                    }
+                }
+                console.log("Dégâts infligés au monstre !");
+            } else {
+                // CAS SOIN : On met à jour le HUD du joueur
+                updateHUD(data);
             }
+            // Dans tous les cas, on met à jour l'inventaire
+            updateInventoryUI(itemId, data.remaining);
+        } else {
+            // Si le PHP renvoie success: false (ex: Jeton invalide)
+            alert("Erreur : " + data.message);
         }
-        console.log("Dégâts infligés au monstre !");
-    } else {
-        // --- CAS SOIN (ce qu'on avait avant) ---
-        updateHUD(data);
-    }
-
-    // Dans tous les cas, on met à jour l'inventaire
-    updateInventoryUI(itemId, data.remaining);
-}
     })
     .catch(error => console.error('Erreur Fetch:', error));
 }
 
+/**
+ * Met à jour l'affichage des barres de vie (HP) et de mana (PM) du joueur.
+ * @param {Object} data - L'objet JSON contenant les nouvelles valeurs (newHp, newMana).
+ */
 function updateHUD(data) {
-    console.log("Données reçues :", data);
     // 1. Mise à jour PV
     const hpText = document.getElementById('hp-text');
     const hpFill = document.getElementById('hp-fill');
@@ -79,6 +87,11 @@ function updateHUD(data) {
     }
 }
 
+/**
+ * Met à jour la quantité d'un objet dans l'inventaire ou supprime la ligne.
+ * @param {number|string} itemId - L'identifiant de l'objet.
+ * @param {number} remaining - La quantité restante renvoyée par le serveur.
+ */
 function updateInventoryUI(itemId, remaining) {
     const itemRow = document.getElementById(`item-row-${itemId}`);
     if (itemRow) {

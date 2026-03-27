@@ -1,7 +1,17 @@
 <?php
-session_start();
+
+require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
 
+// --- SÉCURITÉ CSRF POUR AJAX ---
+$token = $_POST['csrf_token'] ?? null;
+
+if (!$token || $token !== $_SESSION['csrf_token']) {
+    echo json_encode(['success' => false, 'message' => 'Erreur de sécurité (CSRF)']);
+    exit;
+}
+
+// Vérification de la session et de l'item
 if (!isset($_SESSION['user_id']) || !isset($_POST['item_id'])) {
     echo json_encode(['success' => false, 'message' => 'Action non autorisée']);
     exit;
@@ -67,7 +77,7 @@ try {
         ];
 
     } 
-    // CAS B : C'est un objet de SOIN (ton code actuel)
+    // CAS B : C'est un objet de SOIN
     else {
         $newHp = min($data['hp_max'], $data['hp_current'] + $data['heal_hp']);
         $newMana = min($data['mana_max'], $data['mana_current'] + $data['heal_mana']);

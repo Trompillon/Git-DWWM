@@ -1,11 +1,14 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
 
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
+
+/* =========================================
+   1. RÉCUPÉRATION DES DONNÉES
+========================================= */
 
 $userId = $_SESSION['user_id'] ?? null;
 if (!$userId) {
@@ -39,6 +42,12 @@ if ($character) {
 
 // --- Traitement du formulaire de choix de classe ---
 if (isset($_POST['class'])) {
+
+// Vérification du badge AVANT de commencer à créer le personnage
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
+
     $class = $_POST['class'];
 
     switch($class) {
@@ -64,6 +73,10 @@ if (isset($_POST['class'])) {
     $gold_pieces = 50;
     $name = $class;
 
+/* =========================================
+   2. CREATION DU PERSONNAGE
+========================================= */
+
     // 1. Création du perso
     $stmtInsert = $pdo->prepare("
         INSERT INTO characters
@@ -72,9 +85,9 @@ if (isset($_POST['class'])) {
     ");
     $stmtInsert->execute([$userId, $name, $class, $hp_max, $hp_current, $mana_max, $mana_current, $attack_base, $defense_base, $gold_pieces]);
     
-    // 2. RECUPERER L'ID DU PERSO
+    // 2. Récupération de l'ID du personnage créé et stockage en session
     $charId = $pdo->lastInsertId();
-    $_SESSION['char_id'] = $charId; // Sans ça, game.php te jette !
+    $_SESSION['char_id'] = $charId; 
 
     // 3. Gestion des sorts pour le Mage
     if ($class === 'Mage') {
@@ -89,15 +102,16 @@ if (isset($_POST['class'])) {
     $stmtProgress = $pdo->prepare("INSERT INTO char_progress (char_id, current_story_id, updated_at) VALUES (?, ?, NOW())");
     $stmtProgress->execute([$charId, $startPassageId]);
 
-    // --- DONNER LES OBJETS DE DÉPART ---
+    // 5. DONNER LES OBJETS DE DÉPART
     // On regarde quels objets sont liés au passage de départ (ID 2 ou 3 selon la classe)
     $stmtItems = $pdo->prepare("SELECT item_id, quantity FROM story_items WHERE story_id = ?");
     $stmtItems->execute([$startPassageId]);
     $startItems = $stmtItems->fetchAll();
 
+
+    $stmtitem = $pdo->prepare("INSERT INTO inventory (char_id, item_id, quantity, created_at) VALUES (?, ?, ?, NOW())");
     foreach ($startItems as $item) {
-        $pdo->prepare("INSERT INTO inventory (char_id, item_id, quantity, created_at) VALUES (?, ?, ?, NOW())")
-            ->execute([$charId, $item['item_id'], $item['quantity']]);
+            $stmtitem->execute([$charId, $item['item_id'], $item['quantity']]);
     }
     // --- FIN AJOUT ---
 
@@ -130,6 +144,7 @@ if (isset($_POST['class'])) {
 
     <div id="choices">
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             <button type="submit" name="class" value="Guerrier">Je suis un(e) puissant(e) Guerrier(e) !</button>
             <button type="submit" name="class" value="Mage">Je suis un(e) Mage doté(e) de pouvoirs magiques...</button>
         </form>

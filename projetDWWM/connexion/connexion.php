@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../config.php'; 
 require_once __DIR__ . '/../db.php';
@@ -8,6 +7,11 @@ require_once __DIR__ . '/../db.php';
 // ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+// --- VÉRIFICATION CSRF ---
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Erreur de sécurité : Jeton invalide ou expiré.");
+    }
     
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
         
@@ -51,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>img/icon.png">
     <title>Connexion</title>
 </head>
 <body>
@@ -72,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="form-wrapper">
         <form class="formConnexion" action="<?= BASE_URL ?>connexion/connexion.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             <h1>Connexion</h1>
 
             <label for="email">Email</label>

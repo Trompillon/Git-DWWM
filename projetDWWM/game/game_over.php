@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../db.php';
 
 $message = $_SESSION['combat_log'] ?? "Votre aventure s'arrête ici...";
 unset($_SESSION['combat_log']);

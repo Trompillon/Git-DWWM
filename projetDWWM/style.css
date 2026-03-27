@@ -18,9 +18,11 @@
   --primary: #0f172a;
   --secondary: #d3af37;
   --input-bg: #D9D9D9;
+  --magic: #9b59b6;
   --text-light: #ffffff;
   --text-dark: #000000;
   --font-main: 'Merriweather', serif;
+  --font-secondary: 'Cinzel', serif;
 }
 
 /* RESET */
@@ -43,6 +45,8 @@ body {
 /* NAVBAR */
 
 .navbar {
+    position: sticky;
+    top: 0;
     background-color: black;
     padding: 10px 20px;
     display: flex;
@@ -55,11 +59,6 @@ body {
 .nav-right {
     display: flex;
     align-items: center;
-}
-
-.nav-left li {
-    list-style: none;
-    margin-right: 20px;
 }
 
 .nav-left li {
@@ -164,7 +163,7 @@ body {
     background-color: rgba(15,23,42,0.85);
     justify-content: center; align-items: center;
     z-index: 9999;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-secondary);
 }
 
 .inventory-content {
@@ -205,7 +204,7 @@ body {
     margin-bottom: 12px;
     border-left: 4px solid #a0522d;
     border-radius: 6px;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-secondary);
     color: #2b1d0e;
 }
 
@@ -236,7 +235,7 @@ body {
     z-index: 9999;
     padding-top: 60px;   /* espace depuis le haut */
     padding-right: 20px; /* espace depuis la droite */
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-secondary);
 }
 
 .grimoire-modal .inventory-content {
@@ -287,15 +286,14 @@ body {
     background-color: rgba(255, 238, 205, 0.8);
     padding: 10px 15px;
     margin-bottom: 12px;
-    border-left: 4px solid #9b59b6; /* violet pour mage */
+    border-left: 4px solid var(--magic);
     border-radius: 6px;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-secondary);
     color: #2b1d0e;
 }
 
 .grimoire-item-description {
-    color: #9b59b6; /* violet clair pour la description */
-    font-style: italic;
+    color: var(--magic);
     margin-left: 5px;
 }
 
@@ -501,7 +499,7 @@ body {
     filter: brightness(1.8);
 }
 
-#choices form button.choice.mage { background-color: #9b59b6; color: white; }
+#choices form button.choice.mage { background-color: var(--magic); color: white; }
 
 /* FOOTER */
 
@@ -750,7 +748,7 @@ body {
 }
 
 .death-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-secondary);
     font-size: 5rem;
     letter-spacing: 15px;
     margin: 0;
@@ -802,6 +800,10 @@ body {
 }
 
 .burger-menu { display: none; }
+
+.nav-left .close-menu {
+    display: none;
+}
 
 @media (max-width: 600px) {
     #hud {
@@ -862,6 +864,4 @@ body {
         display: flex;
         gap: 10px;
     }
-
-
 }

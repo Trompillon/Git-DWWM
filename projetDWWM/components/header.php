@@ -1,7 +1,4 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);
@@ -35,11 +32,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
     <div class="nav-right">
         <?php if ($character['class'] === 'Mage'): ?>
-            <a href="#"id="btnGrimoire" class="grimoire-btn <?= strtolower($character['class']) ?>">
+            <a href="#" class="grimoire-btn" id="btnGrimoire"  <?= strtolower($character['class']) ?>">
                 <img src="<?= BASE_URL ?>img/grimoire.png" alt="Icône de Grimoire">
             </a>
         <?php endif; ?>
-        <a href="#" id="btnInventory" class="inventory-btn">
+        <a href="#" class="inventory-btn" id="btnInventory" >
             <img src="<?= BASE_URL ?>img/backpack.png" alt="Icône sac à dos">
         </a>
     </div>
@@ -49,7 +46,7 @@ if (session_status() == PHP_SESSION_NONE) {
 </nav>
 
 <!-- Modal inventaire -->
-<div id="inventoryModal" class="inventory-modal">
+<div class="inventory-modal" id="inventoryModal" >
     <div class="inventory-content">
         <div id="inventoryContent">
             <!-- contenu injecté ici -->
@@ -59,7 +56,7 @@ if (session_status() == PHP_SESSION_NONE) {
 </div>
 
 <!-- Modal grimoire -->
-<div id="grimoireModal" class="inventory-modal grimoire-modal">
+<div class="inventory-modal grimoire-modal" id="grimoireModal" >
     <div class="inventory-content">
         <div id="grimoireContent">
             <!-- contenu du grimoire injecté ici -->
@@ -69,7 +66,7 @@ if (session_status() == PHP_SESSION_NONE) {
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+
     // --- INVENTAIRE ---
     const btnInventory = document.getElementById('btnInventory');
     const inventoryModal = document.getElementById('inventoryModal');
@@ -105,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (btnGrimoire) {
         btnGrimoire.addEventListener('click', () => {
-            fetch('<?= BASE_URL ?>game/grimoire.php') // créer ce fichier côté serveur
+            fetch('<?= BASE_URL ?>game/grimoire.php')
                 .then(res => res.text())
                 .then(data => {
                     grimoireContent.innerHTML = data;
@@ -123,9 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
     grimoireModal.addEventListener('click', function(e) {
         if (e.target === grimoireModal) grimoireModal.style.display = 'none';
     });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+    // --- MENU BURGER ---
     const burger = document.getElementById('burgerMenu');
     const navLinks = document.getElementById('navLinks');
     const closeBtn = document.getElementById('closeMenu');
@@ -142,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.onclick = () => {
             navLinks.classList.remove('active');
         };
-    }
-});
+    };
 
 </script>

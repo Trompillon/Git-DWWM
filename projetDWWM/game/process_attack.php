@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
 
 // ini_set('display_errors', 1);
@@ -11,6 +12,12 @@ require_once __DIR__ . '/../db.php';
 $fightId = $_POST['fight_id'] ?? null;
 $action  = $_POST['action'] ?? null;
 $spellId = $_POST['spell_id'] ?? null;
+$token   = $_POST['csrf_token'] ?? null;
+
+// --- LA BARRIÈRE DE SÉCURITÉ ---
+if (!$token || $token !== $_SESSION['csrf_token']) {
+    die("Erreur de sécurité : Action de combat non autorisée.");
+}
 
 if (!$fightId) { 
     header("Location: game.php"); 
@@ -62,7 +69,7 @@ $player['weapon_dice'] = $player['weapon_dice'] ?? 4;
 $player['armor_bonus'] = $player['armor_bonus'] ?? 0;
 
 /* =========================================
-   3. LOGIQUE DES ACTIONS (EXCLUSIVE)
+   3. LOGIQUE DES ACTIONS
 ========================================= */
 
 if ($action === 'cast_spell' && $spellId) {
@@ -132,6 +139,10 @@ if ($action === 'cast_spell' && $spellId) {
 
 // --- CAS : VICTOIRE ---
 if ($newMonsterHp <= 0) {
+
+    $pdo->prepare("UPDATE characters SET hp_current = ? WHERE id = ?")
+        ->execute([$newPlayerHp, $fight['char_id']]);
+
     $stmtWin = $pdo->prepare("
         SELECT win_story_id FROM story_fights 
         WHERE story_id = (SELECT current_story_id FROM char_progress WHERE char_id = ?)

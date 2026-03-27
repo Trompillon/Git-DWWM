@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
@@ -25,6 +24,13 @@ $character = $stmtChar->fetch();
 if (!$character) {
     header("Location: " . BASE_URL . "game/choose_class.php");
     exit;
+}
+
+// On ne vérifie le badge que si un formulaire a été envoyé (POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
 }
 
 // 2. Maintenant qu'on est SÛR qu'il existe, on définit les IDs
@@ -215,6 +221,7 @@ $character['hp_current'] = $activeFight['char_current_hp'];
 
             <div id="attack-list" class="spell-submenu" style="display:none;">
                 <form action="process_attack.php" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                     <input type="hidden" name="fight_id" value="<?= $currentFightId ?>">
                     <input type="hidden" name="action" value="attack">
                     
@@ -231,6 +238,7 @@ $character['hp_current'] = $activeFight['char_current_hp'];
                 <?php if (!empty($offenseSpells)): ?>
                     <?php foreach ($offenseSpells as $spell): ?>
                         <form action="process_attack.php" method="POST">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <input type="hidden" name="fight_id" value="<?= $currentFightId ?>">
                             <input type="hidden" name="action" value="cast_spell">
                             <input type="hidden" name="spell_id" value="<?= $spell['id'] ?>">

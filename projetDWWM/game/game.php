@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
@@ -36,6 +35,12 @@ $_SESSION['char_id'] = $charId; // On synchronise la session
 $error='';
 
 if (isset($_POST['choice_id'])) {
+
+// Vérification du badge AVANT de permettre les choix
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
+
     $choiceId = $_POST['choice_id'];
 
     $stmt = $pdo->prepare("SELECT * FROM choice WHERE id = ?");
@@ -208,6 +213,7 @@ $character = $stmtChar->fetch();
         <?php if ($isFighting): ?>
             <div class="combat-encounter">
                 <form action="fight.php" method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                     <input type="hidden" name="monster_id" value="<?= $monsterId ?>">
                     <button type="submit" class="btn-fight">
                         ⚔️ Combattre
@@ -220,6 +226,7 @@ $character = $stmtChar->fetch();
                 <?php if ($choice['required_class'] && $choice['required_class'] !== $character['class']) continue; ?>
 
                 <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                     <input type="hidden" name="choice_id" value="<?= $choice['id'] ?>">
                     <button type="submit" class="choice <?= $choice['required_class'] ? strtolower($choice['required_class']) : '' ?>">
                         <?= htmlspecialchars($choice['choice']) ?>
