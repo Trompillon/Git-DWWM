@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $charId = $character['id'];
 $_SESSION['char_id'] = $charId;
 
-// 3. Et ENFIN on récupère ses sorts
+// 3. Et ENFIN on récupère ses sorts de type damage
 $stmtSpells = $pdo->prepare("
     SELECT s.* FROM spells s
     JOIN character_spells cs ON s.id = cs.spell_id
